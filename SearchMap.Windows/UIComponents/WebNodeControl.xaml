@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="SearchMap.Windows.UIComponents.WebNodeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SearchMap.Windows.UIComponents"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="500">
+
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Ouvrir la page web.">
+
+            </MenuItem>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+
+    <Grid>
+
+        <Border x:Name="Border" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="12" BorderBrush="DarkGray" 
+                BorderThickness="8" Background="AliceBlue">
+
+            <Border.Effect>
+                <DropShadowEffect/>
+            </Border.Effect>
+
+            <Grid x:Name="PlacementGrid">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="70*"/>
+                </Grid.RowDefinitions>
+
+                <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Source="../Resources/Placeholder.png" Stretch="Uniform" />
+
+                <TextBox x:Name="TitleBox" Text="Welcome to SearchMap" Grid.Column="1" Grid.Row="0" Background="Transparent" FontSize="24" FontWeight="Black"
+                         VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="0" IsReadOnly="False"/>
+
+                <TextBox x:Name="UriLabel" Text="searchmap.net" Grid.Column="1" Grid.Row="1" FontSize="8" FontStyle="Italic" AcceptsReturn="True" 
+                         TextWrapping="WrapWithOverflow" Background="Transparent" BorderThickness="0" IsReadOnly="True" VerticalAlignment="Top" />
+
+                <TextBox x:Name="CommentBox" Text="SearchMap - Download Now!"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Background="Transparent" 
+                         BorderThickness="0" FontSize="14" AcceptsReturn="True" TextWrapping="WrapWithOverflow" Margin="10"/>
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+
+</UserControl>

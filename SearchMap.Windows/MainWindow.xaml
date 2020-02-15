@@ -1,0 +1,166 @@
+﻿<Fluent:RibbonWindow x:Class="SearchMap.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SearchMap.Windows"
+        xmlns:Fluent="urn:fluent-ribbon"
+                     mc:Ignorable="d"
+        Title="SearchMap" Height="1080" Width="1920">
+
+    <Grid x:Name="WindowGrid">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Fluent:Ribbon Grid.Row="0" x:Name="Ribbon">
+
+            <Fluent:Ribbon.ContextualGroups>
+                <Fluent:RibbonContextualTabGroup x:Name="node_tools"
+                                                 BorderBrush="Blue"
+                                                 Background="LightBlue"
+                                                 Foreground="BlueViolet"
+                                                 TabItemMouseOverForeground="BlueViolet"
+                                                 TabItemSelectedMouseOverForeground="Blue"
+                                                 Header="NODE"
+                                                 Visibility="Visible" />
+
+                <Fluent:RibbonContextualTabGroup x:Name="connection_tools"
+                                                 BorderBrush="Green"
+                                                 Background="LightGreen"
+                                                 Foreground="Green"
+                                                 Header="CONNECTIONS"
+                                                 Visibility="Visible" />
+
+            </Fluent:Ribbon.ContextualGroups>
+
+            <Fluent:Ribbon.ToolBarItems>
+                <Fluent:Button Size="Small"
+                               Icon="{DynamicResource Fluent.Ribbon.Images.Help}" >
+                    <Fluent:Button.ToolTip>
+                        <Fluent:ScreenTip Title="TODO Title"
+                                          Text="TODO Text"
+                                          HelpTopic="TODO Topic"
+                                          DisableReason="TODO Reason."
+                                          Width="190"
+                                          IsRibbonAligned="True" />
+                    </Fluent:Button.ToolTip>
+                </Fluent:Button>
+            </Fluent:Ribbon.ToolBarItems>
+
+            <!--Backstage-->
+            <Fluent:Ribbon.Menu>
+                <Fluent:Backstage x:Name="RibbonBackstage">
+                </Fluent:Backstage>
+            </Fluent:Ribbon.Menu>
+            
+            
+
+            <!--Tabs-->
+            <Fluent:RibbonTabItem Header="Home" x:Name="RibbonTabHome">
+                <Fluent:RibbonGroupBox Header="Group">
+                    <Fluent:Button Header="Green" />
+                    <!-- "Resource-Path to your small icon for this button"
+                           LargeIcon="Resource-Path to your large icon for this button" -->
+                    <Fluent:Button Header="Grey"  />
+                    <!-- ="Resource-Path to your small icon for this button"
+                           LargeIcon="Resource-Path to your large icon for this button" /> -->
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="Insert" x:Name="RibbonTabInsert">
+
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="View" x:Name="RibbonTabView">
+
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="Export" x:Name="RibbonTabExport">
+
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="Account" x:Name="RibbonTabAccount">
+
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="Help" x:Name="RibbonTabHelp">
+
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="Web Node Tools" Group="{Binding Source={x:Reference node_tools}}" x:Name="RibbonTabWebNode" Visibility="Visible" >
+                
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="     Customize     " Group="{Binding Source={x:Reference connection_tools}}" x:Name="RibbonTabConnection" Visibility="Visible">
+                
+            </Fluent:RibbonTabItem>
+
+        </Fluent:Ribbon>
+
+        <ScrollViewer Grid.Row="1"  x:Name="ScrollView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                      Background="WhiteSmoke" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden"
+                      PanningMode="Both">
+            <Canvas x:Name="GraphCanvas" Height="2000" Width="3000">
+
+                <Canvas.LayoutTransform>
+                    <ScaleTransform x:Name="ScaleTransform"/>
+                </Canvas.LayoutTransform>
+
+                <Canvas.Background>
+                    <DrawingBrush TileMode="Tile" Viewport="-10,-10,20,20" 
+                                     ViewportUnits="Absolute">
+                        <DrawingBrush.Drawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry Rect="0,0,50,50"/>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="Gray" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Canvas.Background>
+
+            </Canvas>
+        </ScrollViewer>
+
+        <Fluent:StatusBar HorizontalAlignment="Stretch"
+                          VerticalAlignment="Bottom"
+                          Visibility="Visible"
+                          Grid.Row="2"
+                          x:Name="StatusBar">
+            
+            <Separator HorizontalAlignment="Right" />
+
+            <Fluent:StatusBarItem Title="Zoom"
+                                  HorizontalAlignment="Right"
+                                  Value="{Binding Value, ElementName=ZoomSlider, StringFormat={}{0:P}}" />
+
+            <Fluent:StatusBarItem Title="Test (no content, no value)"
+                                  HorizontalAlignment="Right" />
+
+            <Fluent:StatusBarItem Title="Zoom Slider"
+                                  HorizontalAlignment="Right">
+                <Slider x:Name="ZoomSlider"
+                        Minimum="0.1"
+                        Maximum="1.9"
+                        IsDirectionReversed="False"
+                        Style="{DynamicResource ZoomSliderStyle}"
+                        Value="1"
+                        IsSnapToTickEnabled="True"
+                        TickFrequency="0.1"
+                        SmallChange="0.1"
+                        LargeChange="0.1"
+                        ValueChanged="OnSliderValueChanged" />
+                
+            </Fluent:StatusBarItem>
+        </Fluent:StatusBar>
+
+    </Grid>
+
+</Fluent:RibbonWindow>
