@@ -32,6 +32,7 @@ namespace SearchMap.Windows.UIComponents {
 
 
         // Move by drag and drop
+        #region MoveByDragDrop
 
         private bool IsRightClickDown = false;
 
@@ -117,6 +118,8 @@ namespace SearchMap.Windows.UIComponents {
 
         // TODO allow move with left-click when edit mode is move.
         // End of drag-and-drop handling
+
+        #endregion 
 
         // Editing
 
