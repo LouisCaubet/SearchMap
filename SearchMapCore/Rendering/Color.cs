@@ -1,4 +1,6 @@
-﻿namespace SearchMapCore.Rendering {
+﻿using Newtonsoft.Json;
+
+namespace SearchMapCore.Rendering {
 
     /// <summary>
     /// Represents an ARGB color in a cross-platform implementation
@@ -23,12 +25,12 @@
         /// <summary>
         /// Creates a Color from RGB values
         /// </summary>
-        public Color(byte r, byte g, byte b) {
-            Alpha = 255;
-            Red = r;
-            Green = g;
-            Blue = b;
-        }
+        public Color(byte r, byte g, byte b) : this(255, r, g, b) { }
+
+        [JsonConstructor]
+        public Color() : this(0, 0, 0) { }
+
+
 
         /// <summary>
         /// Returns the ARGB-tuple representing this Color.

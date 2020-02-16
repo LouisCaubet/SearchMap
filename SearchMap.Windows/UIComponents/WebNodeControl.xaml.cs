@@ -1,5 +1,7 @@
-﻿using SearchMap.Windows.Utils;
+﻿using Newtonsoft.Json;
+using SearchMap.Windows.Utils;
 using SearchMapCore.Graph;
+using SearchMapCore.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -62,8 +64,6 @@ namespace SearchMap.Windows.UIComponents {
 
         // EVENT HANDLING ------------------------------------------------------------------------------------------------------------------
         // See WebNodeControl_Events.cs
-
-
 
     }
 

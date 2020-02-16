@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SearchMap.Windows.Controls;
+using SearchMap.Windows.UIComponents;
+using SearchMapCore.Graph;
+using SearchMapCore.Serialization;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -14,6 +19,8 @@ namespace SearchMap.Windows {
         /// Call in MainWindow constructor to register event handlers.
         /// </summary>
         void RegisterEventHandlers() {
+
+            // Move by drag and drop
             ScrollView.MouseLeftButtonUp += OnMouseLeftButtonUp;
             ScrollView.PreviewMouseLeftButtonUp += OnMouseLeftButtonUp;
             ScrollView.PreviewMouseWheel += OnPreviewMouseWheel;
@@ -21,13 +28,19 @@ namespace SearchMap.Windows {
             ScrollView.PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
             ScrollView.MouseMove += OnMouseMove;
 
+            // Ribbon layout changes.
             SizeChanged += OnWindowSizeChanged;
             StateChanged += OnWindowStateChanged;
+
+            // Clipboard
+            KeyDown += OnKeyPress;
 
         }
 
         // Implementation of movement by drag and dropping
         // Original code : https://www.codeproject.com/Articles/97871/WPF-simple-zoom-and-drag-support-in-a-ScrollView
+
+        #region MoveByDragDrop
 
         void OnMouseMove(object sender, MouseEventArgs e) {
             if (lastDragPoint.HasValue) {
@@ -45,10 +58,9 @@ namespace SearchMap.Windows {
 
         void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
             var mousePos = e.GetPosition(ScrollView);
-            //if (mousePos.X <= ScrollView.ViewportWidth && mousePos.Y <
-            //    ScrollView.ViewportHeight) //make sure we still can use the scrollbars
-            //{
+
             if (GraphCanvas.IsMouseDirectlyOver) {
+                Selected = null;
                 ScrollView.Cursor = Cursors.SizeAll;
                 lastDragPoint = mousePos;
                 Mouse.Capture(ScrollView);
@@ -84,6 +96,7 @@ namespace SearchMap.Windows {
         }
 
         // End of move by drag & drop implementation.
+        #endregion MoveByDragDrop
 
 
         // Size ribbon tabs correctly on window resize
@@ -106,6 +119,36 @@ namespace SearchMap.Windows {
             OnWindowSizeChanged(sender, null);
         }
 
+        // END of ribbon management
+
+        // Clipboard tasks
+
+        #region Clipboard
+
+        void OnKeyPress(object sender, KeyEventArgs e) {
+            
+            // Detect Ctrl + ... op
+            if(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
+
+                if(e.Key == Key.C) {
+                    if(Selected != null) {
+                        ClipboardManager.CopyToClipboard(Selected, false);
+                    }
+                }
+                else if(e.Key == Key.X) {
+                    if (Selected != null) {
+                        ClipboardManager.CopyToClipboard(Selected, true);
+                    }
+                }
+                else if(e.Key == Key.V) {
+                    ClipboardManager.Paste();
+                }
+
+            }
+
+        }
+
+        #endregion Clipboard
 
     }
 

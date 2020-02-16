@@ -70,6 +70,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ClipboardManager.cs" />
     <Compile Include="Events\ConnectionControl_Events.cs" />
     <Compile Include="Events\MainWindow_Events.cs" />
     <Compile Include="Events\WebNodeControl_Events.cs" />

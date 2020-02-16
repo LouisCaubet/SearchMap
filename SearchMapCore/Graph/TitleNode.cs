@@ -7,6 +7,7 @@ namespace SearchMapCore.Graph {
     /// <summary>
     /// Represents a title node, with a big title and a smaller subtitle.
     /// </summary>
+    [Serializable]
     public class TitleNode : Node {
 
         /// <summary>
@@ -26,6 +27,7 @@ namespace SearchMapCore.Graph {
     /// <summary>
     /// Represents a node with only text.
     /// </summary>
+    [Serializable]
     public class TextNode : Node {
 
         public TextNode(Graph graph) : base(graph) { }

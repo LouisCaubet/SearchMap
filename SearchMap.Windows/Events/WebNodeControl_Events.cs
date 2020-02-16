@@ -12,6 +12,7 @@ namespace SearchMap.Windows.UIComponents {
         // EVENT HANDLING
 
         void RegisterEventHandlers() {
+
             // Drag and drop
             MouseRightButtonUp += OnMouseRightButtonUp;
             PreviewMouseRightButtonUp += OnMouseRightButtonUp;
@@ -138,6 +139,8 @@ namespace SearchMap.Windows.UIComponents {
             if(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
                 Node.OnClick();
             }
+
+            MainWindow.Window.Selected = this;
 
         }
 

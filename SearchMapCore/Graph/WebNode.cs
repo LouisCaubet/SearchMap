@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SearchMapCore.Serialization;
+using System;
 
 namespace SearchMapCore.Graph {
 
+    [Serializable]
     public class WebNode : Node {
 
         public Uri Uri { get; set; }
@@ -17,6 +20,22 @@ namespace SearchMapCore.Graph {
             }
 
             // Save HTML to file in SMP archive
+
+        }
+
+        public WebNode(Graph graph, SerializableWebNode toDuplicate) : this(graph, toDuplicate.Uri, "") {
+
+            AssociatedFile = toDuplicate.AssociatedFile;
+            BorderColor = toDuplicate.BorderColor;
+            Color = toDuplicate.Color;
+            Comment = toDuplicate.Comment;
+            Icon = toDuplicate.Icon;
+            Title = toDuplicate.Title;
+
+            MoveTo(toDuplicate.Location);
+            Resize(toDuplicate.Width, toDuplicate.Height);
+
+            graph.Refresh();
 
         }
 
