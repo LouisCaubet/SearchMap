@@ -4,7 +4,6 @@ using System;
 
 namespace SearchMapCore.Graph {
 
-    [Serializable]
     public class WebNode : Node {
 
         public Uri Uri { get; set; }

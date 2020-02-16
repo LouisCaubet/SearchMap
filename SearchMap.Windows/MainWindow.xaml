@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SearchMap.Windows"
+        xmlns:t="clr-namespace:SearchMap.Windows.Localization"
         xmlns:Fluent="urn:fluent-ribbon"
                      mc:Ignorable="d"
         Title="SearchMap" Height="1080" Width="1920">
@@ -25,14 +26,14 @@
                                                  Foreground="BlueViolet"
                                                  TabItemMouseOverForeground="BlueViolet"
                                                  TabItemSelectedMouseOverForeground="Blue"
-                                                 Header="NODE"
+                                                 Header="{t:Translate Key=Node_ContextualGroup_Header}"
                                                  Visibility="Visible" />
 
                 <Fluent:RibbonContextualTabGroup x:Name="connection_tools"
                                                  BorderBrush="Green"
                                                  Background="LightGreen"
                                                  Foreground="Green"
-                                                 Header="CONNECTIONS"
+                                                 Header="{t:Translate Key=Connections_ContextualGroup_Header}"
                                                  Visibility="Visible" />
 
             </Fluent:Ribbon.ContextualGroups>
@@ -53,49 +54,326 @@
 
             <!--Backstage-->
             <Fluent:Ribbon.Menu>
-                <Fluent:Backstage x:Name="RibbonBackstage">
+                <Fluent:Backstage x:Name="RibbonBackstage" Header="{t:Translate Key=Backstage_RibbonTab}">
                 </Fluent:Backstage>
             </Fluent:Ribbon.Menu>
             
             
 
             <!--Tabs-->
-            <Fluent:RibbonTabItem Header="Home" x:Name="RibbonTabHome">
-                <Fluent:RibbonGroupBox Header="Group">
-                    <Fluent:Button Header="Green" />
-                    <!-- "Resource-Path to your small icon for this button"
-                           LargeIcon="Resource-Path to your large icon for this button" -->
-                    <Fluent:Button Header="Grey"  />
-                    <!-- ="Resource-Path to your small icon for this button"
-                           LargeIcon="Resource-Path to your large icon for this button" /> -->
+            <Fluent:RibbonTabItem Header="{t:Translate Key=Home_RibbonTab}" x:Name="RibbonTabHome">
+                
+                <Fluent:RibbonGroupBox Header="{t:Translate Key=Home_ClipboardGroup}" >
+
+                    <Fluent:Button Header="Paste" 
+                                   Icon="{DynamicResource Fluent.Ribbon.Images.Paste}" 
+                                   LargeIcon="{DynamicResource Fluent.Ribbon.Images.Paste}"
+                                   KeyTip="V" 
+                                   Command="" 
+                                   SizeDefinition="Large"  
+                                   Margin="5, 5, 20, 0"/>
+
+                    <Fluent:Button x:Name="cutButton"
+                                   KeyTip="X"
+                                   Header="Cut"
+                                   Icon="{DynamicResource Fluent.Ribbon.Images.Cut}"
+                                   SizeDefinition="Middle,Small"
+                                   Command=""
+                                   FocusManager.IsFocusScope="True"
+                                   Margin="0, 10, 0, 0" >
+                        
+                    </Fluent:Button>
+                    <Fluent:Button x:Name="copyButton"
+                                   KeyTip="C"
+                                   Header="Copy"
+                                   Icon="{DynamicResource Fluent.Ribbon.Images.Copy}"
+                                   Command=""
+                                   FocusManager.IsFocusScope="True"
+                                   Margin="0, 0, 0, 0">
+                        
+                        <Fluent:Button.SizeDefinition>
+                            <Fluent:RibbonControlSizeDefinition Large="Middle"
+                                                                Middle="Small" />
+                        </Fluent:Button.SizeDefinition>
+                        <Fluent:Button.ToolTip>
+                            <Fluent:ScreenTip Title="Insert Chart"
+                                              DisableReason="Disable reason reason." />
+                        </Fluent:Button.ToolTip>
+                    </Fluent:Button>
+
                 </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
 
-            <Fluent:RibbonTabItem Header="Insert" x:Name="RibbonTabInsert">
+                <Fluent:RibbonGroupBox Header="Nodes">
 
-            </Fluent:RibbonTabItem>
+                    <Fluent:Button Header="New Title Node">
+                        
+                    </Fluent:Button>
 
-            <Fluent:RibbonTabItem Header="View" x:Name="RibbonTabView">
+                    <Fluent:Button Header="New Text Node">
+                        
+                    </Fluent:Button>
+                    
+                    <Fluent:Button Header="New Web Node">
+                        
+                    </Fluent:Button>
 
-            </Fluent:RibbonTabItem>
+                    <Fluent:Button Header="New File Node">
+                        
+                    </Fluent:Button>
+                    
+                </Fluent:RibbonGroupBox>
 
-            <Fluent:RibbonTabItem Header="Export" x:Name="RibbonTabExport">
+                <Fluent:RibbonGroupBox Header="Connections">
 
-            </Fluent:RibbonTabItem>
+                    <Fluent:SplitButton Header="Create connection between nodes">
+                        
+                    </Fluent:SplitButton>
+                    
+                </Fluent:RibbonGroupBox>
+                
+                <Fluent:RibbonGroupBox Header="Editing Mode">
+                    
+                    <Fluent:ToggleButton Header="Normal">
+                        
+                    </Fluent:ToggleButton>
 
-            <Fluent:RibbonTabItem Header="Account" x:Name="RibbonTabAccount">
+                    <Fluent:ToggleButton Header="Move">
+                        
+                    </Fluent:ToggleButton>
 
-            </Fluent:RibbonTabItem>
+                    <Fluent:ToggleButton Header="Re-parent">
+                        
+                    </Fluent:ToggleButton>
+                    
+                </Fluent:RibbonGroupBox>
 
-            <Fluent:RibbonTabItem Header="Help" x:Name="RibbonTabHelp">
+                <Fluent:RibbonGroupBox Header="Collaboration">
 
-            </Fluent:RibbonTabItem>
+                    <Fluent:Button Header="About Collaboration in SearchMap">
+                        
+                    </Fluent:Button>
+                    
+                    <Fluent:Button Header="Share">
+                        
+                    </Fluent:Button>
 
-            <Fluent:RibbonTabItem Header="Web Node Tools" Group="{Binding Source={x:Reference node_tools}}" x:Name="RibbonTabWebNode" Visibility="Visible" >
+                    <Fluent:Button Header="My Account">
+                        
+                    </Fluent:Button>
+                    
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Web Browsers">
+
+                    <Fluent:Button Header="SearchMap Web Plugin Settings">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Open Browser">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Refresh">
+                        
+                    </Fluent:Button>
+                    
+                </Fluent:RibbonGroupBox>
                 
             </Fluent:RibbonTabItem>
 
-            <Fluent:RibbonTabItem Header="     Customize     " Group="{Binding Source={x:Reference connection_tools}}" x:Name="RibbonTabConnection" Visibility="Visible">
+            <Fluent:RibbonTabItem Header="{t:Translate Key=Insert_RibbonTab}" x:Name="RibbonTabInsert">
+
+                <Fluent:RibbonGroupBox Header="Nodes">
+
+                    <Fluent:Button Header="Title Node">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Text Node">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Web Node">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="File Node">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Custom Source Node">
+                        
+                    </Fluent:Button>
+                    
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Connections">
+
+                    <Fluent:ToggleButton Header="New Connection">
+                        
+                    </Fluent:ToggleButton>
+
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Comments">
+
+                    <Fluent:Button Header="Add Comment">
+                        
+                    </Fluent:Button>
+                    
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="External Sources">
+
+                    <Fluent:Button Header="Import BibTeX References">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Add reference manually">
+                        
+                    </Fluent:Button>
+                    
+                </Fluent:RibbonGroupBox>
+
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="{t:Translate Key=View_RibbonTab}" x:Name="RibbonTabView">
+
+                <Fluent:RibbonGroupBox Header="Presentation Style">
+
+                    <Fluent:Button Header="Graph">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="List">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:ToggleButton Header="Show secondary connections">
+                        
+                    </Fluent:ToggleButton>
+                    
+                </Fluent:RibbonGroupBox>
+                
+                <Fluent:RibbonGroupBox Header="Zoom Level">
+
+                    <Fluent:Button Header="Zoom on one node">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Zoom on node and neighbours">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="See whole graph">
+                        
+                    </Fluent:Button>
+                    
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Show">
+
+                    <Fluent:ToggleButton Header="Grid">
+                        
+                    </Fluent:ToggleButton>
+
+                    <Fluent:ToggleButton Header="Comments">
+                        
+                    </Fluent:ToggleButton>
+                    
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Light/Dark Mode">
+
+                    <Fluent:ToggleButton Header="Light Mode">
+                        
+                    </Fluent:ToggleButton>
+
+                    <Fluent:ToggleButton Header="Dark Mode">
+                        
+                    </Fluent:ToggleButton>
+                    
+                </Fluent:RibbonGroupBox>
+                
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="{t:Translate Key=Export_RibbonTab}" x:Name="RibbonTabExport">
+
+                <Fluent:RibbonGroupBox Header="Configure">
+
+                    <Fluent:Button Header="Choose what to include">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Layout">
+                        
+                    </Fluent:Button>
+                    
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="PDF">
+
+                    <Fluent:Button Header="Export to PDF">
+                        
+                    </Fluent:Button>
+                    
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Document">
+
+                    <Fluent:Button Header="Add to existing document">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Save in new document">
+                        
+                    </Fluent:Button>
+                    
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="LaTeX">
+
+                    <Fluent:Button Header="Add to existing document">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Create BibTeX bibliography">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Save in new document">
+                        
+                    </Fluent:Button>
+
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Online">
+
+                    <Fluent:Button Header="Share with link">
+                        
+                    </Fluent:Button>
+
+                    <Fluent:Button Header="Embed in website">
+                        
+                    </Fluent:Button>
+                    
+                </Fluent:RibbonGroupBox>
+                
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="{t:Translate Key=Account_RibbonTab}" x:Name="RibbonTabAccount">
+
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="{t:Translate Key=Help_RibbonTab}" x:Name="RibbonTabHelp">
+
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="{t:Translate Key=WebNode_RibbonTab}" Group="{Binding Source={x:Reference node_tools}}" x:Name="RibbonTabWebNode" Visibility="Visible" >
+                
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="{t:Translate Key=CustomizeConnection_RibbonTab}" Group="{Binding Source={x:Reference connection_tools}}" x:Name="RibbonTabConnection" Visibility="Visible">
                 
             </Fluent:RibbonTabItem>
 

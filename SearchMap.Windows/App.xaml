@@ -10,7 +10,7 @@
                 
                 <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Fluent;component/Themes/Themes/Light.Red.xaml" />
-                
+
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>

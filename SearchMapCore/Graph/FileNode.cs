@@ -4,7 +4,6 @@ using System.Text;
 
 namespace SearchMapCore.Graph {
 
-    [Serializable]
     public class FileNode : Node {
 
         public string File { get; private set; }

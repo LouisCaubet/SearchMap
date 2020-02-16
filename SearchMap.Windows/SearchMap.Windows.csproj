@@ -74,6 +74,12 @@
     <Compile Include="Events\ConnectionControl_Events.cs" />
     <Compile Include="Events\MainWindow_Events.cs" />
     <Compile Include="Events\WebNodeControl_Events.cs" />
+    <Compile Include="Localization\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\TranslateExtension.cs" />
     <Compile Include="Rendering\GraphRenderer.cs" />
     <Compile Include="Rendering\Logging.cs" />
     <Compile Include="UIComponents\ConnectionControl.xaml.cs">
@@ -119,6 +125,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Localization\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
