@@ -1,0 +1,81 @@
+﻿<Fluent:RibbonTabItem xmlns:Fluent="urn:fluent-ribbon" 
+                      x:Class="SearchMap.Windows.UIComponents.RibbonExportTab"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                      xmlns:local="clr-namespace:SearchMap.Windows.UIComponents"
+                      xmlns:t="clr-namespace:SearchMap.Windows.Localization"
+                      mc:Ignorable="d" 
+                      d:DesignHeight="450" d:DesignWidth="800"
+                      Header="{t:Translate Key=Export_RibbonTab}">
+
+    <Fluent:RibbonGroupBox Header="Configure">
+
+        <Fluent:Button Header="Choose what to include">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="Layout">
+
+        </Fluent:Button>
+
+    </Fluent:RibbonGroupBox>
+
+    <Fluent:RibbonGroupBox Header="PDF">
+
+        <Fluent:Button Header="Export to PDF">
+
+        </Fluent:Button>
+
+    </Fluent:RibbonGroupBox>
+
+    <Fluent:RibbonGroupBox Header="Image">
+
+        <Fluent:Button Header="Export to JPG Image">
+            
+        </Fluent:Button>
+        
+    </Fluent:RibbonGroupBox>
+
+    <Fluent:RibbonGroupBox Header="Document">
+
+        <Fluent:Button Header="Add to existing document">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="Save in new document">
+
+        </Fluent:Button>
+
+    </Fluent:RibbonGroupBox>
+
+    <Fluent:RibbonGroupBox Header="LaTeX">
+
+        <Fluent:Button Header="Add to existing document">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="Create BibTeX bibliography">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="Save in new document">
+
+        </Fluent:Button>
+
+    </Fluent:RibbonGroupBox>
+
+    <Fluent:RibbonGroupBox Header="Online">
+
+        <Fluent:Button Header="Share with link">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="Embed in website">
+
+        </Fluent:Button>
+
+    </Fluent:RibbonGroupBox>
+
+</Fluent:RibbonTabItem>

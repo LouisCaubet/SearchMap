@@ -85,6 +85,30 @@
     <Compile Include="UIComponents\ConnectionControl.xaml.cs">
       <DependentUpon>ConnectionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIComponents\RibbonAccountTab.xaml.cs">
+      <DependentUpon>RibbonAccountTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\RibbonCustomizeConnTab.xaml.cs">
+      <DependentUpon>RibbonCustomizeConnTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\RibbonExportTab.xaml.cs">
+      <DependentUpon>RibbonExportTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\RibbonHelpTab.xaml.cs">
+      <DependentUpon>RibbonHelpTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\RibbonHomeTab.xaml.cs">
+      <DependentUpon>RibbonHomeTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\RibbonInsertTab.xaml.cs">
+      <DependentUpon>RibbonInsertTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\RibbonViewTab.xaml.cs">
+      <DependentUpon>RibbonViewTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\RibbonWebNodeTab.xaml.cs">
+      <DependentUpon>RibbonWebNodeTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\WebNodeControl.xaml.cs">
       <DependentUpon>WebNodeControl.xaml</DependentUpon>
     </Compile>
@@ -103,6 +127,38 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UIComponents\ConnectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\RibbonAccountTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\RibbonCustomizeConnTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\RibbonExportTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\RibbonHelpTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\RibbonHomeTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\RibbonInsertTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\RibbonViewTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\RibbonWebNodeTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

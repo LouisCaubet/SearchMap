@@ -1,0 +1,128 @@
+﻿<Fluent:RibbonTabItem xmlns:Fluent="urn:fluent-ribbon" x:Class="SearchMap.Windows.UIComponents.RibbonHomeTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SearchMap.Windows.UIComponents"
+             xmlns:t="clr-namespace:SearchMap.Windows.Localization"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Header="{t:Translate Key=Home_RibbonTab}">
+
+    <Fluent:RibbonGroupBox Header="{t:Translate Key=Home_ClipboardGroup}" >
+
+        <Fluent:Button Header="Paste" 
+                                   Icon="{DynamicResource Fluent.Ribbon.Images.Paste}" 
+                                   LargeIcon="{DynamicResource Fluent.Ribbon.Images.Paste}"
+                                   KeyTip="V" 
+                                   Command="" 
+                                   SizeDefinition="Large"  
+                                   Margin="5, 5, 20, 0"/>
+
+        <Fluent:Button x:Name="cutButton"
+                                   KeyTip="X"
+                                   Header="Cut"
+                                   Icon="{DynamicResource Fluent.Ribbon.Images.Cut}"
+                                   SizeDefinition="Middle,Small"
+                                   Command=""
+                                   FocusManager.IsFocusScope="True"
+                                   Margin="0, 10, 0, 0" >
+
+        </Fluent:Button>
+        <Fluent:Button x:Name="copyButton"
+                                   KeyTip="C"
+                                   Header="Copy"
+                                   Icon="{DynamicResource Fluent.Ribbon.Images.Copy}"
+                                   Command=""
+                                   FocusManager.IsFocusScope="True"
+                                   Margin="0, 0, 0, 0">
+
+            <Fluent:Button.SizeDefinition>
+                <Fluent:RibbonControlSizeDefinition Large="Middle"
+                                                                Middle="Small" />
+            </Fluent:Button.SizeDefinition>
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip Title="Insert Chart"
+                                              DisableReason="Disable reason reason." />
+            </Fluent:Button.ToolTip>
+        </Fluent:Button>
+
+    </Fluent:RibbonGroupBox>
+
+    <Fluent:RibbonGroupBox Header="Nodes">
+
+        <Fluent:Button Header="New Title Node">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="New Text Node">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="New Web Node">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="New File Node">
+
+        </Fluent:Button>
+
+    </Fluent:RibbonGroupBox>
+
+    <Fluent:RibbonGroupBox Header="Connections">
+
+        <Fluent:SplitButton Header="Create connection between nodes">
+
+        </Fluent:SplitButton>
+
+    </Fluent:RibbonGroupBox>
+
+    <Fluent:RibbonGroupBox Header="Editing Mode">
+
+        <Fluent:ToggleButton Header="Normal">
+
+        </Fluent:ToggleButton>
+
+        <Fluent:ToggleButton Header="Move">
+
+        </Fluent:ToggleButton>
+
+        <Fluent:ToggleButton Header="Re-parent">
+
+        </Fluent:ToggleButton>
+
+    </Fluent:RibbonGroupBox>
+
+    <Fluent:RibbonGroupBox Header="Collaboration">
+
+        <Fluent:Button Header="About Collaboration in SearchMap">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="Share">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="My Account">
+
+        </Fluent:Button>
+
+    </Fluent:RibbonGroupBox>
+
+    <Fluent:RibbonGroupBox Header="Web Browsers">
+
+        <Fluent:Button Header="SearchMap Web Plugin Settings">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="Open Browser">
+
+        </Fluent:Button>
+
+        <Fluent:Button Header="Refresh">
+
+        </Fluent:Button>
+
+    </Fluent:RibbonGroupBox>
+
+</Fluent:RibbonTabItem>
