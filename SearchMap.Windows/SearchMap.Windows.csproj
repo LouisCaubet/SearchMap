@@ -205,7 +205,9 @@
       <Name>SearchMapCore</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Placeholder.png" />
   </ItemGroup>

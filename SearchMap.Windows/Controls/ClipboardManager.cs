@@ -43,6 +43,11 @@ namespace SearchMap.Windows.Controls {
 
         }
 
+        // Is there something to paste
+        public static bool ClipboardContainsNode() {
+            return Clipboard.ContainsData(WEBNODE_FORMAT);
+        }
+
         // Pasting from Clipboard
         public static void Paste(Point? point = null) {
 
@@ -53,13 +58,14 @@ namespace SearchMap.Windows.Controls {
                     var node = JsonConvert.DeserializeObject<SerializableWebNode>(
                         (string)Clipboard.GetData(WEBNODE_FORMAT));
 
+                    if (point.HasValue) {
+                        node.Location = MainWindow.Window.ConvertToLocation(point.Value);
+                    }
+
                     // Regenerate new node to get Unique Id
                     WebNode newnode = new WebNode(SearchMapCore.SearchMapCore.Graph, node);
                     // New node is rendered by constructor (see WebNode.cs)
 
-                    if (point.HasValue) {
-                        newnode.MoveTo(MainWindow.Window.ConvertToLocation(point.Value));
-                    }
 
                 }
                 catch (InvalidCastException exc) {

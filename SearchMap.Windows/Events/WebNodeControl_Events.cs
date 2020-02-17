@@ -141,6 +141,7 @@ namespace SearchMap.Windows.UIComponents {
             }
 
             MainWindow.Window.Selected = this;
+            MainWindow.Window.LastClickedPoint = null;
 
         }
 

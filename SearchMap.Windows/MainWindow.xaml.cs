@@ -31,6 +31,11 @@ namespace SearchMap.Windows {
         /// </summary>
         internal UserControl Selected { get; set; }
 
+        /// <summary>
+        /// Indicates where to paste node.
+        /// </summary>
+        internal Point? LastClickedPoint { get; set; }
+
         // Move by dragging
         Point? lastCenterPositionOnTarget;
         Point? lastMousePositionOnTarget;
@@ -54,7 +59,6 @@ namespace SearchMap.Windows {
 
             // Hide ScrollView when no project is opened - disabled for testing
             // ScrollView.Visibility = Visibility.Hidden;
-
             
         }
 
@@ -77,6 +81,9 @@ namespace SearchMap.Windows {
 
             MinWidth = Width / 3;
             MinHeight = Height / 3;
+
+            // Register Commands
+            RibbonTabHome.RegisterCommands();
 
         }
 

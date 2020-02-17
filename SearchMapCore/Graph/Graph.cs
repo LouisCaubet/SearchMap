@@ -98,6 +98,16 @@ namespace SearchMapCore.Graph {
 
             SearchMapCore.Clipboard.CtrlZ.Push(new Snapshot(this));
 
+            if (id == RootNode.Id) {
+                var children = RootNode.GetChildren();
+                if(children.Length > 0) {
+                    RootNode = children[0];
+                }
+                else {
+                    RootNode = null;
+                }
+            }
+
             // Call deleting code of node
             Nodes[id].Internal_DeleteNode();
             
@@ -205,7 +215,9 @@ namespace SearchMapCore.Graph {
             Renderer = renderer;
             IsDisplayed = true;
             Renderer.SetDrawingZoneSize(Width, Height);
-            RootNode.Render();
+
+            if(RootNode != null) RootNode.Render();
+
         }
 
         /// <summary>
@@ -233,7 +245,7 @@ namespace SearchMapCore.Graph {
         /// Call to re-render the graph.
         /// </summary>
         public void Refresh() {
-            RootNode.Refresh();
+            if(RootNode != null) RootNode.Refresh();
         }
 
         // Called when graph is loaded from file

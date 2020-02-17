@@ -63,6 +63,7 @@ namespace SearchMap.Windows {
                 Selected = null;
                 ScrollView.Cursor = Cursors.SizeAll;
                 lastDragPoint = mousePos;
+                LastClickedPoint = e.GetPosition(GraphCanvas);
                 Mouse.Capture(ScrollView);
             }
         }
@@ -141,7 +142,7 @@ namespace SearchMap.Windows {
                     }
                 }
                 else if(e.Key == Key.V) {
-                    ClipboardManager.Paste();
+                    ClipboardManager.Paste(LastClickedPoint);
                 }
 
             }

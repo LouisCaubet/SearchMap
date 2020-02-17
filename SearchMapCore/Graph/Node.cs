@@ -59,6 +59,8 @@ namespace SearchMapCore.Graph {
             // Default location
             Location = new Location(0, 0);
 
+            ConnectionsToSiblings = new Dictionary<int, Connection>();
+
         }
 
         /// <summary>
@@ -178,17 +180,24 @@ namespace SearchMapCore.Graph {
             // Argument checks
             if (parent == null) {
                 ParentId = -1;
-                return;
+            }
+            else {
+
+                // Remove this from parent children - no public function for this, should only be done through SetParent
+                if (GetParent() != null) GetParent().ChildrenIds.Remove(this.Id);
+
+                // Reparent
+                ParentId = parent.Id;
+
+                // Add to new parent children
+                parent.ChildrenIds.Add(this.Id);
+
             }
 
-            // Remove this from parent children - no public function for this, should only be done through SetParent
-            if (parent != null) parent.ChildrenIds.Remove(this.Id);
-
-            // Reparent
-            ParentId = parent.Id;
-
-            // Add to new parent children
-            parent.ChildrenIds.Add(this.Id);
+            // Delete previous connection to parent
+            if (graph.IsDisplayed && ConnectionToParent != null) {
+                graph.Renderer.DeleteObject(ConnectionToParent.RenderId);
+            }
 
             // Render changes.
             Refresh();
@@ -254,7 +263,8 @@ namespace SearchMapCore.Graph {
 
             // Connect childs to parent
             foreach(int child_id in c_ids) {
-                graph.Nodes[child_id].SetParent(graph.Nodes[p_id]);
+                if(p_id == -1) graph.Nodes[child_id].SetParent(null);
+                else graph.Nodes[child_id].SetParent(graph.Nodes[p_id]);
             }
 
             // Disconnect siblings
@@ -262,7 +272,17 @@ namespace SearchMapCore.Graph {
                 RemoveSibling(s_id);
             }
 
-            // Rendering of changes done in Graph.
+            // Render Changes
+            if (graph.IsDisplayed) {
+
+                graph.Renderer.DeleteObject(RenderId);
+                if(ConnectionToParent != null) graph.Renderer.DeleteObject(ConnectionToParent.RenderId);
+
+                foreach(var conn in ConnectionsToSiblings.Values) {
+                    graph.Renderer.DeleteObject(conn.RenderId);
+                }
+
+            }
 
         }
 

@@ -32,6 +32,10 @@ namespace SearchMapCore.Graph {
             y += v.y;
         }
 
+        public override string ToString() {
+            return "Location X=" + x + "; Y=" + y;
+        }
+
     }   
 
     public class Vector {
