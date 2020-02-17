@@ -18,18 +18,29 @@
                        KeyTip="V" 
                        SizeDefinition="Large"
                        FocusManager.IsFocusScope="True"
-                       Margin="5, 5, 20, 0" />
+                       Margin="5, 5, 20, 0">
+
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip Title="Paste (Ctrl+V)" Text="Pastes the content of the clipboard." DisableReason="Clipboard is empty"/>
+            </Fluent:Button.ToolTip>
+            
+        </Fluent:Button>
 
         <Fluent:Button x:Name="CutButton"
-                                   KeyTip="X"
-                                   Header="Cut"
-                                   Icon="{DynamicResource Fluent.Ribbon.Images.Cut}"
-                                   SizeDefinition="Middle,Small"
-                                   Command=""
-                                   FocusManager.IsFocusScope="True"
-                                   Margin="0, 10, 0, 0" >
+                                KeyTip="X"
+                                Header="Cut"
+                                Icon="{DynamicResource Fluent.Ribbon.Images.Cut}"
+                                SizeDefinition="Middle,Small"
+                                Command=""
+                                FocusManager.IsFocusScope="True"
+                                Margin="0, 10, 0, 0" >
 
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip Title="Cut (Ctrl+X)" Text="Cuts the selection to the clipboard." />
+            </Fluent:Button.ToolTip>
+            
         </Fluent:Button>
+        
         <Fluent:Button x:Name="CopyButton"
                        KeyTip="C"
                        Header="Copy"
@@ -38,12 +49,11 @@
                        Margin="0, 0, 0, 0">
 
             <Fluent:Button.SizeDefinition>
-                <Fluent:RibbonControlSizeDefinition Large="Middle"
-                                                                Middle="Small" />
+                <Fluent:RibbonControlSizeDefinition Large="Middle" Middle="Small" />
             </Fluent:Button.SizeDefinition>
+            
             <Fluent:Button.ToolTip>
-                <Fluent:ScreenTip Title="Insert Chart"
-                                              DisableReason="Disable reason reason." />
+                <Fluent:ScreenTip Title="Copy (Ctrl+C)" Text="Copies the selection to the clipboard." />
             </Fluent:Button.ToolTip>
         </Fluent:Button>
 

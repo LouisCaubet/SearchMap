@@ -1,5 +1,6 @@
 ﻿using SearchMapCore.Graph;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,6 +20,8 @@ namespace SearchMap.Windows.UIComponents {
             PreviewMouseRightButtonDown += OnMouseRightButtonDown;
             MouseMove += OnMouseMove;
 
+            RegisterScrollManager();
+
             // Editing
             TitleBox.TextChanged += OnTitleChanged;
             CommentBox.TextChanged += OnCommentChanged;
@@ -33,10 +36,66 @@ namespace SearchMap.Windows.UIComponents {
 
 
         // Move by drag and drop
+
+        // Scrolls the view when the node is dragged out of sight.
+        #region ScrollWhenOutOfBounds
+
+        private const int STEP = 5;
+
+        private enum ScrollAction {
+            TOP,
+            BOTTOM,
+            RIGHT,
+            LEFT
+        }
+
+        private ScrollAction? QueuedAction;
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Qualité du code", "IDE0052:Supprimer les membres privés non lus", 
+            Justification = "Timer stored here to prevent destruction by GC.")]
+        private Timer CooldownTimer;
+
+        private void RegisterScrollManager() {
+
+            CooldownTimer = new Timer(delegate {
+                
+                if (QueuedAction.HasValue) {
+                    var action = QueuedAction.Value;
+
+                    Console.WriteLine("Action invoked");
+
+                    if (action == ScrollAction.LEFT) {
+                        MainWindow.Window.Dispatcher.Invoke(delegate {
+                            MainWindow.Window.ScrollView.ScrollToHorizontalOffset(MainWindow.Window.ScrollView.HorizontalOffset - STEP);
+                        });                        
+                    }
+                    else if (action == ScrollAction.RIGHT) {
+                        MainWindow.Window.Dispatcher.Invoke(delegate {
+                            MainWindow.Window.ScrollView.ScrollToHorizontalOffset(MainWindow.Window.ScrollView.HorizontalOffset + STEP);
+                        });                        
+                    }
+                    else if (action == ScrollAction.TOP) {
+                        MainWindow.Window.Dispatcher.Invoke(delegate {
+                            MainWindow.Window.ScrollView.ScrollToVerticalOffset(MainWindow.Window.ScrollView.VerticalOffset - STEP);
+                        });                        
+                    }
+                    else if (action == ScrollAction.BOTTOM) {
+                        MainWindow.Window.Dispatcher.Invoke(delegate {
+                            MainWindow.Window.ScrollView.ScrollToVerticalOffset(MainWindow.Window.ScrollView.VerticalOffset + STEP);
+                        });                        
+                    }
+                }
+
+            }, null, TimeSpan.FromMilliseconds(100), TimeSpan.FromMilliseconds(10));
+
+        }
+
+        #endregion ScrollWhenOutOfBounds
+
         #region MoveByDragDrop
 
         private bool IsRightClickDown = false;
-
+        
         void OnMouseRightButtonDown(object sender, MouseButtonEventArgs args) {
 
             ContextMenu.IsOpen = false;
@@ -87,6 +146,7 @@ namespace SearchMap.Windows.UIComponents {
         void OnMouseRightButtonUp(object sender, MouseButtonEventArgs e) {
 
             IsRightClickDown = false;
+            QueuedAction = null;
 
             this.Cursor = Cursors.Arrow;
             this.ReleaseMouseCapture();
@@ -113,6 +173,26 @@ namespace SearchMap.Windows.UIComponents {
                 Location newLoc = new Location(topLeft.x + Node.Width / 2, topLeft.y + Node.Height / 2);
 
                 Node.MoveTo(newLoc, false);
+
+                // Scroll if border is reached
+                Point relativeToScrollView = e.GetPosition(MainWindow.Window.ScrollView);
+
+                if (relativeToScrollView.X <= 20) {
+                    Console.WriteLine("ScrollAction LEFT added to queue");
+                    QueuedAction = ScrollAction.LEFT;
+                }
+                else if (relativeToScrollView.X >= MainWindow.Window.ScrollView.ActualWidth - 20) {
+                    QueuedAction = ScrollAction.RIGHT;
+                }
+
+                if (relativeToScrollView.Y <= 20) {
+                    QueuedAction = ScrollAction.TOP;
+                }
+                else if (relativeToScrollView.Y >= MainWindow.Window.ScrollView.ActualHeight - 20) {
+                    QueuedAction = ScrollAction.BOTTOM;
+                }
+
+                
 
             }
         }

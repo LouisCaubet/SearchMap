@@ -50,7 +50,7 @@
         <!-- TODO -->
     </Fluent:RibbonGroupBox>
 
-    <Fluent:RibbonGroupBox Header="">
+    <Fluent:RibbonGroupBox Header="Delete">
 
         <Fluent:Button Header="Delete">
             
