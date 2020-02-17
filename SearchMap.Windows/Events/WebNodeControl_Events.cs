@@ -62,8 +62,6 @@ namespace SearchMap.Windows.UIComponents {
                 if (QueuedAction.HasValue) {
                     var action = QueuedAction.Value;
 
-                    Console.WriteLine("Action invoked");
-
                     if (action == ScrollAction.LEFT) {
                         MainWindow.Window.Dispatcher.Invoke(delegate {
                             MainWindow.Window.ScrollView.ScrollToHorizontalOffset(MainWindow.Window.ScrollView.HorizontalOffset - STEP);
@@ -178,7 +176,6 @@ namespace SearchMap.Windows.UIComponents {
                 Point relativeToScrollView = e.GetPosition(MainWindow.Window.ScrollView);
 
                 if (relativeToScrollView.X <= 20) {
-                    Console.WriteLine("ScrollAction LEFT added to queue");
                     QueuedAction = ScrollAction.LEFT;
                 }
                 else if (relativeToScrollView.X >= MainWindow.Window.ScrollView.ActualWidth - 20) {
