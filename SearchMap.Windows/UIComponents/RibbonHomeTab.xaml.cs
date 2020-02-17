@@ -72,8 +72,11 @@ namespace SearchMap.Windows.UIComponents {
         }
 
         void Copy_Execute(object sender, ExecutedRoutedEventArgs e) {
-            if (Keyboard.FocusedElement.GetType() == typeof(System.Windows.Controls.TextBox)) {
+            if (Keyboard.FocusedElement.GetType() == typeof(System.Windows.Controls.TextBox)
+                && ((System.Windows.Controls.TextBox)Keyboard.FocusedElement).SelectedText != "") {
+
                 ApplicationCommands.Copy.Execute(e.Parameter, Keyboard.FocusedElement);
+
             }
             else {
                 ClipboardManager.CopyToClipboard(MainWindow.Window.Selected);

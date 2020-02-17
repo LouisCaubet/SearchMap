@@ -18,9 +18,6 @@ namespace SearchMap.Windows.UIComponents {
         /// </summary>
         public WebNode Node { get; }
 
-        // For drag and drop
-        Point? lastDragPoint;
-
         public WebNodeControl(WebNode node) {
             InitializeComponent();
 

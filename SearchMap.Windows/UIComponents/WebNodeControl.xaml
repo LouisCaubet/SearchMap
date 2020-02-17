@@ -37,7 +37,7 @@
                     <RowDefinition Height="70*"/>
                 </Grid.RowDefinitions>
 
-                <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Source="../Resources/Placeholder.png" Stretch="Uniform" />
+                <Image x:Name="Icon" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Source="../Resources/Placeholder.png" Stretch="Uniform" />
 
                 <TextBox x:Name="TitleBox" Text="Welcome to SearchMap" Grid.Column="1" Grid.Row="0" Background="Transparent" FontSize="24" FontWeight="Black"
                          VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="0" IsReadOnly="False"/>

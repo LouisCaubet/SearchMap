@@ -73,6 +73,7 @@
     <Compile Include="Controls\ClipboardManager.cs" />
     <Compile Include="Events\ConnectionControl_Events.cs" />
     <Compile Include="Events\MainWindow_Events.cs" />
+    <Compile Include="Events\NodeControl_Events.cs" />
     <Compile Include="Events\WebNodeControl_Events.cs" />
     <Compile Include="Localization\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
