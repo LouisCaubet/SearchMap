@@ -21,7 +21,7 @@
                 BorderThickness="8" Background="AliceBlue">
 
             <Border.Effect>
-                <DropShadowEffect/>
+                <DropShadowEffect x:Name="Shadow" />
             </Border.Effect>
 
             <Grid x:Name="PlacementGrid">

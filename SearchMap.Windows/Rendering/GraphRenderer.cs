@@ -143,7 +143,8 @@ namespace SearchMap.Windows.Rendering {
                 }
 
             }
-            catch (Exception) {
+            catch (Exception e) {
+                Console.WriteLine(e.StackTrace);
                 throw new ArgumentException("The id " + renderId + " is not the id of a renderer object corresponding to a node.");
             }
             

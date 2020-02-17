@@ -1,4 +1,5 @@
-﻿using SearchMapCore.Graph;
+﻿using SearchMap.Windows.Rendering;
+using SearchMapCore.Graph;
 using System;
 using System.Threading;
 using System.Windows;
@@ -120,9 +121,14 @@ namespace SearchMap.Windows.Events {
 
                             // Show on top
                             Panel.SetZIndex(Control, 20);
+
+                            // Call reparent code
+                            OnMoveStarted();
+
                         });
 
                         ShouldContextMenuBeOpened = false;
+                        
 
                     }
                     else {
@@ -152,6 +158,8 @@ namespace SearchMap.Windows.Events {
             Control.Cursor = Cursors.Arrow;
             Control.ReleaseMouseCapture();
             lastDragPoint = null;
+
+            OnMoveStop();
 
             // Put back on normal level
             Panel.SetZIndex(Control, 10);
@@ -192,13 +200,142 @@ namespace SearchMap.Windows.Events {
                     QueuedAction = ScrollAction.BOTTOM;
                 }
 
-
+                // Call reparent check
+                OnMove(e.GetPosition(MainWindow.Window.GraphCanvas));
 
             }
         }
 
         // TODO allow move with left-click when edit mode is move.
         // End of drag-and-drop handling
+
+        #endregion
+
+        #region Reparent
+
+        Node PotentialNewParent;
+        UserControl PotentialNewParentControl;
+
+        Timer timer = null;
+
+        Point? LastLocationOfNodeControl;
+        Location LastLocationOfNode;
+
+        NodeSelectionAnimation Animation;
+
+        // Called once when user stars moving the node
+        void OnMoveStarted() {
+            LastLocationOfNodeControl = new Point(Canvas.GetLeft(Control), Canvas.GetTop(Control));
+            LastLocationOfNode = new Location(Node.Location);
+        }
+
+        // Called by the MouseMove Event
+        void OnMove(Point positionOnCanvas) {
+            CheckIfOverOtherNode(positionOnCanvas);
+        }
+
+        // Called when the user stops moving the node
+        void OnMoveStop() {
+
+            StopAnimation();
+
+            LastLocationOfNode = null;
+            LastLocationOfNodeControl = null;
+            PotentialNewParent = null;
+            PotentialNewParentControl = null;
+
+            timer = null;
+
+        }
+
+        // Checks if the current node is above another node
+        void CheckIfOverOtherNode(Point positionOnCanvas) {
+
+            foreach(var node in SearchMapCore.SearchMapCore.Graph.Nodes.Values) {
+
+                if (node.Id == Node.Id) continue;
+
+                var control = MainWindow.Renderer.RenderedObjects[node.RenderId];
+
+                // Check if mouse is over node
+                if (positionOnCanvas.X >= Canvas.GetLeft(control) && positionOnCanvas.X <= Canvas.GetLeft(control) + control.ActualWidth
+                    && positionOnCanvas.Y >= Canvas.GetTop(control) && positionOnCanvas.Y <= Canvas.GetTop(control) + control.ActualHeight) {
+
+                    if(PotentialNewParent != null && node.Id != PotentialNewParent.Id) StopAnimation();
+
+                    PotentialNewParent = node;
+                    PotentialNewParentControl = control;
+                    AnimateNewParent();
+                    return;
+                }
+
+            }
+
+        }
+
+        // Stops the animation if currently played.
+        void StopAnimation() {
+
+            if(timer != null) timer.Dispose();
+
+            if (Animation != null) {
+                Animation.Normal();
+                Animation = null;
+            }           
+
+        }
+
+        // Plays the selection animation on the PotentialParent
+        void AnimateNewParent() {
+
+            if (timer != null) return;
+
+            int pulses = 0;
+            Animation = new NodeSelectionAnimation(PotentialNewParentControl);
+
+            timer = new Timer(delegate {
+
+                if (Animation == null) return;
+
+                Control.Dispatcher.Invoke(delegate {
+                    Animation.Highlight();
+                });
+
+                Thread.Sleep(250);
+
+                if (Animation == null) return;
+
+                Control.Dispatcher.Invoke(delegate {
+                    Animation.Normal();
+                });
+
+                if (pulses == 5) {
+                    timer.Dispose();
+                    Control.Dispatcher.Invoke(delegate {
+                        SetNewParent();
+                    });                    
+                }
+
+                pulses++;
+
+            }, null, TimeSpan.FromMilliseconds(100), TimeSpan.FromMilliseconds(500));
+
+        }
+
+        void SetNewParent() {
+
+            // Operation was cancelled exactly when this method was called, cancel it.
+            if(LastLocationOfNode == null) {
+                return;
+            }
+
+            Node.SetParent(PotentialNewParent);
+
+            Node.MoveTo(LastLocationOfNode, false);
+            Canvas.SetLeft(Control, LastLocationOfNodeControl.Value.X);
+            Canvas.SetTop(Control, LastLocationOfNodeControl.Value.Y);
+
+        }
 
         #endregion
 

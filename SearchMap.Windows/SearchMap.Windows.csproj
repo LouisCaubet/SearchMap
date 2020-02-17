@@ -81,6 +81,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Localization\TranslateExtension.cs" />
+    <Compile Include="Rendering\NodeSelectionAnimation.cs" />
     <Compile Include="Rendering\GraphRenderer.cs" />
     <Compile Include="Rendering\Logging.cs" />
     <Compile Include="UIComponents\ConnectionControl.xaml.cs">
@@ -206,9 +207,7 @@
       <Name>SearchMapCore</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Placeholder.png" />
   </ItemGroup>

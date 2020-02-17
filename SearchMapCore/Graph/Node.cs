@@ -186,17 +186,27 @@ namespace SearchMapCore.Graph {
                 // Remove this from parent children - no public function for this, should only be done through SetParent
                 if (GetParent() != null) GetParent().ChildrenIds.Remove(this.Id);
 
-                // Reparent
-                ParentId = parent.Id;
-
                 // Add to new parent children
                 parent.ChildrenIds.Add(this.Id);
+
+                // IMPORTANT EDGE CASE : when placing one of the children as parent.
+                // In this case, we swap the nodes (we set the previous parent of this as the parent of the new parent).
+                if (ChildrenIds.Contains(parent.Id)) {
+
+                    ChildrenIds.Remove(parent.Id);
+                    parent.SetParent(GetParent());
+
+                }
+
+                // Reparent
+                ParentId = parent.Id;
 
             }
 
             // Delete previous connection to parent
             if (graph.IsDisplayed && ConnectionToParent != null) {
                 graph.Renderer.DeleteObject(ConnectionToParent.RenderId);
+                ConnectionToParent = null;
             }
 
             // Render changes.
@@ -431,15 +441,33 @@ namespace SearchMapCore.Graph {
 
                 // Re-render line to parent.
                 if(ParentId != -1) {
-                    ConnectionPlacement.RefreshConnection(graph, ConnectionToParent);
-                    graph.Renderer.RefreshCurvedLine(ConnectionToParent.RenderId);                    
+
+                    if(ConnectionToParent == null) {
+                        ConnectionToParent = ConnectionPlacement.CreateConnectionBetween(graph, this, GetParent());
+                        ConnectionToParent.RenderId = graph.Renderer.RenderCurvedLine(ConnectionToParent);
+                    }
+                    else {
+                        ConnectionPlacement.RefreshConnection(graph, ConnectionToParent);
+                        graph.Renderer.RefreshCurvedLine(ConnectionToParent.RenderId);   
+                    }
+
+                                     
                 }
 
 
                 // Re-render lines to siblings.
                 foreach (int id in SiblingsIds) {
-                    ConnectionPlacement.RefreshConnection(graph, ConnectionsToSiblings[id]);
-                    graph.Renderer.RefreshCurvedLine(ConnectionsToSiblings[id].RenderId);
+
+                    if (ConnectionsToSiblings.ContainsKey(id)) {
+                        ConnectionPlacement.RefreshConnection(graph, ConnectionsToSiblings[id]);
+                        graph.Renderer.RefreshCurvedLine(ConnectionsToSiblings[id].RenderId);
+                    }
+                    else {
+                        var conn = ConnectionPlacement.CreateConnectionBetween(graph, this, graph.Nodes[id]);
+                        conn.RenderId = graph.Renderer.RenderCurvedLine(conn);
+                        ConnectionsToSiblings.Add(id, conn);
+                    }
+
                 }               
 
 
