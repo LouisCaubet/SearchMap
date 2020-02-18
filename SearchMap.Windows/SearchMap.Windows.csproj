@@ -208,9 +208,32 @@
       <Name>SearchMapCore</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\WebNodeIcon.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\WebNodeIcon_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TitleNodeIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TextNodeIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TextNodeIcon_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TitleNodeIcon_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\FileNodeIcon_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CustomNodeIcon_small.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

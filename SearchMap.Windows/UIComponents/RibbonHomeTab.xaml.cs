@@ -1,19 +1,6 @@
 ﻿using Fluent;
 using SearchMap.Windows.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SearchMap.Windows.UIComponents {
 
@@ -22,14 +9,18 @@ namespace SearchMap.Windows.UIComponents {
     /// </summary>
     public partial class RibbonHomeTab : RibbonTabItem {
 
-        protected ICommand Paste { get; private set; }
-        protected ICommand Copy { get; private set; }
-        protected ICommand Cut { get; private set; }
+        internal ICommand Paste { get; private set; }
+        internal ICommand Copy { get; private set; }
+        internal ICommand Cut { get; private set; }
 
         public RibbonHomeTab() {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Registers commands associated with the buttons of the Ribbon Home Tab.
+        /// Must be called before any interaction with the ribbon.
+        /// </summary>
         public void RegisterCommands() {
 
             Paste = new RoutedCommand("HomeTabCommands.Paste", typeof(RibbonHomeTab));
@@ -46,8 +37,9 @@ namespace SearchMap.Windows.UIComponents {
 
         }
 
-        // Paste Button
-        #region Paste
+        // Command definitions
+
+        #region Paste Command
 
         void Paste_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = ClipboardManager.ClipboardContainsNode() || ApplicationCommands.Paste.CanExecute(e.Parameter, Keyboard.FocusedElement);
@@ -65,7 +57,7 @@ namespace SearchMap.Windows.UIComponents {
 
         #endregion Paste
 
-        #region Copy
+        #region Copy Command
 
         void Copy_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = MainWindow.Window.Selected != null || ApplicationCommands.Copy.CanExecute(e.Parameter, Keyboard.FocusedElement);
@@ -85,7 +77,7 @@ namespace SearchMap.Windows.UIComponents {
 
         #endregion Copy
 
-        #region Cut
+        #region Cut Command
 
         void Cut_Execute(object sender, ExecutedRoutedEventArgs e) {
             if (Keyboard.FocusedElement.GetType() == typeof(System.Windows.Controls.TextBox)) {

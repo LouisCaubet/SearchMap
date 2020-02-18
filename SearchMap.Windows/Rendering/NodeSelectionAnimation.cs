@@ -7,7 +7,11 @@ using System.Windows.Media;
 
 namespace SearchMap.Windows.Rendering {
 
-    class NodeSelectionAnimation {
+    /// <summary>
+    /// Represents the pulsation animation when a node is selected.
+    /// Increases the size of the node and changes the shadow color.
+    /// </summary>
+    sealed class NodeSelectionAnimation {
 
         Node Node { get; set; }
         UserControl Control { get; set; }
@@ -21,6 +25,9 @@ namespace SearchMap.Windows.Rendering {
         int NormalHeight { get; set; }
         double HighlightedHeight { get; set; }
 
+        /// <summary>
+        /// Creates a NodeSelectionAnimation for a given control with a size increase of the given factor.
+        /// </summary>
         public NodeSelectionAnimation(UserControl control, double factor = 1.1) {
 
             Control = control;
@@ -47,6 +54,9 @@ namespace SearchMap.Windows.Rendering {
 
         }
 
+        /// <summary>
+        /// Switches the animation state to Highlighted.
+        /// </summary>
         public void Highlight() {
 
             if (Control.GetType() == typeof(WebNodeControl)) {
@@ -62,6 +72,9 @@ namespace SearchMap.Windows.Rendering {
 
         }
 
+        /// <summary>
+        /// Switches the animation state to Normal
+        /// </summary>
         public void Normal() {
 
             if (Control.GetType() == typeof(WebNodeControl)) {

@@ -9,13 +9,18 @@ using System.Windows.Input;
 
 namespace SearchMap.Windows.Events {
 
-    class NodeControl_Events {
+    /// <summary>
+    /// Registers events independent of the type of node on a control representing a node. <para />
+    /// This class cannot be inherited.
+    /// </summary>
+    sealed class NodeControl_Events {
 
         UserControl Control { get; }
         Node Node { get; }
 
-        ResizableNodeControl Resizing;
-
+        /// <summary>
+        /// Register events independent of the type of Node on the given control.
+        /// </summary>
         public NodeControl_Events(UserControl control, Node node) {
 
             Control = control;
@@ -36,10 +41,13 @@ namespace SearchMap.Windows.Events {
             Control.ContextMenuOpening += OnContextMenuOpening;
 
             // Resizing
-            Resizing = new ResizableNodeControl(Control, Node);
-
+            new ResizableNodeControl(Control, Node);
+            
         }
 
+        /// <summary>
+        /// Call this on every child of Control to complete initialization of the event handlers
+        /// </summary>
         public void RegisterEventsOnChild(UIElement child) {
             child.PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
         }

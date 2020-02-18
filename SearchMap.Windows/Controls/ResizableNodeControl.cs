@@ -7,11 +7,19 @@ using System.Windows.Input;
 namespace SearchMap.Windows.Controls {
 
     /// <summary>
-    /// Registers event handling to enable resizing through usual mouse gestures.
+    /// Registers event handling to enable resizing through usual mouse gestures. <para />
+    /// This class cannot be inherited.
     /// </summary>
-    class ResizableNodeControl {
+    sealed class ResizableNodeControl {
 
+        /// <summary>
+        /// The control made resizable by this
+        /// </summary>
         UserControl Control { get; }
+
+        /// <summary>
+        /// The node represented by Control
+        /// </summary>
         Node Node { get; }
 
         /// <summary>
@@ -22,6 +30,7 @@ namespace SearchMap.Windows.Controls {
             Control = control;
             Node = node;
 
+            // Event handlers
             Control.MouseLeftButtonDown += OnMouseLeftDown;
             Control.MouseLeftButtonUp += OnMouseLeftUp;
             Control.MouseMove += OnMouseMove;
@@ -31,20 +40,28 @@ namespace SearchMap.Windows.Controls {
         // Source : http://csharphelper.com/blog/2014/12/let-user-move-resize-rectangle-wpf-c/
         // (Heavily modified)
 
-        private enum HitType {
+        /// <summary>
+        /// Types of interaction with the border of the control
+        /// </summary>
+        enum HitType {
             None, UL, UR, LR, LL, L, R, T, B
         };
 
 
         HitType MouseHitType = HitType.None;
-        private bool DragInProgress = false;
-        private Point LastPoint;
+        bool DragInProgress = false;
+        Point LastPoint;
 
 
-        // Return a HitType value to indicate what is at the point.
-        // Point is position relative to the Control.
-        private HitType SetHitType(Point point) {
+        /// <summary>
+        /// Return a HitType value to indicate what is at the point.
+        /// Point is position relative to the Control.
+        /// </summary>
+        /// <param name="point">Position relative to Control</param>
+        /// <returns></returns>
+        HitType SetHitType(Point point) {
 
+            // The width of the border on which interactions allow resizing
             const double GAP = 10;
 
             if(point.X < GAP) {
@@ -73,8 +90,10 @@ namespace SearchMap.Windows.Controls {
 
         }
 
-        // Set a mouse cursor appropriate for the current hit type.
-        private void SetMouseCursor() {
+        /// <summary>
+        /// Set a mouse cursor appropriate for the current hit type.
+        /// </summary>
+        void SetMouseCursor() {
             // See what cursor we should display.
             Cursor desired_cursor = Cursors.Arrow;
             switch (MouseHitType) {
@@ -103,8 +122,11 @@ namespace SearchMap.Windows.Controls {
             if (Control.Cursor != desired_cursor) Control.Cursor = desired_cursor;
         }
 
-        // Start dragging.
-        private void OnMouseLeftDown(object sender, MouseButtonEventArgs e) {
+        /// <summary>
+        /// Event Handler for MouseLeftButtonDown. <para />
+        /// Starts resizing if the mouse is on the border.
+        /// </summary>
+        void OnMouseLeftDown(object sender, MouseButtonEventArgs e) {
             
             MouseHitType = SetHitType(e.GetPosition(Control));
             SetMouseCursor();
@@ -117,9 +139,12 @@ namespace SearchMap.Windows.Controls {
 
         }
 
-        // If a drag is in progress, continue the drag.
-        // Otherwise display the correct cursor.
-        private void OnMouseMove(object sender, MouseEventArgs e) {
+        /// <summary>
+        /// Event Handler for MouseMove. <para />
+        /// If a resizing is in progress, continue.
+        /// Otherwise display the correct cursor.
+        /// </summary>
+        void OnMouseMove(object sender, MouseEventArgs e) {
             if (DragInProgress) {
 
                 // See how much the mouse has moved.
@@ -127,13 +152,13 @@ namespace SearchMap.Windows.Controls {
                 double dX = point.X - LastPoint.X;
                 double dY = point.Y - LastPoint.Y;
 
-                // Get the rectangle's current position.
+                // Get the Controls's current position.
                 double new_x = Canvas.GetLeft(Control);
                 double new_y = Canvas.GetTop(Control);
                 double new_width = Control.ActualWidth;
                 double new_height = Control.ActualHeight;
 
-                // Update the rectangle.
+                // Update the Control.
                 switch (MouseHitType) {
                     case HitType.UL:
                         new_x += dX;
@@ -174,10 +199,9 @@ namespace SearchMap.Windows.Controls {
                 // Don't use negative width or height.
                 if ((new_width > 0) && (new_height > 0)) {
 
+                    // Update Node
                     Point center = new Point(new_x + new_width / 2, new_y + new_height / 2);
-
                     Node.MoveTo(MainWindow.Window.ConvertToLocation(center));
-
                     Node.Resize((int) new_width, (int) new_height);
 
                     // Update the control.
@@ -188,6 +212,7 @@ namespace SearchMap.Windows.Controls {
 
                     // Save the mouse's new location.
                     LastPoint = point;
+
                 }
             }
             else {
@@ -196,8 +221,11 @@ namespace SearchMap.Windows.Controls {
             }
         }
 
-        // Stop dragging.
-        private void OnMouseLeftUp(object sender, MouseButtonEventArgs e) {
+        /// <summary>
+        /// Event Handler for MouseLeftButtonUp. <para />
+        /// Stops resizing
+        /// </summary>
+        void OnMouseLeftUp(object sender, MouseButtonEventArgs e) {
             DragInProgress = false;
             Control.ReleaseMouseCapture();
         }

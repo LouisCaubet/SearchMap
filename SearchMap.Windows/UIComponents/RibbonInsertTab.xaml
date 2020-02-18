@@ -13,23 +13,38 @@
 
     <Fluent:RibbonGroupBox Header="Nodes">
 
-        <Fluent:Button Header="Title Node">
+        <Fluent:Button Header="New Title Node" 
+                       LargeIcon="../Resources/TitleNodeIcon_small.png" 
+                       Icon="../Resources/TitleNodeIcon_small.png"
+                       Margin="5, 5, 5, 0" >
 
         </Fluent:Button>
 
-        <Fluent:Button Header="Text Node">
+        <Fluent:Button Header="New Text Node" 
+                       LargeIcon="../Resources/TextNodeIcon_small.png" 
+                       Icon="../Resources/TextNodeIcon_small.png"
+                       Margin="5, 5, 5, 0">
 
         </Fluent:Button>
 
-        <Fluent:Button Header="Web Node">
+        <Fluent:Button Header="New Web Node" 
+                       LargeIcon="../Resources/WebNodeIcon_small.png" 
+                       Icon="../Resources/WebNodeIcon_small.png"
+                       Margin="5, 5, 5, 0" >
 
         </Fluent:Button>
 
-        <Fluent:Button Header="File Node">
+        <Fluent:Button Header="New File Node" 
+                       LargeIcon="../Resources/FileNodeIcon_small.png" 
+                       Icon="../Resources/FileNodeIcon_small.png"
+                       Margin="5, 5, 5, 0">
 
         </Fluent:Button>
 
-        <Fluent:Button Header="Custom Source Node">
+        <Fluent:Button Header="Custom Source Node" 
+                       LargeIcon="../Resources/CustomNodeIcon_small.png" 
+                       Icon="../Resources/CustomNodeIcon_small.png"
+                       Margin="5, 5, 5, 0">
 
         </Fluent:Button>
 

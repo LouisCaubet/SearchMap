@@ -22,12 +22,12 @@ namespace SearchMapCore.Graph {
         /// <summary>
         /// DIRECT ACCESS FOR INTERNAL USE ONLY. Use GetChildren() instead.
         /// </summary>
-        internal HashSet<int> ChildrenIds { get; private set; }
+        internal HashSet<int> ChildrenIds { get; }
 
         /// <summary>
         /// DIRECT ACCESS FOR INTERNAL USE ONLY. Use GetSiblings() instead.
         /// </summary>
-        internal HashSet<int> SiblingsIds { get; private set; }
+        internal HashSet<int> SiblingsIds { get; }
 
         protected bool rendered;
 
@@ -37,6 +37,7 @@ namespace SearchMapCore.Graph {
         /// <param name="graph">The graph to add the node to.</param>
         public Node(Graph graph) {
             this.graph = graph;
+            if (graph == null) throw new InvalidOperationException("Tried to associate a Node with graph null.");
 
             ChildrenIds = new HashSet<int>();
             SiblingsIds = new HashSet<int>();
@@ -222,7 +223,7 @@ namespace SearchMapCore.Graph {
 
             // Argument checks
             if (sibling == null) {
-                SearchMapCore.Logger.Debug("Tried to add null as sibling of node " + Id + " (Title: " + Title + "). ");
+                SearchMapCore.Logger.Error("Tried to add null as sibling of node " + Id + " (Title: " + Title + "). ");
                 return;
             }
 
@@ -249,7 +250,7 @@ namespace SearchMapCore.Graph {
                 SiblingsIds.Remove(siblingId);
                 SearchMapCore.Clipboard.CtrlZ.Push(snapshot);
             }
-            catch (Exception) {
+            catch (KeyNotFoundException) {
                 SearchMapCore.Logger.Error("Node with id " + siblingId + " does not exist or is not a sibling of node " + Id);
             }
 
@@ -371,6 +372,8 @@ namespace SearchMapCore.Graph {
         /// Moves the node to an absolute location. (Abstract location, not the on-screen location)
         /// </summary>
         public void MoveTo(Location newLocation, bool renderMove = false) {
+
+            if (newLocation == null) throw new InvalidOperationException("Tried to move node " + Id + " to Location null");
 
             SearchMapCore.Clipboard.CtrlZ.Push(new Snapshot(graph));
 

@@ -20,6 +20,7 @@ namespace SearchMapCore.Graph {
         public Location() { }
 
         public double DistanceSquared(Location to) {
+            if (to == null) return double.NaN;
             return Math.Pow(x - to.x, 2) + Math.Pow(y - to.y, 2);
         }
 
@@ -28,6 +29,11 @@ namespace SearchMapCore.Graph {
         }
 
         public void Translation(Vector v) {
+            if (v == null) {
+                SearchMapCore.Logger.Warning("Attempted to translate a location with Vector null");
+                SearchMapCore.Logger.Warning("The location has not been modified. If this was the intent, translate of Vector(0,0) instead.");
+                return;
+            }
             x += v.x;
             y += v.y;
         }

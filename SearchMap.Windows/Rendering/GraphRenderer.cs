@@ -16,6 +16,9 @@ namespace SearchMap.Windows.Rendering {
 
         private const double SMOOTH_STEP = 10;
 
+        /// <summary>
+        /// Dictionary associating the id of the rendererd object to the associated UserControl.
+        /// </summary>
         public Dictionary<int, UserControl> RenderedObjects { get; }
         private int lastRegisteredId;
 
@@ -23,6 +26,9 @@ namespace SearchMap.Windows.Rendering {
         private Dictionary<int, bool> LockedObjects { get; }
         private Dictionary<int, List<Location>> QueuedMovements { get; }
 
+        /// <summary>
+        /// Initializes the GraphRenderer for WPF
+        /// </summary>
         public GraphRenderer() {
             RenderedObjects = new Dictionary<int, UserControl>();
             lastRegisteredId = 0;
