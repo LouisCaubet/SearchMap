@@ -1,4 +1,5 @@
-﻿using SearchMap.Windows.Rendering;
+﻿using SearchMap.Windows.Controls;
+using SearchMap.Windows.Rendering;
 using SearchMapCore.Graph;
 using System;
 using System.Threading;
@@ -12,6 +13,8 @@ namespace SearchMap.Windows.Events {
 
         UserControl Control { get; }
         Node Node { get; }
+
+        ResizableNodeControl Resizing;
 
         public NodeControl_Events(UserControl control, Node node) {
 
@@ -31,6 +34,9 @@ namespace SearchMap.Windows.Events {
 
             // ContextMenu
             Control.ContextMenuOpening += OnContextMenuOpening;
+
+            // Resizing
+            Resizing = new ResizableNodeControl(Control, Node);
 
         }
 
@@ -331,6 +337,7 @@ namespace SearchMap.Windows.Events {
 
             Node.SetParent(PotentialNewParent);
 
+            // Move node back to its original location
             Node.MoveTo(LastLocationOfNode, false);
             Canvas.SetLeft(Control, LastLocationOfNodeControl.Value.X);
             Canvas.SetTop(Control, LastLocationOfNodeControl.Value.Y);

@@ -3,6 +3,7 @@ using SearchMapCore.Graph;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace SearchMap.Windows.Rendering {
 
@@ -48,6 +49,11 @@ namespace SearchMap.Windows.Rendering {
 
         public void Highlight() {
 
+            if (Control.GetType() == typeof(WebNodeControl)) {
+                WebNodeControl nodeControl = (WebNodeControl)Control;
+                nodeControl.Shadow.Color = Color.FromRgb(255, 0, 0);
+            }
+
             Control.Width = HighlightedWidth;
             Control.Height = HighlightedHeight;
 
@@ -57,6 +63,11 @@ namespace SearchMap.Windows.Rendering {
         }
 
         public void Normal() {
+
+            if (Control.GetType() == typeof(WebNodeControl)) {
+                WebNodeControl nodeControl = (WebNodeControl)Control;
+                nodeControl.Shadow.Color = Color.FromRgb(0, 0, 0);
+            }
 
             Control.Width = NormalWidth;
             Control.Height = NormalHeight;

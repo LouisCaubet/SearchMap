@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\ClipboardManager.cs" />
+    <Compile Include="Controls\ResizableNodeControl.cs" />
     <Compile Include="Events\ConnectionControl_Events.cs" />
     <Compile Include="Events\MainWindow_Events.cs" />
     <Compile Include="Events\NodeControl_Events.cs" />
