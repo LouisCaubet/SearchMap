@@ -255,10 +255,6 @@ namespace SearchMap.Windows.Events {
 
             LastLocationOfNode = null;
             LastLocationOfNodeControl = null;
-            PotentialNewParent = null;
-            PotentialNewParentControl = null;
-
-            timer = null;
 
         }
 
@@ -285,6 +281,9 @@ namespace SearchMap.Windows.Events {
 
             }
 
+            // Stop animation if not over a node.
+            StopAnimation();
+
         }
 
         // Stops the animation if currently played.
@@ -295,7 +294,11 @@ namespace SearchMap.Windows.Events {
             if (Animation != null) {
                 Animation.Normal();
                 Animation = null;
-            }           
+            }
+
+            PotentialNewParent = null;
+            PotentialNewParentControl = null;
+            timer = null;
 
         }
 
