@@ -72,6 +72,9 @@
     </ApplicationDefinition>
     <Compile Include="Controls\ClipboardManager.cs" />
     <Compile Include="Controls\ResizableNodeControl.cs" />
+    <Compile Include="Dialog\NewWebNodeDialog.xaml.cs">
+      <DependentUpon>NewWebNodeDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Events\ConnectionControl_Events.cs" />
     <Compile Include="Events\MainWindow_Events.cs" />
     <Compile Include="Events\NodeControl_Events.cs" />
@@ -117,6 +120,10 @@
     </Compile>
     <Compile Include="Utils\CoreToWPFUtils.cs" />
     <Compile Include="Utils\MathUtils.cs" />
+    <Page Include="Dialog\NewWebNodeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

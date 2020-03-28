@@ -84,6 +84,7 @@ namespace SearchMap.Windows {
 
             // Register Commands
             RibbonTabHome.RegisterCommands();
+            RibbonTabInsert.RegisterCommands();
 
         }
 
