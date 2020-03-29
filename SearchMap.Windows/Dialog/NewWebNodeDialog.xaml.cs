@@ -1,18 +1,10 @@
 ﻿using SearchMap.Windows.Utils;
 using SearchMapCore.Graph;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SearchMap.Windows.Dialog {
 
@@ -82,6 +74,7 @@ namespace SearchMap.Windows.Dialog {
                 Comment = comment
             };
 
+
             // Determine parent.
             Node parent = null;
             try {
@@ -90,19 +83,24 @@ namespace SearchMap.Windows.Dialog {
             catch (ArgumentException) { }
 
             createdNode.SetParent(parent);
-            
+
             // Place Node
-            if(parent != null) {
-                Location loc = NodePlacement.PlaceNode(MainWindow.Window.GetGraph(), createdNode);
-                createdNode.MoveTo(loc);
+            if (parent != null) {
+                Location loc1 = NodePlacement.PlaceNode(MainWindow.Window.GetGraph(), createdNode);
+                createdNode.MoveTo(loc1);
                 // TODO move scrollview to center on the new node.
             }
             else {
-                Point centerPt = new Point(MainWindow.Window.ScrollView.ContentHorizontalOffset, MainWindow.Window.ScrollView.ContentVerticalOffset);
+
+                double x = MainWindow.Window.ScrollView.HorizontalOffset + MainWindow.Window.ScrollView.ActualWidth / 2;
+                double y = MainWindow.Window.ScrollView.VerticalOffset + MainWindow.Window.ScrollView.ActualHeight / 2;
+
+                Point centerPt = new Point(x, y);
                 Location loc = MainWindow.Window.ConvertToLocation(centerPt);
                 createdNode.MoveTo(loc);
-            }
 
+            }
+            
             this.Close();
 
         }
@@ -111,6 +109,7 @@ namespace SearchMap.Windows.Dialog {
 
 
         // TEXT EDITION EVENT HANDLING
+        #region NodeEditionEvents
 
         bool IgnoreNextTextChange = false;
 
@@ -185,6 +184,9 @@ namespace SearchMap.Windows.Dialog {
             if (CommentBox.Text != "" && !IgnoreNextTextChange) CommentBoxModified = true;
             if (IgnoreNextTextChange) IgnoreNextTextChange = false;
         }
+
+        #endregion NodeEditionEvents
+
     }
 
 }

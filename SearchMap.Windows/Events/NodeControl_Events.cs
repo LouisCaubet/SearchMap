@@ -15,6 +15,8 @@ namespace SearchMap.Windows.Events {
     /// </summary>
     sealed class NodeControl_Events {
 
+        private const int REPARENT_ANIMATION_NB_PULSES = 5;
+
         UserControl Control { get; }
         Node Node { get; }
 
@@ -326,7 +328,7 @@ namespace SearchMap.Windows.Events {
                     Animation.Normal();
                 });
 
-                if (pulses == 5) {
+                if (pulses == REPARENT_ANIMATION_NB_PULSES) {
                     timer.Dispose();
                     Control.Dispatcher.Invoke(delegate {
                         SetNewParent();

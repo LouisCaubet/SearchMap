@@ -211,7 +211,8 @@ namespace SearchMapCore.Graph {
             }
 
             // Render changes.
-            Refresh();
+            // This method should not render the node if we're not ready yet, hence the check.
+            if(rendered) Refresh();
 
         }
 
