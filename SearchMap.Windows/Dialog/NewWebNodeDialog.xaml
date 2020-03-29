@@ -101,22 +101,25 @@
                     <Image x:Name="NodeIcon" Source="../Resources/Placeholder.png" Grid.Column="0" Grid.Row="0" Margin="20"/>
                     
                     <!-- Title -->
-                    <TextBox x:Name="TitleBox" Text="New Web Node" Grid.Column="1" Grid.Row="0" Background="Transparent" 
-                             FontSize="54" VerticalAlignment="Center" Margin="20" TextWrapping="WrapWithOverflow" IsReadOnly="False" />
+                    <TextBox x:Name="TitleBox" Text="New Web Node" Grid.Column="1" Grid.Row="0" Background="Transparent" FontStyle="Italic"
+                             FontSize="54" VerticalAlignment="Center" Margin="20" TextWrapping="WrapWithOverflow" IsReadOnly="False"
+                             GotFocus="TitleBox_GotFocus" LostFocus="TitleBox_LostFocus" TextChanged="TitleBox_TextChanged" />
 
                     <!-- URL -->
                     <TextBlock Text="URL:" Grid.Column="0" Grid.Row="1" Background="Transparent" Margin="10"
                              HorizontalAlignment="Right" FontWeight="Bold" FontSize="16" />
 
-                    <TextBox x:Name="UriBox" Text="www.example.com" Grid.Column="1" Grid.Row="1" Background="Transparent" Margin="10" IsReadOnly="False"
-                             TextWrapping="WrapWithOverflow" />
+                    <TextBox x:Name="UriBox" Text="www.example.com" Grid.Column="1" Grid.Row="1" Background="Transparent" Margin="10" 
+                             IsReadOnly="False" TextWrapping="WrapWithOverflow" 
+                             GotFocus="UriBox_GotFocus" LostFocus="UriBox_LostFocus" TextChanged="UriBox_TextChanged" />
                     
                     <!-- Comment -->
                     <TextBlock Text="Comment:" Grid.Column="0" Grid.Row="2" Background="Transparent" Margin="10" 
                              HorizontalAlignment="Right" FontWeight="Bold" FontSize="16" />
 
-                    <TextBox x:Name="CommentBox" Text="Insert comments here." Grid.Column="1" Grid.Row="2" Background="Transparent" Margin="10, 13, 10, 10" IsReadOnly="False"
-                             TextWrapping="WrapWithOverflow" FontStyle="Italic" AcceptsReturn="True" />
+                    <TextBox x:Name="CommentBox" Text="Insert comments here." Grid.Column="1" Grid.Row="2" Background="Transparent" 
+                             Margin="10, 13, 10, 10" IsReadOnly="False" TextWrapping="WrapWithOverflow" FontStyle="Italic" AcceptsReturn="True" 
+                             GotFocus="CommentBox_GotFocus" LostFocus="CommentBox_LostFocus" TextChanged="CommentBox_TextChanged" />
 
                     <!-- Action buttons -->
                     <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" >

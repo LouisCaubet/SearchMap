@@ -27,7 +27,7 @@ namespace SearchMap.Windows {
         internal static GraphRenderer Renderer;
 
         /// <summary>
-        /// Indicates which control is currently selected for Ctrl+C/X ops.
+        /// Indicates which control is currently selected.
         /// </summary>
         internal UserControl Selected { get; set; }
 
@@ -121,6 +121,14 @@ namespace SearchMap.Windows {
             ScrollView.ScrollToVerticalOffset((GraphCanvas.Height - ScrollView.ActualHeight) / 2);
             ScrollView.ScrollToHorizontalOffset((GraphCanvas.Width - ScrollView.ActualWidth) / 2);
 
+        }
+
+        /// <summary>
+        /// Returns the graph currently visible in MainWindow.
+        /// </summary>
+        /// <returns></returns>
+        public Graph GetGraph() {
+            return SearchMapCore.SearchMapCore.Graph;
         }
 
         // EVENT HANDLING
