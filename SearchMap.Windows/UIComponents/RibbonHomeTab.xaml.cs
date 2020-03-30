@@ -37,6 +37,13 @@ namespace SearchMap.Windows.UIComponents {
 
         }
 
+        /// <summary>
+        /// Registers commands defined in the Insert ribbon tab. Must be called once those commands have been initialized.
+        /// </summary>
+        public void RegisterInsertionCommands() {
+            NewWebNodeButton.Command = MainWindow.Window.RibbonTabInsert.NewWebNode;
+        }
+
         // Command definitions
 
         #region Paste Command

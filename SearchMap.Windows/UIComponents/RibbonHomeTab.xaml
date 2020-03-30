@@ -76,6 +76,7 @@
         </Fluent:Button>
 
         <Fluent:Button Header="New Web Node" 
+                       x:Name="NewWebNodeButton"
                        LargeIcon="../Resources/WebNodeIcon_small.png" 
                        Icon="../Resources/WebNodeIcon_small.png"
                        Margin="5, 5, 5, 0" >
