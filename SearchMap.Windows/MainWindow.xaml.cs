@@ -1,4 +1,5 @@
 ﻿using Fluent;
+using SearchMap.Windows.Dialog;
 using SearchMap.Windows.Rendering;
 using SearchMap.Windows.UIComponents;
 using SearchMapCore.Graph;
@@ -54,6 +55,7 @@ namespace SearchMap.Windows {
             WindowState = WindowState.Maximized;
 
             ContentRendered += OnWindowLoaded;
+            Closed += OnWindowClose;
 
             RegisterEventHandlers();
 
@@ -86,6 +88,11 @@ namespace SearchMap.Windows {
             RibbonTabHome.RegisterCommands();
             RibbonTabInsert.RegisterCommands();
 
+        }
+
+        void OnWindowClose(object sender, EventArgs e) {
+            // Close all subwindows
+            if (NewWebNodeDialog.Instance != null) NewWebNodeDialog.Instance.Close();
         }
 
         /// <summary>

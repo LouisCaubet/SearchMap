@@ -13,12 +13,20 @@ namespace SearchMap.Windows.Dialog {
     /// </summary>
     public partial class NewWebNodeDialog : Window {
 
+        private static Point? DefaultLocation = null;
+        internal static NewWebNodeDialog Instance;
+
         bool TitleBoxModified;
         bool UriBoxModified;
         bool CommentBoxModified;
         bool IconModified;
 
         public NewWebNodeDialog() {
+
+            // Only one of such windows open at a time
+            if (Instance != null) this.Close();
+            Instance = this;
+
             InitializeComponent();
 
             TitleBoxModified = false;
@@ -28,6 +36,19 @@ namespace SearchMap.Windows.Dialog {
 
             MouseLeftButtonDown += OnMouseDown;
 
+            this.Topmost = true;
+
+            if (DefaultLocation.HasValue) {
+                this.Left = DefaultLocation.Value.X;
+                this.Top = DefaultLocation.Value.Y;
+            }
+
+        }
+
+        void CloseWindow() {
+            DefaultLocation = new Point(this.Left, this.Top);
+            Instance = null;
+            this.Close();
         }
 
         void OnMouseDown(object sender, MouseButtonEventArgs e) {
@@ -39,7 +60,7 @@ namespace SearchMap.Windows.Dialog {
         }
 
         private void Button_Close_Click(object sender, RoutedEventArgs e) {
-            this.Close();
+            CloseWindow();
         }
 
         private void Button_Apply_Click(object sender, RoutedEventArgs e) {
@@ -100,8 +121,8 @@ namespace SearchMap.Windows.Dialog {
                 createdNode.MoveTo(loc);
 
             }
-            
-            this.Close();
+
+            CloseWindow();
 
         }
 
@@ -186,6 +207,7 @@ namespace SearchMap.Windows.Dialog {
         }
 
         #endregion NodeEditionEvents
+
 
     }
 
