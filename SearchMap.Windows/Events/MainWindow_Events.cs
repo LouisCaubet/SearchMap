@@ -60,12 +60,16 @@ namespace SearchMap.Windows {
             var mousePos = e.GetPosition(ScrollView);
 
             if (GraphCanvas.IsMouseDirectlyOver) {
-                
+
+                DeselectAll();
+
                 Selected = null;
+
                 ScrollView.Cursor = Cursors.SizeAll;
                 lastDragPoint = mousePos;
                 LastClickedPoint = e.GetPosition(GraphCanvas);
                 Mouse.Capture(ScrollView);
+
             }
         }
 

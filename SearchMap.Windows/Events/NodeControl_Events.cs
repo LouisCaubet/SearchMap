@@ -38,8 +38,7 @@ namespace SearchMap.Windows.Controls {
             // Resizing
             new ResizableNodeControl(this, Node);
 
-            // Selection Animation
-            SelectionAnimation = new NodeSelectionAnimation(this);
+           
             
         }
 
@@ -117,6 +116,11 @@ namespace SearchMap.Windows.Controls {
             if (IsMouseOver) {
 
                 IsRightClickDown = true;
+
+                // Deselect selected node if not this one
+                if(MainWindow.Window.Selected != this) {
+                    MainWindow.Window.DeselectAll();
+                }
 
                 var pos = args.GetPosition(MainWindow.Window.GraphCanvas);
                 lastDragPoint = pos;
@@ -363,11 +367,17 @@ namespace SearchMap.Windows.Controls {
                 Node.OnClick();
             }
 
+            // Unhighlight previously selected node if it wasn't this one.
+            if (MainWindow.Window.Selected != this) {
+                MainWindow.Window.DeselectAll();
+            }
+
             MainWindow.Window.Selected = this;
             MainWindow.Window.LastClickedPoint = null;
 
-            // Selection Animation
-            // SelectionAnimation.Highlight(Color.FromRgb(33, 196, 93));
+            // Selection Animation - Init here to be sure every required parameter is set.
+            if(SelectionAnimation == null) SelectionAnimation = new NodeSelectionAnimation(this);
+            SelectionAnimation.Highlight(Color.FromRgb(33, 196, 93));
 
         }
 

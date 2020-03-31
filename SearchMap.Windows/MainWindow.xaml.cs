@@ -139,6 +139,15 @@ namespace SearchMap.Windows {
             return SearchMapCore.SearchMapCore.Graph;
         }
 
+        public void DeselectAll() {
+
+            if (Selected != null) {
+                Selected.SelectionAnimation.Normal();
+                Selected = null;
+            }
+
+        }
+
         // EVENT HANDLING
         // See MainWindow_Events.cs
 
