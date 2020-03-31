@@ -6,44 +6,40 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
-namespace SearchMap.Windows.Events {
+namespace SearchMap.Windows.Controls {
 
-    /// <summary>
-    /// Registers events independent of the type of node on a control representing a node. <para />
-    /// This class cannot be inherited.
-    /// </summary>
-    sealed class NodeControl_Events {
+    partial class NodeControl {
 
         private const int REPARENT_ANIMATION_NB_PULSES = 5;
 
-        UserControl Control { get; }
-        Node Node { get; }
+        internal NodeSelectionAnimation SelectionAnimation { get; private set; }
 
         /// <summary>
-        /// Register events independent of the type of Node on the given control.
+        /// Register events independent of the type of Node.
         /// </summary>
-        public NodeControl_Events(UserControl control, Node node) {
-
-            Control = control;
-            Node = node;
+        public void RegisterBaseEvents() {
 
             // Drag and drop
-            Control.MouseRightButtonUp += OnMouseRightButtonUp;
-            Control.PreviewMouseRightButtonUp += OnMouseRightButtonUp;
-            Control.PreviewMouseRightButtonDown += OnMouseRightButtonDown;
-            Control.MouseMove += OnMouseMove;
+            this.MouseRightButtonUp += OnMouseRightButtonUp;
+            this.PreviewMouseRightButtonUp += OnMouseRightButtonUp;
+            this.PreviewMouseRightButtonDown += OnMouseRightButtonDown;
+            this.MouseMove += OnMouseMove;
 
             RegisterScrollManager();
 
             // Ctrl + Click to open
-            Control.MouseLeftButtonDown += OnMouseLeftButtonDown;
+            this.MouseLeftButtonDown += OnMouseLeftButtonDown;
 
             // ContextMenu
-            Control.ContextMenuOpening += OnContextMenuOpening;
+            this.ContextMenuOpening += OnContextMenuOpening;
 
             // Resizing
-            new ResizableNodeControl(Control, Node);
+            new ResizableNodeControl(this, Node);
+
+            // Selection Animation
+            SelectionAnimation = new NodeSelectionAnimation(this);
             
         }
 
@@ -116,15 +112,15 @@ namespace SearchMap.Windows.Events {
 
         void OnMouseRightButtonDown(object sender, MouseButtonEventArgs args) {
 
-            Control.ContextMenu.IsOpen = false;
+            ContextMenu.IsOpen = false;
 
-            if (Control.IsMouseOver) {
+            if (IsMouseOver) {
 
                 IsRightClickDown = true;
 
                 var pos = args.GetPosition(MainWindow.Window.GraphCanvas);
                 lastDragPoint = pos;
-                Mouse.Capture(Control);
+                Mouse.Capture(this);
 
                 // To distiguish between right click and move, check if the mouse is released 0.1 seconds later.
                 new Timer(delegate {
@@ -132,11 +128,11 @@ namespace SearchMap.Windows.Events {
                     if (IsRightClickDown) {
                         // User wants to move the node
 
-                        Control.Dispatcher.Invoke(delegate {
-                            Control.Cursor = Cursors.SizeAll;
+                        Dispatcher.Invoke(delegate {
+                            Cursor = Cursors.SizeAll;
 
                             // Show on top
-                            Panel.SetZIndex(Control, 20);
+                            Panel.SetZIndex(this, 20);
 
                             // Call reparent code
                             OnMoveStarted();
@@ -152,8 +148,8 @@ namespace SearchMap.Windows.Events {
 
                         ShouldContextMenuBeOpened = true;
 
-                        Control.Dispatcher.Invoke(delegate {
-                            Control.ContextMenu.IsOpen = true;
+                        Dispatcher.Invoke(delegate {
+                            ContextMenu.IsOpen = true;
                         });
 
                     }
@@ -171,14 +167,14 @@ namespace SearchMap.Windows.Events {
             IsRightClickDown = false;
             QueuedAction = null;
 
-            Control.Cursor = Cursors.Arrow;
-            Control.ReleaseMouseCapture();
+            Cursor = Cursors.Arrow;
+            this.ReleaseMouseCapture();
             lastDragPoint = null;
 
             OnMoveStop();
 
             // Put back on normal level
-            Panel.SetZIndex(Control, 10);
+            Panel.SetZIndex(this, 10);
         }
 
         void OnMouseMove(object sender, MouseEventArgs e) {
@@ -190,10 +186,10 @@ namespace SearchMap.Windows.Events {
 
                 lastDragPoint = posNow;
 
-                Canvas.SetLeft(Control, Canvas.GetLeft(Control) + dX);
-                Canvas.SetTop(Control, Canvas.GetTop(Control) + dY);
+                Canvas.SetLeft(this, Canvas.GetLeft(this) + dX);
+                Canvas.SetTop(this, Canvas.GetTop(this) + dY);
 
-                Location topLeft = new Location(MainWindow.Window.ConvertToLocation(new Point(Canvas.GetLeft(Control), Canvas.GetTop(Control))));
+                Location topLeft = new Location(MainWindow.Window.ConvertToLocation(new Point(Canvas.GetLeft(this), Canvas.GetTop(this))));
 
                 Location newLoc = new Location(topLeft.x + Node.Width / 2, topLeft.y + Node.Height / 2);
 
@@ -241,7 +237,7 @@ namespace SearchMap.Windows.Events {
 
         // Called once when user stars moving the node
         void OnMoveStarted() {
-            LastLocationOfNodeControl = new Point(Canvas.GetLeft(Control), Canvas.GetTop(Control));
+            LastLocationOfNodeControl = new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
             LastLocationOfNode = new Location(Node.Location);
         }
 
@@ -316,7 +312,7 @@ namespace SearchMap.Windows.Events {
 
                 if (Animation == null) return;
 
-                Control.Dispatcher.Invoke(delegate {
+                Dispatcher.Invoke(delegate {
                     Animation.Highlight();
                 });
 
@@ -324,13 +320,13 @@ namespace SearchMap.Windows.Events {
 
                 if (Animation == null) return;
 
-                Control.Dispatcher.Invoke(delegate {
+                Dispatcher.Invoke(delegate {
                     Animation.Normal();
                 });
 
                 if (pulses == REPARENT_ANIMATION_NB_PULSES) {
                     timer.Dispose();
-                    Control.Dispatcher.Invoke(delegate {
+                    Dispatcher.Invoke(delegate {
                         SetNewParent();
                     });                    
                 }
@@ -352,8 +348,8 @@ namespace SearchMap.Windows.Events {
 
             // Move node back to its original location
             Node.MoveTo(LastLocationOfNode, false);
-            Canvas.SetLeft(Control, LastLocationOfNodeControl.Value.X);
-            Canvas.SetTop(Control, LastLocationOfNodeControl.Value.Y);
+            Canvas.SetLeft(this, LastLocationOfNodeControl.Value.X);
+            Canvas.SetTop(this, LastLocationOfNodeControl.Value.Y);
 
         }
 
@@ -367,8 +363,11 @@ namespace SearchMap.Windows.Events {
                 Node.OnClick();
             }
 
-            MainWindow.Window.Selected = Control;
+            MainWindow.Window.Selected = this;
             MainWindow.Window.LastClickedPoint = null;
+
+            // Selection Animation
+            // SelectionAnimation.Highlight(Color.FromRgb(33, 196, 93));
 
         }
 
@@ -378,10 +377,10 @@ namespace SearchMap.Windows.Events {
         void OnContextMenuOpening(object sender, ContextMenuEventArgs e) {
 
             e.Handled = true;
-            Control.ContextMenu.IsOpen = false;
+            ContextMenu.IsOpen = false;
 
             if (!ShouldContextMenuBeOpened) {
-                Control.ContextMenu.IsOpen = false;
+                ContextMenu.IsOpen = false;
                 e.Handled = true;
             }
             else {

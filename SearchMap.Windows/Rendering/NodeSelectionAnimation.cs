@@ -55,13 +55,13 @@ namespace SearchMap.Windows.Rendering {
         }
 
         /// <summary>
-        /// Switches the animation state to Highlighted.
+        /// Switches the animation state to Highlighted, with the given color.
         /// </summary>
-        public void Highlight() {
+        public void Highlight(Color color) {
 
             if (Control.GetType() == typeof(WebNodeControl)) {
                 WebNodeControl nodeControl = (WebNodeControl)Control;
-                nodeControl.Shadow.Color = Color.FromRgb(255, 0, 0);
+                nodeControl.Shadow.Color = color;
             }
 
             Control.Width = HighlightedWidth;
@@ -70,6 +70,13 @@ namespace SearchMap.Windows.Rendering {
             Canvas.SetLeft(Control, HighlightedPosition.X);
             Canvas.SetTop(Control, HighlightedPosition.Y);
 
+        }
+
+        /// <summary>
+        /// Highlights the node in red.
+        /// </summary>
+        public void Highlight() {
+            Highlight(Color.FromRgb(255, 0, 0));
         }
 
         /// <summary>

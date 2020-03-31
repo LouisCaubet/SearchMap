@@ -32,7 +32,7 @@ namespace SearchMap.Windows.Controls {
 
             if(control.GetType() == typeof(WebNodeControl)) {
 
-                AddWebNode(((WebNodeControl)control).Node);
+                AddWebNode(((WebNodeControl)control).GetWebNode());
                 if(cut) {
                     SearchMapCore.SearchMapCore.Graph.DeleteNode(((WebNodeControl)control).Node.Id);
                 }

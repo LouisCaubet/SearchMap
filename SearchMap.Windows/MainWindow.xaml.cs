@@ -1,4 +1,5 @@
 ﻿using Fluent;
+using SearchMap.Windows.Controls;
 using SearchMap.Windows.Dialog;
 using SearchMap.Windows.Rendering;
 using SearchMap.Windows.UIComponents;
@@ -30,7 +31,7 @@ namespace SearchMap.Windows {
         /// <summary>
         /// Indicates which control is currently selected.
         /// </summary>
-        internal UserControl Selected { get; set; }
+        internal NodeControl Selected { get; set; }
 
         /// <summary>
         /// Indicates where to paste node.

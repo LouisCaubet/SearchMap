@@ -1,5 +1,4 @@
-﻿using SearchMap.Windows.Events;
-using SearchMapCore.Graph;
+﻿using SearchMapCore.Graph;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -13,20 +12,18 @@ namespace SearchMap.Windows.UIComponents {
 
         // EVENT HANDLING
 
-        NodeControl_Events NodeEvents;
-
         void RegisterEventHandlers() {
 
-            NodeEvents = new NodeControl_Events(this, Node);
+            RegisterBaseEvents();
 
             // Editing
             TitleBox.TextChanged += OnTitleChanged;
             CommentBox.TextChanged += OnCommentChanged;
 
-            NodeEvents.RegisterEventsOnChild(TitleBox);
-            NodeEvents.RegisterEventsOnChild(CommentBox);
-            NodeEvents.RegisterEventsOnChild(UriLabel);
-            NodeEvents.RegisterEventsOnChild(Icon);
+            RegisterEventsOnChild(TitleBox);
+            RegisterEventsOnChild(CommentBox);
+            RegisterEventsOnChild(UriLabel);
+            RegisterEventsOnChild(Icon);
 
         }
 

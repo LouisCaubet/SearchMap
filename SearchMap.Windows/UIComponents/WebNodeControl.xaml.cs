@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SearchMap.Windows.Controls;
 using SearchMap.Windows.Utils;
 using SearchMapCore.Graph;
 using SearchMapCore.Serialization;
@@ -11,17 +12,10 @@ namespace SearchMap.Windows.UIComponents {
     /// <summary>
     /// Logique d'interaction pour NodeControl.xaml
     /// </summary>
-    public partial class WebNodeControl : UserControl {
+    public partial class WebNodeControl : NodeControl {
 
-        /// <summary>
-        /// The node rendered by this control.
-        /// </summary>
-        public WebNode Node { get; }
-
-        public WebNodeControl(WebNode node) {
+        public WebNodeControl(WebNode node) : base(node) {
             InitializeComponent();
-
-            Node = node;
 
             // Put this in front of connectors.
             Panel.SetZIndex(this, 10);
@@ -33,30 +27,27 @@ namespace SearchMap.Windows.UIComponents {
 
         }
 
-        /// <summary>
-        /// Updates the rendered values and colors. for the node.
-        /// </summary>
-        public void Refresh() {
+        public WebNode GetWebNode() {
+            return (WebNode) Node;
+        }
+
+        public override void Refresh() {
 
             Border.Background = new SolidColorBrush(CoreToWPFUtils.CoreColorToWPF(Node.Color));
             Border.BorderBrush = new SolidColorBrush(CoreToWPFUtils.CoreColorToWPF(Node.BorderColor));
 
             TitleBox.Text = Node.Title;
             CommentBox.Text = Node.Comment;
-            UriLabel.Text = Node.Uri.OriginalString;
+            UriLabel.Text = GetWebNode().Uri.OriginalString;
 
             Color textColor = GetBrightness(CoreToWPFUtils.CoreColorToWPF(Node.Color)) < 0.55 ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0);
             TitleBox.Foreground = new SolidColorBrush(textColor);
             CommentBox.Foreground = new SolidColorBrush(textColor);
             UriLabel.Foreground = new SolidColorBrush(textColor);
 
-        }
+            Height = Node.Height;
+            Width = Node.Width;
 
-        /// <summary>
-        /// Source : https://stackoverflow.com/questions/50540301/c-sharp-get-good-color-for-label
-        /// </summary>
-        float GetBrightness(Color c) { 
-            return (c.R * 0.299f + c.G * 0.587f + c.B * 0.114f) / 256f; 
         }
 
         // EVENT HANDLING ------------------------------------------------------------------------------------------------------------------
