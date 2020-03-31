@@ -133,6 +133,8 @@ namespace SearchMap.Windows.Controls {
 
             if (MouseHitType == HitType.None) return;
 
+            MainWindow.Window.DeselectAll();
+
             LastPoint = e.GetPosition(MainWindow.Window.GraphCanvas);
             DragInProgress = true;
             Mouse.Capture(Control);

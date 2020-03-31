@@ -117,10 +117,8 @@ namespace SearchMap.Windows.Controls {
 
                 IsRightClickDown = true;
 
-                // Deselect selected node if not this one
-                if(MainWindow.Window.Selected != this) {
-                    MainWindow.Window.DeselectAll();
-                }
+                // Deselect selected node
+                MainWindow.Window.DeselectAll();
 
                 var pos = args.GetPosition(MainWindow.Window.GraphCanvas);
                 lastDragPoint = pos;
@@ -376,7 +374,7 @@ namespace SearchMap.Windows.Controls {
             MainWindow.Window.LastClickedPoint = null;
 
             // Selection Animation - Init here to be sure every required parameter is set.
-            if(SelectionAnimation == null) SelectionAnimation = new NodeSelectionAnimation(this);
+            SelectionAnimation = new NodeSelectionAnimation(this, 1);
             SelectionAnimation.Highlight(Color.FromRgb(33, 196, 93));
 
         }

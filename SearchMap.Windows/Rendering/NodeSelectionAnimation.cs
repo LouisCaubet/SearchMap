@@ -16,7 +16,6 @@ namespace SearchMap.Windows.Rendering {
         Node Node { get; set; }
         UserControl Control { get; set; }
 
-        Point NormalPosition { get; set; }
         Point HighlightedPosition { get; set; }
 
         int NormalWidth { get; set; }
@@ -42,7 +41,6 @@ namespace SearchMap.Windows.Rendering {
                 throw new ArgumentException("This animation can only be applied to controls representing nodes.");
             }
 
-            NormalPosition = new Point(Canvas.GetLeft(control), Canvas.GetTop(control));
             NormalWidth = Node.Width;
             NormalHeight = Node.Height;
 
@@ -89,11 +87,13 @@ namespace SearchMap.Windows.Rendering {
                 nodeControl.Shadow.Color = Color.FromRgb(0, 0, 0);
             }
 
+            // recompute position every time
+            Point pt = MainWindow.Window.ConvertFromLocation(Node.Location);
+            Canvas.SetLeft(Control, pt.X - Node.Width / 2);
+            Canvas.SetTop(Control, pt.Y - Node.Height / 2);
+
             Control.Width = NormalWidth;
             Control.Height = NormalHeight;
-
-            Canvas.SetLeft(Control, NormalPosition.X);
-            Canvas.SetTop(Control, NormalPosition.Y);
 
         }
 
