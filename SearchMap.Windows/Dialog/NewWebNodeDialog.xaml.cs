@@ -98,10 +98,10 @@ namespace SearchMap.Windows.Dialog {
 
             // Determine parent.
             Node parent = null;
-            try {
-                parent = CoreToWPFUtils.GetNodeFromNodeControl(MainWindow.Window.Selected);
+
+            if(MainWindow.Window.Selected != null) {
+                parent = MainWindow.Window.Selected.Node;
             }
-            catch (ArgumentException) { }
 
             createdNode.SetParent(parent);
 

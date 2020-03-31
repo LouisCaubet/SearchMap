@@ -20,26 +20,6 @@ namespace SearchMap.Windows.Utils {
 
         }
 
-        /// <summary>
-        /// Returns the associated Node if the given UserControl represents a node. <para/>
-        /// Throws ArgumentException elsewise.
-        /// </summary>
-        /// <param name="control"></param>
-        /// <returns></returns>
-        public static Node GetNodeFromNodeControl(UserControl control) {
-
-            if(control == null) {
-                throw new ArgumentNullException();
-            }
-
-            if(control.GetType() == typeof(WebNodeControl)) {
-                return ((WebNodeControl) control).Node;
-            }
-
-            throw new ArgumentException("The given UserControl does not represent a Node");
-
-        }
-
     }
 
 }
