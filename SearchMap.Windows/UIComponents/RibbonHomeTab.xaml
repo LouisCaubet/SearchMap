@@ -94,7 +94,25 @@
 
     <Fluent:RibbonGroupBox Header="Connections">
 
-        <Fluent:SplitButton Header="Create connection between nodes">
+        <Fluent:SplitButton Header="Create connection between nodes"
+                            x:Name="NewConnectionButton"
+                            LargeIcon="../Resources/Connection_Red.png"
+                            Margin="5, 5, 5, 0">
+
+            <Fluent:Gallery>
+                <Fluent:GalleryItem x:Name="NewGrayConnButton">
+                    <Image Source="../Resources/Connection_Gray.png" Height="80" />
+                </Fluent:GalleryItem>
+
+                <Fluent:GalleryItem x:Name="NewRedConnButton">
+                    <Image Source="../Resources/Connection_Red.png" Height="80" />
+                </Fluent:GalleryItem>
+
+                <Fluent:GalleryItem x:Name="NewGreenConnButton">
+                    <Image Source="../Resources/Connection_Green.png" Height="80" />
+                </Fluent:GalleryItem>
+
+            </Fluent:Gallery>
 
         </Fluent:SplitButton>
 

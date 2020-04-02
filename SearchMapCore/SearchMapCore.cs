@@ -81,6 +81,8 @@ namespace SearchMapCore {
             node4.SetParent(node3);
             node4.MoveTo(NodePlacement.PlaceNode(graph, node4));
 
+            node2.AddSibling(node3);
+
             return graph;
 
         }

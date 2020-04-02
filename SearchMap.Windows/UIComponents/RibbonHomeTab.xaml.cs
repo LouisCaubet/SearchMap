@@ -42,6 +42,12 @@ namespace SearchMap.Windows.UIComponents {
         /// </summary>
         public void RegisterInsertionCommands() {
             NewWebNodeButton.Command = MainWindow.Window.RibbonTabInsert.NewWebNode;
+
+            NewConnectionButton.Command = MainWindow.Window.RibbonTabInsert.NewConnection;
+            NewGrayConnButton.Command = MainWindow.Window.RibbonTabInsert.NewGrayConn;
+            NewRedConnButton.Command = MainWindow.Window.RibbonTabInsert.NewRedConn;
+            NewGreenConnButton.Command = MainWindow.Window.RibbonTabInsert.NewGreenConn;
+
         }
 
         // Command definitions

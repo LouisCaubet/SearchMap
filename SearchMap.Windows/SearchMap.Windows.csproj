@@ -246,5 +246,11 @@
   <ItemGroup>
     <Resource Include="Resources\CustomNodeIcon_small.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Connection_Blue.png" />
+    <Resource Include="Resources\Connection_Gray.png" />
+    <Resource Include="Resources\Connection_Green.png" />
+    <Resource Include="Resources\Connection_Red.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

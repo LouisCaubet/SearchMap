@@ -29,6 +29,11 @@ namespace SearchMapCore.Graph {
         /// </summary>
         internal HashSet<int> SiblingsIds { get; }
 
+        /// <summary>
+        ///  true if this node handles the rendering of the connection.
+        /// </summary>
+        private Dictionary<int, bool> RenderSibling { get; } 
+
         protected bool rendered;
 
         /// <summary>
@@ -41,6 +46,7 @@ namespace SearchMapCore.Graph {
 
             ChildrenIds = new HashSet<int>();
             SiblingsIds = new HashSet<int>();
+            RenderSibling = new Dictionary<int, bool>();
             ParentId = -1;
 
             // Generate Id
@@ -228,11 +234,21 @@ namespace SearchMapCore.Graph {
                 return;
             }
 
+            if (ParentId == sibling.Id || SiblingsIds.Contains(sibling.Id) || ChildrenIds.Contains(sibling.Id)) {
+                throw new ArgumentException("These nodes are already connected!");
+            }
+
             // Undo system snapshot
             SearchMapCore.Clipboard.CtrlZ.Push(new Snapshot(graph));
 
+            // This node will handle the rendering
+            RenderSibling.Add(sibling.Id, true);
+
             SiblingsIds.Add(sibling.Id);
             sibling.SiblingsIds.Add(Id);
+
+            // The other node does not handle the rendering
+            sibling.RenderSibling.Add(Id, false);
 
             // Render changes
             Refresh();
@@ -416,9 +432,15 @@ namespace SearchMapCore.Graph {
                 }
                 
                 foreach(int id in SiblingsIds) {
-                    var conn = ConnectionPlacement.CreateConnectionBetween(graph, this, graph.Nodes[id]);
-                    conn.RenderId = graph.Renderer.RenderCurvedLine(conn);
-                    ConnectionsToSiblings.Add(id, conn);
+
+                    // If this node must handle the rendering.
+                    if (RenderSibling[id]) {
+                        var conn = ConnectionPlacement.CreateConnectionBetween(graph, this, graph.Nodes[id]);
+                        conn.ShadowColor = new Color(100, 100, 100);
+                        conn.RenderId = graph.Renderer.RenderCurvedLine(conn);
+                        ConnectionsToSiblings.Add(id, conn);
+                    }
+
                 }
 
                 foreach(int child in ChildrenIds) {
@@ -462,15 +484,13 @@ namespace SearchMapCore.Graph {
                 // Re-render lines to siblings.
                 foreach (int id in SiblingsIds) {
 
-                    if (ConnectionsToSiblings.ContainsKey(id)) {
-                        ConnectionPlacement.RefreshConnection(graph, ConnectionsToSiblings[id]);
-                        graph.Renderer.RefreshCurvedLine(ConnectionsToSiblings[id].RenderId);
+                    if (!RenderSibling[id]) {
+                        // To refresh the connection, we need to refresh the node controlling the render.
+                        graph.Nodes[id].RefreshConnectionWithSibling(Id);
+                        continue;
                     }
-                    else {
-                        var conn = ConnectionPlacement.CreateConnectionBetween(graph, this, graph.Nodes[id]);
-                        conn.RenderId = graph.Renderer.RenderCurvedLine(conn);
-                        ConnectionsToSiblings.Add(id, conn);
-                    }
+
+                    RefreshConnectionWithSibling(id);
 
                 }               
 
@@ -480,6 +500,20 @@ namespace SearchMapCore.Graph {
                 }
 
             }
+        }
+
+        private void RefreshConnectionWithSibling(int id) {
+
+            if (ConnectionsToSiblings.ContainsKey(id)) {
+                ConnectionPlacement.RefreshConnection(graph, ConnectionsToSiblings[id]);
+                graph.Renderer.RefreshCurvedLine(ConnectionsToSiblings[id].RenderId);
+            }
+            else {
+                var conn = ConnectionPlacement.CreateConnectionBetween(graph, this, graph.Nodes[id]);
+                conn.RenderId = graph.Renderer.RenderCurvedLine(conn);
+                ConnectionsToSiblings.Add(id, conn);
+            }
+
         }
 
         /// <summary>

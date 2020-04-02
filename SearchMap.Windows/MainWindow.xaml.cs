@@ -139,6 +139,9 @@ namespace SearchMap.Windows {
             return SearchMapCore.SearchMapCore.Graph;
         }
 
+        /// <summary>
+        /// Deselects the selected objects, if any.
+        /// </summary>
         public void DeselectAll() {
 
             if (Selected != null) {

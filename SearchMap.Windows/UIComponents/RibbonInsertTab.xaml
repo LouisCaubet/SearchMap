@@ -53,9 +53,27 @@
 
     <Fluent:RibbonGroupBox Header="Connections">
 
-        <Fluent:ToggleButton Header="New Connection">
+        <Fluent:SplitButton Header="Create connection"
+                            x:Name="NewConnectionButton"
+                            LargeIcon="../Resources/Connection_Red.png"
+                            Margin="5,5,5,0">
 
-        </Fluent:ToggleButton>
+            <Fluent:Gallery>
+                <Fluent:GalleryItem x:Name="NewGrayConnButton">
+                    <Image Source="../Resources/Connection_Gray.png" Height="80" />
+                </Fluent:GalleryItem>
+
+                <Fluent:GalleryItem x:Name="NewRedConnButton">
+                    <Image Source="../Resources/Connection_Red.png" Height="80" />
+                </Fluent:GalleryItem>
+
+                <Fluent:GalleryItem x:Name="NewGreenConnButton">
+                    <Image Source="../Resources/Connection_Green.png" Height="80" />
+                </Fluent:GalleryItem>
+
+            </Fluent:Gallery>
+
+        </Fluent:SplitButton>
 
     </Fluent:RibbonGroupBox>
 

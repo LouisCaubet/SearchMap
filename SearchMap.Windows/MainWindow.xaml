@@ -118,7 +118,13 @@
                           Visibility="Visible"
                           Grid.Row="2"
                           x:Name="StatusBar">
+
+            <Fluent:StatusBarItem Title="Instructions"
+                                  x:Name="StatusBarInstructionField"
+                                  HorizontalAlignment="Left"
+                                  Margin="10,0,0,0" />
             
+
             <Separator HorizontalAlignment="Right" />
 
             <Fluent:StatusBarItem Title="Zoom"

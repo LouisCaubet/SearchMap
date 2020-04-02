@@ -13,7 +13,7 @@ namespace SearchMap.Windows.UIComponents {
     /// </summary>
     public partial class ConnectionControl : UserControl {
 
-        Connection Connection { get; }
+        internal Connection Connection { get; }
 
         /// <summary>
         /// Where the connection must be placed on canvas.

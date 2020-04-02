@@ -152,6 +152,10 @@ namespace SearchMap.Windows {
 
             }
 
+            if(e.Key == Key.Escape) {
+                RibbonTabInsert.CancelAllTasks();
+            }
+
         }
 
         #endregion Clipboard
