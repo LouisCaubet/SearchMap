@@ -6,30 +6,57 @@
              xmlns:local="clr-namespace:SearchMap.Windows.UIComponents"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <Canvas>
     
-    <Path x:Name="Path" Stroke="AliceBlue" StrokeThickness="5">
+        <Path x:Name="Path" Stroke="AliceBlue" StrokeThickness="5">
 
-        <Path.Effect>
-            <DropShadowEffect x:Name="ShadowEffect" Color="Blue" ShadowDepth="0" BlurRadius="20"  />
-            
-        </Path.Effect>
+            <Path.Effect>
+                <DropShadowEffect x:Name="ShadowEffect" Color="Blue" ShadowDepth="0" BlurRadius="20"  />
+            </Path.Effect>
 
-        <Path.Data>
-            <PathGeometry>
-                <PathGeometry.Figures>
-                    <PathFigureCollection>
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigureCollection>
 
-                        <PathFigure x:Name="Figure" StartPoint="10, 100">
-                            <PathFigure.Segments>
-                                <PolyBezierSegment x:Name="PolySegment" Points="0,0 200,0 300, 100" />
-                            </PathFigure.Segments>
-                        </PathFigure>
-                        
-                    </PathFigureCollection>
-                </PathGeometry.Figures>
-            </PathGeometry>
-        </Path.Data>
-            
-    </Path>
-    
+                            <PathFigure x:Name="Figure" StartPoint="10, 100">
+                                <PathFigure.Segments>
+                                    <PolyBezierSegment x:Name="PolySegment" Points="0,0 200,0 300, 100" />
+                                </PathFigure.Segments>
+                            </PathFigure>
+
+                        </PathFigureCollection>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+
+        </Path>
+
+        <!-- Hitbox of the previous path is too small; 
+        we add this transparent path with the same figure to increase the hitbox of this control. -->
+        <Path x:Name="Hitbox" Stroke="Transparent" StrokeThickness="50">
+
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigureCollection>
+
+                            <PathFigure x:Name="HitboxFigure" StartPoint="10, 100">
+                                <PathFigure.Segments>
+                                    <PolyBezierSegment x:Name="HitboxPolySegment" Points="0,0 200,0 300, 100" />
+                                </PathFigure.Segments>
+                            </PathFigure>
+
+                        </PathFigureCollection>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+
+        </Path>
+
+
+
+    </Canvas>
+
 </UserControl>

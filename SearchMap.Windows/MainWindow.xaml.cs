@@ -11,13 +11,14 @@ using System.Windows.Controls;
 namespace SearchMap.Windows {
 
     /// <summary>
-    /// Logique d'interaction pour MainWindow.xaml
+    /// Represents the Main Window of the SearchMap Windows Software.
     /// </summary>
     public partial class MainWindow : RibbonWindow {
 
         /// <summary>
         /// The scale factor from abstract length to real length.
-        /// 1 for computer seems good, higher for phones, etc.
+        /// 1 for computer seems good, higher for phones, etc. <para/>
+        /// Note: this has not been properly implemented and values other than 1 will break things.
         /// </summary>
         public const double SCALE_FACTOR = 1;
 
@@ -26,6 +27,9 @@ namespace SearchMap.Windows {
         /// </summary>
         public static MainWindow Window;
 
+        /// <summary>
+        /// The renderer for the opened graph
+        /// </summary>
         internal static GraphRenderer Renderer;
 
         /// <summary>
@@ -38,11 +42,17 @@ namespace SearchMap.Windows {
         /// </summary>
         internal Point? LastClickedPoint { get; set; }
 
+        /// <summary>
+        /// Indicates which tab the user was using. Used to restore after opening a "hidden" tab.
+        /// </summary>
+        internal int RibbonTabIndex { get; set; }
+
         // Move by dragging
-        Point? lastCenterPositionOnTarget;
-        Point? lastMousePositionOnTarget;
         Point? lastDragPoint;
 
+        /// <summary>
+        /// Must only be called by the WPF system.
+        /// </summary>
         public MainWindow() {
             InitializeComponent();
 
@@ -59,6 +69,8 @@ namespace SearchMap.Windows {
             Closed += OnWindowClose;
 
             RegisterEventHandlers();
+
+            RibbonTabIndex = 0;
 
             // Hide ScrollView when no project is opened - disabled for testing
             // ScrollView.Visibility = Visibility.Hidden;
@@ -77,8 +89,6 @@ namespace SearchMap.Windows {
             Graph test = SearchMapCore.SearchMapCore.CreateTestGraph();
             test.Render(Renderer);
             SearchMapCore.SearchMapCore.Graph = test;
-            // test.Renderer.RenderNode(test.RootNode);
-            // test.RootNode.Render();
 
             OnWindowSizeChanged(null, null);
 
@@ -126,8 +136,8 @@ namespace SearchMap.Windows {
         public void MoveToCenterOfCanvas() {
             // Center scrollview 
 
-            ScrollView.ScrollToVerticalOffset((GraphCanvas.Height - ScrollView.ActualHeight) / 2);
-            ScrollView.ScrollToHorizontalOffset((GraphCanvas.Width - ScrollView.ActualWidth) / 2);
+            ScrollView.ScrollToVerticalOffset((GraphCanvas.Height * DEFAULT_ZOOM - ScrollView.ActualHeight) / 2);
+            ScrollView.ScrollToHorizontalOffset((GraphCanvas.Width * DEFAULT_ZOOM - ScrollView.ActualWidth) / 2);
 
         }
 
@@ -147,6 +157,11 @@ namespace SearchMap.Windows {
             if (Selected != null) {
                 Selected.SelectionAnimation.Normal();
                 Selected = null;
+            }
+
+            // Deselect connection
+            if(ConnectionControl.Selected != null) {
+                ConnectionControl.Selected.SetUnselected();
             }
 
         }

@@ -21,6 +21,8 @@ namespace SearchMap.Windows.UIComponents {
     /// </summary>
     public partial class RibbonCustomizeConnTab : RibbonTabItem {
 
+        public const int TAB_INDEX = 7;
+
         public RibbonCustomizeConnTab() {
             InitializeComponent();
         }

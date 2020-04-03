@@ -32,14 +32,14 @@
                                                  TabItemMouseOverForeground="BlueViolet"
                                                  TabItemSelectedMouseOverForeground="Blue"
                                                  Header="{t:Translate Key=Node_ContextualGroup_Header}"
-                                                 Visibility="Visible" />
+                                                 Visibility="Collapsed" />
 
                 <Fluent:RibbonContextualTabGroup x:Name="connection_tools"
                                                  BorderBrush="Green"
                                                  Background="LightGreen"
                                                  Foreground="Green"
                                                  Header="{t:Translate Key=Connections_ContextualGroup_Header}"
-                                                 Visibility="Visible" />
+                                                 Visibility="Collapsed" />
 
             </Fluent:Ribbon.ContextualGroups>
 
@@ -78,9 +78,9 @@
 
             <uicomponents:RibbonHelpTab x:Name="RibbonTabHelp" />
 
-            <uicomponents:RibbonWebNodeTab Group="{Binding Source={x:Reference node_tools}}" x:Name="RibbonTabWebNode" Visibility="Visible" />
+            <uicomponents:RibbonWebNodeTab Group="{Binding Source={x:Reference node_tools}}" x:Name="RibbonTabWebNode" />
 
-            <uicomponents:RibbonCustomizeConnTab Group="{Binding Source={x:Reference connection_tools}}" x:Name="RibbonTabConnection" Visibility="Visible" />
+            <uicomponents:RibbonCustomizeConnTab Group="{Binding Source={x:Reference connection_tools}}" x:Name="RibbonTabConnection" />
 
             
         </Fluent:Ribbon>
@@ -91,7 +91,7 @@
             <Canvas x:Name="GraphCanvas" Height="2000" Width="3000">
 
                 <Canvas.LayoutTransform>
-                    <ScaleTransform x:Name="ScaleTransform"/>
+                    <ScaleTransform x:Name="ScaleTransform" />
                 </Canvas.LayoutTransform>
 
                 <Canvas.Background>

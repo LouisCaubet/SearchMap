@@ -21,7 +21,7 @@ namespace SearchMap.Windows.UIComponents {
         /// Registers commands associated with the buttons of the Ribbon Home Tab.
         /// Must be called before any interaction with the ribbon.
         /// </summary>
-        public void RegisterCommands() {
+        internal void RegisterCommands() {
 
             Paste = new RoutedCommand("HomeTabCommands.Paste", typeof(RibbonHomeTab));
             MainWindow.Window.CommandBindings.Add(new CommandBinding(Paste, Paste_Execute, Paste_CanExecute));
@@ -40,7 +40,7 @@ namespace SearchMap.Windows.UIComponents {
         /// <summary>
         /// Registers commands defined in the Insert ribbon tab. Must be called once those commands have been initialized.
         /// </summary>
-        public void RegisterInsertionCommands() {
+        internal void RegisterInsertionCommands() {
             NewWebNodeButton.Command = MainWindow.Window.RibbonTabInsert.NewWebNode;
 
             NewConnectionButton.Command = MainWindow.Window.RibbonTabInsert.NewConnection;

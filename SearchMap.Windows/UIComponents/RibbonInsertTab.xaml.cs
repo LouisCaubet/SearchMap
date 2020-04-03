@@ -25,7 +25,10 @@ namespace SearchMap.Windows.UIComponents {
             InitializeComponent();
         }
 
-        public void RegisterCommands() {
+        /// <summary>
+        /// Registers commands for the buttons in this tab.
+        /// </summary>
+        internal void RegisterCommands() {
 
             NewWebNode = new RoutedCommand("InsertTabCommands.NewWebNode", GetType());
             MainWindow.Window.CommandBindings.Add(new CommandBinding(NewWebNode, NewWebNode_Execute, NewWebNode_CanExecute));

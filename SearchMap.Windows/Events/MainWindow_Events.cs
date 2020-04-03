@@ -5,13 +5,16 @@ using SearchMapCore.Graph;
 using SearchMapCore.Serialization;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace SearchMap.Windows {
 
     public partial class MainWindow {
 
-        private const int NUMBER_OF_PERSISTANT_TABS = 7;
+        internal const int NUMBER_OF_PERSISTANT_TABS = 6;
+
+        private const double DEFAULT_ZOOM = 0.4;
 
         // Event Handling
 
@@ -31,6 +34,9 @@ namespace SearchMap.Windows {
             // Ribbon layout changes.
             SizeChanged += OnWindowSizeChanged;
             StateChanged += OnWindowStateChanged;
+
+            // Ribbon
+            Ribbon.SelectedTabChanged += OnSelectedTabChanged;
 
             // Clipboard
             KeyDown += OnKeyPress;
@@ -74,7 +80,6 @@ namespace SearchMap.Windows {
         }
 
         void OnPreviewMouseWheel(object sender, MouseWheelEventArgs e) {
-            lastMousePositionOnTarget = Mouse.GetPosition(WindowGrid);
 
             if (e.Delta > 0) {
                 ZoomSlider.Value += 0.03;
@@ -93,12 +98,11 @@ namespace SearchMap.Windows {
         }
 
         void OnSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            ScaleTransform.ScaleX = e.NewValue;
-            ScaleTransform.ScaleY = e.NewValue;
+            ScaleTransform.ScaleX = e.NewValue * DEFAULT_ZOOM;
+            ScaleTransform.ScaleY = e.NewValue * DEFAULT_ZOOM;
 
             var centerOfViewport = new Point(ScrollView.ViewportWidth / 2,
                                              ScrollView.ViewportHeight / 2);
-            lastCenterPositionOnTarget = ScrollView.TranslatePoint(centerOfViewport, WindowGrid);
         }
 
         // End of move by drag & drop implementation.
@@ -123,6 +127,12 @@ namespace SearchMap.Windows {
 
         void OnWindowStateChanged(object sender, EventArgs e) {
             OnWindowSizeChanged(sender, null);
+        }
+
+        void OnSelectedTabChanged(object sender, SelectionChangedEventArgs e) {
+            if(Ribbon.SelectedTabIndex < NUMBER_OF_PERSISTANT_TABS) {
+                RibbonTabIndex = Ribbon.SelectedTabIndex;
+            }
         }
 
         // END of ribbon management

@@ -9,7 +9,11 @@ namespace SearchMapCore.Graph {
     /// </summary>
     public class Connection {
 
-        public const int CONNECTOR_EDIT_DISTANCE = 75;
+        /// <summary>
+        /// When the click is closer to one node than this distance, it will change the position of the connector 
+        /// to this node instead of the control point.
+        /// </summary>
+        public const int CONNECTOR_EDIT_DISTANCE = 200;
 
         private Graph Graph { get; }
 
@@ -24,6 +28,9 @@ namespace SearchMapCore.Graph {
         /// </summary>
         public List<Location> Points { get; set; }
 
+        /// <summary>
+        /// The points than have been imposed by user interaction.
+        /// </summary>
         public List<Location> UserImposedPoints { get; set; }
 
         /// <summary>

@@ -31,6 +31,9 @@ namespace SearchMap.Windows.UIComponents {
                 Cursor = Cursors.Hand;
                 Mouse.Capture(this);
 
+                MainWindow.Window.DeselectAll();
+                SetSelected();
+
             }
 
         }

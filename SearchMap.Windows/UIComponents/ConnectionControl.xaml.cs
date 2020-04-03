@@ -13,12 +13,20 @@ namespace SearchMap.Windows.UIComponents {
     /// </summary>
     public partial class ConnectionControl : UserControl {
 
-        internal Connection Connection { get; }
+        /// <summary>
+        /// The currently selected connection.
+        /// </summary>
+        public static ConnectionControl Selected = null;
+
+        /// <summary>
+        /// The connection represented by this control
+        /// </summary>
+        public Connection Connection { get; }
 
         /// <summary>
         /// Where the connection must be placed on canvas.
         /// </summary>
-        public Point PositionOnCanvas { get; private set; }
+        internal Point PositionOnCanvas { get; private set; }
 
         public ConnectionControl(Connection connection) {
             InitializeComponent();
@@ -72,9 +80,11 @@ namespace SearchMap.Windows.UIComponents {
 
             // Draw
             Figure.StartPoint = draw_points[0];
+            HitboxFigure.StartPoint = draw_points[0];
 
             // Note: a multiple of 3 points is required.
             PolySegment.Points = new PointCollection(draw_points.GetRange(1, 3));
+            HitboxPolySegment.Points = new PointCollection(draw_points.GetRange(1, 3));
 
 
             // Colors :
@@ -88,6 +98,20 @@ namespace SearchMap.Windows.UIComponents {
 
             // (Colors default to white with blue shadow - see XAML)
 
+        }
+
+        public void SetSelected() {
+            Selected = this;
+            Path.StrokeThickness = 10;
+            MainWindow.Window.connection_tools.Visibility = Visibility.Visible;
+            MainWindow.Window.Ribbon.SelectedTabIndex = RibbonCustomizeConnTab.TAB_INDEX;
+        }
+
+        public void SetUnselected() {
+            Selected = null;
+            Path.StrokeThickness = 5;
+            MainWindow.Window.Ribbon.SelectedTabIndex = MainWindow.Window.RibbonTabIndex;
+            MainWindow.Window.connection_tools.Visibility = Visibility.Collapsed;
         }
 
 

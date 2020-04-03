@@ -81,6 +81,11 @@
                        Icon="../Resources/WebNodeIcon_small.png"
                        Margin="5, 5, 5, 0" >
 
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip Title="Create new Web Node" Text="Creates a new node representing a website on this graph, 
+                                  which will be connected to the currently selected node. " />
+            </Fluent:Button.ToolTip>
+
         </Fluent:Button>
 
         <Fluent:Button Header="New File Node" 
