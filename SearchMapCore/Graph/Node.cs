@@ -181,8 +181,14 @@ namespace SearchMapCore.Graph {
         /// <param name="parent">The node to set as parent</param>
         public void SetParent(Node parent) {
 
+            // Save existing connection between this and parent, if existing.
+            Connection conn = null;
+
             // Take snapshot from graph to revert
             SearchMapCore.Clipboard.CtrlZ.Push(new Snapshot(graph));
+
+            // Remove this from parent children - no public function for this, should only be done through SetParent
+            if (GetParent() != null) GetParent().ChildrenIds.Remove(this.Id);
 
             // Argument checks
             if (parent == null) {
@@ -190,8 +196,15 @@ namespace SearchMapCore.Graph {
             }
             else {
 
-                // Remove this from parent children - no public function for this, should only be done through SetParent
-                if (GetParent() != null) GetParent().ChildrenIds.Remove(this.Id);
+                // Case where the new parent is previously a sibling.
+                if (SiblingsIds.Contains(parent.Id)) {
+
+                    // Keep the same connection, to keep user customizations.
+                    conn = ConnectionsToSiblings[parent.Id];
+
+                    RemoveSibling(parent.Id);
+
+                }
 
                 // Add to new parent children
                 parent.ChildrenIds.Add(this.Id);
@@ -199,10 +212,8 @@ namespace SearchMapCore.Graph {
                 // IMPORTANT EDGE CASE : when placing one of the children as parent.
                 // In this case, we swap the nodes (we set the previous parent of this as the parent of the new parent).
                 if (ChildrenIds.Contains(parent.Id)) {
-
                     ChildrenIds.Remove(parent.Id);
                     parent.SetParent(GetParent());
-
                 }
 
                 // Reparent
@@ -214,6 +225,16 @@ namespace SearchMapCore.Graph {
             if (graph.IsDisplayed && ConnectionToParent != null) {
                 graph.Renderer.DeleteObject(ConnectionToParent.RenderId);
                 ConnectionToParent = null;
+            }
+
+            if(conn != null) {
+
+                ConnectionToParent = conn;
+                ConnectionToParent.IsBoldStyle = true;
+
+                // Re-render, as the connection has been deleted when calling RemoveSibling.
+                ConnectionToParent.RenderId = graph.Renderer.RenderCurvedLine(ConnectionToParent);
+
             }
 
             // Render changes.
@@ -261,16 +282,34 @@ namespace SearchMapCore.Graph {
         /// <param name="siblingId">The id of the sibling to remove</param>
         public void RemoveSibling(int siblingId) {
 
-            try {
+            if (SiblingsIds.Contains(siblingId)) {
+
+                Node sibling = graph.Nodes[siblingId];
+
                 Snapshot snapshot = new Snapshot(graph);
-                graph.Nodes[siblingId].SiblingsIds.Remove(Id);
+                sibling.SiblingsIds.Remove(Id);
                 SiblingsIds.Remove(siblingId);
                 SearchMapCore.Clipboard.CtrlZ.Push(snapshot);
+
+                if(rendered) {
+                    if (RenderSibling[siblingId]) {
+                        graph.Renderer.DeleteObject(ConnectionsToSiblings[siblingId].RenderId);
+                    }
+                    else {
+                        graph.Renderer.DeleteObject(sibling.ConnectionsToSiblings[Id].RenderId);
+                    }
+                }
+
+                RenderSibling.Remove(siblingId);
+                sibling.RenderSibling.Remove(Id);
+
+                ConnectionsToSiblings.Remove(siblingId);
+                sibling.ConnectionsToSiblings.Remove(Id);
+
             }
-            catch (KeyNotFoundException) {
+            else {
                 SearchMapCore.Logger.Error("Node with id " + siblingId + " does not exist or is not a sibling of node " + Id);
             }
-
             
         }
         
@@ -366,6 +405,41 @@ namespace SearchMapCore.Graph {
             }
         }
 
+        /// <summary>
+        /// Replaces the connection between this and the given sibling with the given connection <para/>
+        /// The given connection must be a connection between this node and sibling.
+        /// </summary>
+        /// <param name="sibling"></param>
+        /// <param name="connection"></param>
+        public void SetConnectionToSibling(Node sibling, Connection connection) {
+            if (ConnectionsToSiblings.ContainsKey(sibling.Id)) {
+                if((connection.GetDepartureNode() == this && connection.GetArrivalNode() == sibling) ||
+                    connection.GetDepartureNode() == sibling && connection.GetArrivalNode() == this) {
+
+                    // Delete the current connection
+                    graph.Renderer.DeleteObject(ConnectionsToSiblings[sibling.Id].RenderId);
+
+                    // connection is a leftover connection from previous operations
+                    // it has probably been removed from the renderer already.
+                    connection.RenderId = graph.Renderer.RenderCurvedLine(connection);
+
+                    connection.IsBoldStyle = false;
+
+                    // Set new connection
+                    ConnectionsToSiblings[sibling.Id] = connection;
+                    sibling.ConnectionsToSiblings[Id] = connection;
+                    RefreshConnectionWithSibling(sibling.Id);
+
+                }
+                else {
+                    throw new ArgumentException("The given connection must be a connection between {this} and {sibling}.");
+                }
+            }
+            else {
+                throw new ArgumentException("The node given in argument (id = " + sibling.Id + ") is not a sibling of node " + Id);
+            }
+        }
+
         // Graphics operations ----------------------------------------------------------------------------------------------------------------------
 
         /// <summary>
@@ -428,6 +502,7 @@ namespace SearchMapCore.Graph {
 
                 if(ParentId != -1) {
                     ConnectionToParent = ConnectionPlacement.CreateConnectionBetween(graph, this, GetParent());
+                    ConnectionToParent.IsBoldStyle = true;
                     ConnectionToParent.RenderId = graph.Renderer.RenderCurvedLine(ConnectionToParent);
                 }
                 
@@ -470,6 +545,7 @@ namespace SearchMapCore.Graph {
 
                     if(ConnectionToParent == null) {
                         ConnectionToParent = ConnectionPlacement.CreateConnectionBetween(graph, this, GetParent());
+                        ConnectionToParent.IsBoldStyle = true;
                         ConnectionToParent.RenderId = graph.Renderer.RenderCurvedLine(ConnectionToParent);
                     }
                     else {

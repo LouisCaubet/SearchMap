@@ -99,6 +99,8 @@ namespace SearchMap.Windows {
             RibbonTabHome.RegisterCommands();
             RibbonTabInsert.RegisterCommands();
 
+            RibbonTabConnection.RegisterCommands();
+
         }
 
         void OnWindowClose(object sender, EventArgs e) {

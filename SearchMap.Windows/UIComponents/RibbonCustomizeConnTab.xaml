@@ -10,5 +10,72 @@
                       d:DesignHeight="450" d:DesignWidth="800"
                       Header="{t:Translate Key=CustomizeConnection_RibbonTab}">
 
+    <Fluent:RibbonGroupBox Header="Revert">
+
+        <Fluent:Button Header="Revert to default shape" 
+                       x:Name="RevertButton"
+                       LargeIcon="../Resources/RevertIcon_small.png"
+                       Margin="5, 5, 5, 0">
+
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip Title="Revert to default shape" Text="Regenerates the connection, removing all shape modifications done by the user." />
+            </Fluent:Button.ToolTip>
+
+        </Fluent:Button>
+
+    </Fluent:RibbonGroupBox>
+
+    <Fluent:RibbonGroupBox Header="Style">
+
+        <Fluent:DropDownButton Header="Color" 
+                               x:Name="ColorButton"
+                               LargeIcon="../Resources/ColorCircle_small.png"
+                               Margin="5, 5, 5, 0">
+
+            <Fluent:ColorGallery Mode="StandardColors" 
+                                 StandardColorGridRows="5"
+                                 x:Name="ColorSelector"
+                                 IsNoColorButtonVisible="False" 
+            />
+
+            <Fluent:DropDownButton.ToolTip>
+                <Fluent:ScreenTip Title="Color" Text="Choose a new color for the selected connection." />
+            </Fluent:DropDownButton.ToolTip>
+
+        </Fluent:DropDownButton>
+
+    </Fluent:RibbonGroupBox>
+
+
+    <Fluent:RibbonGroupBox Header="Importance">
+
+        <Fluent:Button Header="Make primary" 
+                       x:Name="MakePrimaryButton"
+                       LargeIcon="../Resources/PrimaryImportance.png"
+                       Margin="5, 5, 5, 0" />
+        
+        <Fluent:Button Header="Make secondary" 
+                       x:Name="MakeSecondaryButton"
+                       LargeIcon="../Resources/SecondaryImportance.png"
+                       Margin="5, 5, 5, 0" />
+
+    </Fluent:RibbonGroupBox>
+    
+
+    <Fluent:RibbonGroupBox Header="Delete">
+
+        <Fluent:Button Header="Delete connection" 
+                       x:Name="DeleteButton"
+                       LargeIcon="../Resources/DeleteIcon.png"
+                       Margin="5, 5, 5, 0">
+
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip Title="Delete connection" Text="Deletes the selected connection." />
+            </Fluent:Button.ToolTip>
+            
+        </Fluent:Button>
+
+    </Fluent:RibbonGroupBox>
+
    
 </Fluent:RibbonTabItem>

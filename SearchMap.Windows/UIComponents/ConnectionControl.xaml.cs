@@ -86,6 +86,15 @@ namespace SearchMap.Windows.UIComponents {
             PolySegment.Points = new PointCollection(draw_points.GetRange(1, 3));
             HitboxPolySegment.Points = new PointCollection(draw_points.GetRange(1, 3));
 
+            // Thickness
+            if (Connection.IsBoldStyle) {
+                Path.StrokeThickness = 10;
+                ShadowEffect.BlurRadius = 40;
+            }
+            else {
+                Path.StrokeThickness = 5;
+                ShadowEffect.BlurRadius = 20;
+            }
 
             // Colors :
             if (Connection.Color != null) {
@@ -102,14 +111,19 @@ namespace SearchMap.Windows.UIComponents {
 
         public void SetSelected() {
             Selected = this;
-            Path.StrokeThickness = 10;
+            Path.Stroke = new SolidColorBrush(Color.FromRgb(225, 225, 225));
             MainWindow.Window.connection_tools.Visibility = Visibility.Visible;
             MainWindow.Window.Ribbon.SelectedTabIndex = RibbonCustomizeConnTab.TAB_INDEX;
         }
 
         public void SetUnselected() {
             Selected = null;
-            Path.StrokeThickness = 5;
+
+            if (Connection.Color != null) {
+                Path.Stroke = new SolidColorBrush(CoreToWPFUtils.CoreColorToWPF(Connection.Color));
+            }
+            else Path.Stroke = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+
             MainWindow.Window.Ribbon.SelectedTabIndex = MainWindow.Window.RibbonTabIndex;
             MainWindow.Window.connection_tools.Visibility = Visibility.Collapsed;
         }

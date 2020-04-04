@@ -20,6 +20,15 @@ namespace SearchMap.Windows.Utils {
 
         }
 
+        /// <summary>
+        /// Converts a Color (Windows) to a Color (SearchMapCore.Rendering)
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public static SearchMapCore.Rendering.Color WPFColorToCore(Color color) {
+            return new SearchMapCore.Rendering.Color(color.A, color.R, color.G, color.B);
+        }
+
     }
 
 }

@@ -252,5 +252,20 @@
     <Resource Include="Resources\Connection_Green.png" />
     <Resource Include="Resources\Connection_Red.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\RevertIcon_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\DeleteIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ColorCircle_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SecondaryImportance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PrimaryImportance.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

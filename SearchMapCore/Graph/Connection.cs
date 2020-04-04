@@ -34,18 +34,6 @@ namespace SearchMapCore.Graph {
         public List<Location> UserImposedPoints { get; set; }
 
         /// <summary>
-        /// Constructs a new Connection object, with default values.
-        /// </summary>
-        public Connection(Graph graph) {
-            Graph = graph;
-            Points = new List<Location>();
-            UserImposedPoints = new List<Location>(4) { null, null, null, null };
-            Color = null;
-            ShadowColor = null;
-            IsCustomizedByUser = false;
-        }
-
-        /// <summary>
         /// The inner color of the Connection
         /// </summary>
         public Color Color { get; set; }
@@ -55,6 +43,11 @@ namespace SearchMapCore.Graph {
         /// </summary>
         public Color ShadowColor { get; set; }
 
+        /// <summary>
+        /// true for connections between father-child, false for nodes between siblings.
+        /// </summary>
+        public bool IsBoldStyle { get; internal set; }
+        
         // Used to refresh user customized connections
         internal int NodeFromId { get; set; }
         internal int NodeToId { get; set; }
@@ -66,6 +59,19 @@ namespace SearchMapCore.Graph {
         /// Indicates if this node was customized by user.
         /// </summary>
         public bool IsCustomizedByUser { get; set; }
+
+        /// <summary>
+        /// Constructs a new Connection object, with default values.
+        /// </summary>
+        public Connection(Graph graph) {
+            Graph = graph;
+            Points = new List<Location>();
+            UserImposedPoints = new List<Location>(4) { null, null, null, null };
+            Color = null;
+            ShadowColor = null;
+            IsCustomizedByUser = false;
+            IsBoldStyle = false;
+        }
 
         public Node GetDepartureNode() {
             return Graph.Nodes[NodeFromId];
