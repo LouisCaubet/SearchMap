@@ -166,6 +166,9 @@ namespace SearchMap.Windows {
                 RibbonTabInsert.CancelAllTasks();
             }
 
+            // Propagate event to selected control (for some reason the event is not fired there)
+            if (ConnectionControl.Selected != null) ConnectionControl.Selected.OnKeyDown(sender, e);
+
         }
 
         #endregion Clipboard

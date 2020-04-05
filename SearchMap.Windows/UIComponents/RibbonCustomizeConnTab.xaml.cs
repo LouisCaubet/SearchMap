@@ -24,7 +24,9 @@ namespace SearchMap.Windows.UIComponents {
         public RibbonCustomizeConnTab() {
             InitializeComponent();
 
+            // Events
             ColorSelector.SelectedColorChanged += SelectedColorChanged;
+
         }
 
         private void SelectedColorChanged(object sender, RoutedEventArgs e) {
@@ -43,6 +45,9 @@ namespace SearchMap.Windows.UIComponents {
 
         }
 
+        /// <summary>
+        /// Registers commands associated to the buttons in this ribbon tab.
+        /// </summary>
         internal void RegisterCommands() {
 
             RevertShape = new RoutedCommand("RibbonConnectionTab.RevertShape", GetType());
@@ -111,26 +116,7 @@ namespace SearchMap.Windows.UIComponents {
                 return;
             }
 
-            var conn = ConnectionControl.Selected.Connection;
-
-            if (conn.IsBoldStyle) {
-                // Must attribute new parent before deleting.
-                // If the node doesnt have any siblings, parent is null.
-                Node[] siblings = conn.GetDepartureNode().GetSiblings();
-                if(siblings.Length == 0) {
-                    conn.GetDepartureNode().SetParent(null);
-                }
-                else {
-                    conn.GetDepartureNode().RemoveSibling(siblings[0].Id);
-                    conn.GetDepartureNode().SetParent(siblings[0]);
-                }
-            }
-            else {
-                // Just delete it.
-                conn.GetDepartureNode().RemoveSibling(conn.GetArrivalNode().Id);
-            }
-
-            MainWindow.Window.DeselectAll();
+            ConnectionControl.Selected.DeleteConnection();
 
         }
 

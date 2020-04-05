@@ -19,6 +19,17 @@ namespace SearchMap.Windows.UIComponents {
 
         }
 
+        /// <summary>
+        /// Only called by MainWindow to propagate a KeyDown event.
+        /// </summary>
+        internal void OnKeyDown(object sender, KeyEventArgs e) {
+            
+            if(e.Key == Key.Delete) {
+                DeleteConnection();
+            }
+
+        }
+
         void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
 
             if (IsMouseOver) {
@@ -41,9 +52,6 @@ namespace SearchMap.Windows.UIComponents {
         void OnMouseMove(object sender, MouseEventArgs e) {
             if (CurrentAction.HasValue) {
                 Point posNow = e.GetPosition(MainWindow.Window.GraphCanvas);
-
-                // double dX = posNow.X - lastDragPoint.Value.X;
-                // double dY = posNow.Y - lastDragPoint.Value.Y;
 
                 switch (CurrentAction) {
 

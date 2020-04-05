@@ -33,6 +33,10 @@ namespace SearchMap.Windows.UIComponents {
         /// </summary>
         internal Point PositionOnCanvas { get; private set; }
 
+        /// <summary>
+        /// Creates a new Connection Control representing the given Connection
+        /// </summary>
+        /// <param name="connection"></param>
         public ConnectionControl(Connection connection) {
             InitializeComponent();
 
@@ -46,6 +50,9 @@ namespace SearchMap.Windows.UIComponents {
 
         }
 
+        /// <summary>
+        /// Renders changes of the Connection object to this Control.
+        /// </summary>
         public void Refresh() {
 
             // Convert the abstract connection to real points
@@ -114,13 +121,22 @@ namespace SearchMap.Windows.UIComponents {
 
         }
 
+        /// <summary>
+        /// Selects this connection, allowing the "Connection" tab to interact with it.
+        /// </summary>
         public void SetSelected() {
+
             Selected = this;
             Path.Stroke = new SolidColorBrush(Color.FromRgb(225, 225, 225));
+
             MainWindow.Window.connection_tools.Visibility = Visibility.Visible;
             MainWindow.Window.Ribbon.SelectedTabIndex = RibbonCustomizeConnTab.TAB_INDEX;
+
         }
 
+        /// <summary>
+        /// Deselects this connection.
+        /// </summary>
         public void SetUnselected() {
             Selected = null;
 
@@ -133,6 +149,31 @@ namespace SearchMap.Windows.UIComponents {
             MainWindow.Window.connection_tools.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Deletes this control and the associated connection.
+        /// </summary>
+        public void DeleteConnection() {
+
+            if (Connection.IsBoldStyle) {
+                // Must attribute new parent before deleting.
+                // If the node doesnt have any siblings, parent is null.
+                Node[] siblings = Connection.GetDepartureNode().GetSiblings();
+                if (siblings.Length == 0) {
+                    Connection.GetDepartureNode().SetParent(null);
+                }
+                else {
+                    Connection.GetDepartureNode().RemoveSibling(siblings[0].Id);
+                    Connection.GetDepartureNode().SetParent(siblings[0]);
+                }
+            }
+            else {
+                // Just delete it.
+                Connection.GetDepartureNode().RemoveSibling(Connection.GetArrivalNode().Id);
+            }
+
+            MainWindow.Window.DeselectAll();
+
+        }
 
     }
 }
