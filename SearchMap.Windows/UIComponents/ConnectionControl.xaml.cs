@@ -13,6 +13,11 @@ namespace SearchMap.Windows.UIComponents {
     /// </summary>
     public partial class ConnectionControl : UserControl {
 
+        private const double WIDTH_SECONDARY = 5;
+        private const double WIDTH_PRIMARY = 12;
+        private const double SHADOW_SECONDARY = 20;
+        private const double SHADOW_PRIMARY = 45;
+
         /// <summary>
         /// The currently selected connection.
         /// </summary>
@@ -88,12 +93,12 @@ namespace SearchMap.Windows.UIComponents {
 
             // Thickness
             if (Connection.IsBoldStyle) {
-                Path.StrokeThickness = 10;
-                ShadowEffect.BlurRadius = 40;
+                Path.StrokeThickness = WIDTH_PRIMARY;
+                ShadowEffect.BlurRadius = SHADOW_PRIMARY;
             }
             else {
-                Path.StrokeThickness = 5;
-                ShadowEffect.BlurRadius = 20;
+                Path.StrokeThickness = WIDTH_SECONDARY;
+                ShadowEffect.BlurRadius = SHADOW_SECONDARY;
             }
 
             // Colors :

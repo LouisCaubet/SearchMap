@@ -52,12 +52,26 @@
         <Fluent:Button Header="Make primary" 
                        x:Name="MakePrimaryButton"
                        LargeIcon="../Resources/PrimaryImportance.png"
-                       Margin="5, 5, 5, 0" />
-        
+                       Margin="5, 5, 5, 0">
+
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip x:Name="MakePrimaryScreenTip" Title="Make selected connection primary" />
+            </Fluent:Button.ToolTip>
+            
+        </Fluent:Button>
+
         <Fluent:Button Header="Make secondary" 
                        x:Name="MakeSecondaryButton"
                        LargeIcon="../Resources/SecondaryImportance.png"
-                       Margin="5, 5, 5, 0" />
+                       Margin="5, 5, 5, 0">
+
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip x:Name="MakeSecondaryScreenTip" 
+                                  Title="Make selected connection secondary"
+                                  Text="Secondary connections are used to indicate weaker relations between nodes."/>
+            </Fluent:Button.ToolTip>
+
+        </Fluent:Button>
 
     </Fluent:RibbonGroupBox>
     

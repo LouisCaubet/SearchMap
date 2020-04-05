@@ -130,6 +130,8 @@ namespace SearchMap.Windows.UIComponents {
                 conn.GetDepartureNode().RemoveSibling(conn.GetArrivalNode().Id);
             }
 
+            MainWindow.Window.DeselectAll();
+
         }
 
         #endregion
@@ -139,9 +141,17 @@ namespace SearchMap.Windows.UIComponents {
         void MakeSecondary_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
 
             if(ConnectionControl.Selected != null) {
-
                 var conn = ConnectionControl.Selected.Connection;
                 e.CanExecute = conn.IsBoldStyle;
+
+                // Tooltip
+                if (!conn.IsBoldStyle) {
+                    MakeSecondaryScreenTip.Text = "Secondary connections are used to indicate weaker relations between nodes." +
+                        "\n\n" + "This feature is disabled, as the selected connection is already secondary.";
+                }
+                else {
+                    MakeSecondaryScreenTip.Text = "Secondary connections are used to indicate weaker relations between nodes.";
+                }
 
             }
             else {
@@ -191,6 +201,18 @@ namespace SearchMap.Windows.UIComponents {
                 var conn = ConnectionControl.Selected.Connection;
                 // Can only be executed if one of the nodes doesnt have a parent yet. Else, user should use the reparent feature.
                 e.CanExecute = !conn.IsBoldStyle && (conn.GetDepartureNode().GetParent() == null || conn.GetArrivalNode().GetParent() == null);
+
+                MakePrimaryScreenTip.Text = "Primary connections represent the main relations between nodes. They connect a child node to its only parent.";
+
+                if (!e.CanExecute) {
+                    if (conn.IsBoldStyle) {
+                        MakePrimaryScreenTip.Text += "\n\nThis feature is disabled, as the selected connection is already primary.";
+                    }
+                    else if (conn.GetDepartureNode().GetParent() != null && conn.GetArrivalNode().GetParent() != null) {
+                        MakePrimaryScreenTip.Text += "\n\nThis feature is disabled, because both nodes connected by this connection already have a parent. " +
+                            "To change the parent, drag the child node on another node, which will become the parent.";
+                    }
+                }
 
             }
             else {
