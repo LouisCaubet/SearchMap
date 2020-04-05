@@ -10,6 +10,8 @@ namespace SearchMapCore.Graph {
         private const int DEFAULT_HEIGHT = 250;
         private const int DEFAULT_WIDTH = 500;
 
+        #region Properties
+
         private Graph graph;
 
         // These properties need to be accessed internally by the undo/redo system. ----------------------------------------------------------------
@@ -32,48 +34,14 @@ namespace SearchMapCore.Graph {
         /// <summary>
         ///  true if this node handles the rendering of the connection.
         /// </summary>
-        private Dictionary<int, bool> RenderSibling { get; } 
-
-        protected bool rendered;
-
-        /// <summary>
-        /// Creates a new node, adding it to the graph passed as argument.
-        /// </summary>
-        /// <param name="graph">The graph to add the node to.</param>
-        public Node(Graph graph) {
-            this.graph = graph;
-            if (graph == null) throw new InvalidOperationException("Tried to associate a Node with graph null.");
-
-            ChildrenIds = new HashSet<int>();
-            SiblingsIds = new HashSet<int>();
-            RenderSibling = new Dictionary<int, bool>();
-            ParentId = -1;
-
-            // Generate Id
-            Id = graph.Internal_AddNewNode(this);
-
-            // Do not render the node for now
-            rendered = false;
-
-            // Set default width/height values
-            Height = DEFAULT_HEIGHT;
-            Width = DEFAULT_WIDTH;
-
-            // Default colors
-            Color = new Color(255, 255, 255);
-            BorderColor = new Color(50, 50, 50);
-
-            // Default location
-            Location = new Location(0, 0);
-
-            ConnectionsToSiblings = new Dictionary<int, Connection>();
-
-        }
+        private Dictionary<int, bool> RenderSibling { get; }
 
         /// <summary>
         /// The Id of this node in the graph. Set once when creating the node.
         /// </summary>
         public int Id { get; }
+
+        protected bool rendered;
 
         // Characteristics -------------------------------------------------------------------------------------------------------------------------
 
@@ -131,8 +99,43 @@ namespace SearchMapCore.Graph {
         /// </summary>
         public Location Location { get; protected set; }
 
+        #endregion
 
-        // -- Getters --------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Creates a new node, adding it to the graph passed as argument.
+        /// </summary>
+        /// <param name="graph">The graph to add the node to.</param>
+        public Node(Graph graph) {
+            this.graph = graph;
+            if (graph == null) throw new InvalidOperationException("Tried to associate a Node with graph null.");
+
+            ChildrenIds = new HashSet<int>();
+            SiblingsIds = new HashSet<int>();
+            RenderSibling = new Dictionary<int, bool>();
+            ParentId = -1;
+
+            // Generate Id
+            Id = graph.Internal_AddNewNode(this);
+
+            // Do not render the node for now
+            rendered = false;
+
+            // Set default width/height values
+            Height = DEFAULT_HEIGHT;
+            Width = DEFAULT_WIDTH;
+
+            // Default colors
+            Color = new Color(255, 255, 255);
+            BorderColor = new Color(50, 50, 50);
+
+            // Default location
+            Location = new Location(0, 0);
+
+            ConnectionsToSiblings = new Dictionary<int, Connection>();
+
+        }
+
+        #region Getters
 
         // Private helper method to convert list of ids to node array.
         private Node[] GenerateArrayFromIdList(HashSet<int> ids) {
@@ -172,8 +175,9 @@ namespace SearchMapCore.Graph {
             return GenerateArrayFromIdList(SiblingsIds);
         }
 
+        #endregion
 
-        // Edit operations -----------------------------------------------------------------------------------------------------------------------
+        #region Edit Operations
 
         /// <summary>
         /// Reparents the node, removing it from is previous parent's children, and adding it to the new parent's children.
@@ -373,8 +377,9 @@ namespace SearchMapCore.Graph {
             graph = g;
         }
 
+        #endregion
 
-        // Graphics Data ---------------------------------------------------------------------------------------------------------------------------
+        #region Graphics Data
 
         /// <summary>
         /// The ID given by the rendering system to this node.
@@ -440,7 +445,9 @@ namespace SearchMapCore.Graph {
             }
         }
 
-        // Graphics operations ----------------------------------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Move & Resize
 
         /// <summary>
         /// Change abstract size of Node.
@@ -487,8 +494,9 @@ namespace SearchMapCore.Graph {
 
         }
 
+        #endregion
 
-        // Rendering
+        #region Rendering
 
         /// <summary>
         /// Called on first render of the node.
@@ -601,7 +609,7 @@ namespace SearchMapCore.Graph {
             }
         }
 
-
+        #endregion
 
         // Event Handling
 

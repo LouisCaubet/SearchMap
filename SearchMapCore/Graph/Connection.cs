@@ -167,9 +167,8 @@ namespace SearchMapCore.Graph {
             EDIT_CONNECTOR2
         }
 
-
         public override string ToString() {
-            string text = "";
+            string text = "Connection interpolating following points: ";
             foreach (Location pt in Points) {
                 text += "Point x=" + pt.x + "; y=" + pt.y + "        ";
             }

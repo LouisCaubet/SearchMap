@@ -104,6 +104,10 @@
                             LargeIcon="../Resources/Connection_Red.png"
                             Margin="5, 5, 5, 0">
 
+            <Fluent:SplitButton.ToolTip>
+                <Fluent:ScreenTip Title="Create connection" Text="Use this tool to connect two nodes with a secondary connection." />
+            </Fluent:SplitButton.ToolTip>
+
             <Fluent:Gallery>
                 <Fluent:GalleryItem x:Name="NewGrayConnButton">
                     <Image Source="../Resources/Connection_Gray.png" Height="80" />
@@ -125,15 +129,21 @@
 
     <Fluent:RibbonGroupBox Header="Editing Mode">
 
-        <Fluent:ToggleButton Header="Normal">
+        <Fluent:ToggleButton Header="Normal" 
+                             LargeIcon="../Resources/NormalCursor_white.png"
+                             Margin="5, 5, 5, 0" >
 
         </Fluent:ToggleButton>
 
-        <Fluent:ToggleButton Header="Move">
+        <Fluent:ToggleButton Header="Move"
+                             LargeIcon="../Resources/MoveCursor_small.png"
+                             Margin="5, 5, 5, 0" >
 
         </Fluent:ToggleButton>
 
-        <Fluent:ToggleButton Header="Re-parent">
+        <Fluent:ToggleButton Header="Re-parent"
+                             LargeIcon="../Resources/ReparentIcon_small.png"
+                             Margin="5, 5, 5, 0" >
 
         </Fluent:ToggleButton>
 

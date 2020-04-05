@@ -1,5 +1,4 @@
-﻿using SearchMap.Windows.Controls;
-using SearchMap.Windows.Rendering;
+﻿using SearchMap.Windows.Rendering;
 using SearchMapCore.Graph;
 using System;
 using System.Threading;

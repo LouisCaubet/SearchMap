@@ -267,5 +267,14 @@
   <ItemGroup>
     <Resource Include="Resources\PrimaryImportance.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NormalCursor_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MoveCursor_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ReparentIcon_small.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
