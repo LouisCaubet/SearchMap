@@ -128,6 +128,11 @@ namespace SearchMap.Windows.Controls {
         /// </summary>
         void OnMouseLeftDown(object sender, MouseButtonEventArgs e) {
             
+            // Disabled if Mode is not normal
+            if(MainWindow.Window.CurrentEditMode != MainWindow.EditMode.NORMAL) {
+                return;
+            }
+
             MouseHitType = SetHitType(e.GetPosition(Control));
             SetMouseCursor();
 
@@ -147,6 +152,12 @@ namespace SearchMap.Windows.Controls {
         /// Otherwise display the correct cursor.
         /// </summary>
         void OnMouseMove(object sender, MouseEventArgs e) {
+
+            // Disabled if Mode is not normal
+            if (MainWindow.Window.CurrentEditMode != MainWindow.EditMode.NORMAL) {
+                return;
+            }
+
             if (DragInProgress) {
 
                 // See how much the mouse has moved.

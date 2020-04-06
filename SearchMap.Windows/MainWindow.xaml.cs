@@ -28,6 +28,11 @@ namespace SearchMap.Windows {
         public static MainWindow Window;
 
         /// <summary>
+        /// The edit mode currently selected by the user.
+        /// </summary>
+        public EditMode CurrentEditMode { get; internal set; }
+
+        /// <summary>
         /// The renderer for the opened graph
         /// </summary>
         internal static GraphRenderer Renderer;
@@ -81,9 +86,6 @@ namespace SearchMap.Windows {
 
             MoveToCenterOfCanvas();
 
-            // RenderTestWebNode();
-            // RenderTestConnection();
-
             Renderer = new GraphRenderer();
 
             Graph test = SearchMapCore.SearchMapCore.CreateTestGraph();
@@ -94,6 +96,8 @@ namespace SearchMap.Windows {
 
             MinWidth = Width / 3;
             MinHeight = Height / 3;
+
+            CurrentEditMode = EditMode.NORMAL;
 
             // Register Commands
             RibbonTabHome.RegisterCommands();
@@ -171,6 +175,15 @@ namespace SearchMap.Windows {
         // EVENT HANDLING
         // See MainWindow_Events.cs
 
+        /// <summary>
+        /// Enum containing possible edit modes for the graph.
+        /// </summary>
+        public enum EditMode {
+            NORMAL, MOVE, REPARENT
+        }
+
+        #region Tests
+
         // TESTS ------------------------------------------------------------------------------------------------------------------------------
 
         void RenderTestWebNode() {
@@ -225,6 +238,8 @@ namespace SearchMap.Windows {
             GraphCanvas.Children.Add(control);
 
         }
+
+        #endregion
 
     }
 

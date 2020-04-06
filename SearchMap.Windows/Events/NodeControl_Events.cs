@@ -1,6 +1,7 @@
 ﻿using SearchMap.Windows.Rendering;
 using SearchMapCore.Graph;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,6 +31,10 @@ namespace SearchMap.Windows.Controls {
 
             // Ctrl + Click to open
             this.MouseLeftButtonDown += OnMouseLeftButtonDown;
+
+            // Move mode
+            this.MouseLeftButtonUp += OnMouseLeftButtonUp;
+            this.MouseMove += MoveMode_OnMouseMove;
 
             // ContextMenu
             this.ContextMenuOpening += OnContextMenuOpening;
@@ -360,6 +365,22 @@ namespace SearchMap.Windows.Controls {
 
         void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
 
+            if(MainWindow.Window.CurrentEditMode == MainWindow.EditMode.MOVE) {
+
+                var pos = e.GetPosition(MainWindow.Window.GraphCanvas);
+                lastDragPoint = pos;
+                Mouse.Capture(this);
+
+                // Show on top
+                Panel.SetZIndex(this, 20);
+
+                // Call reparent code
+                OnMoveStarted();
+
+                return;
+
+            }
+
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
                 Node.OnClick();
             }
@@ -375,6 +396,34 @@ namespace SearchMap.Windows.Controls {
             // Selection Animation - Init here to be sure every required parameter is set.
             SelectionAnimation = new NodeSelectionAnimation(this, 1);
             SelectionAnimation.Highlight(Color.FromRgb(33, 196, 93));
+
+        }
+
+        // Move mode
+
+        void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+
+            if (MainWindow.Window.CurrentEditMode == MainWindow.EditMode.MOVE) {
+                this.ReleaseMouseCapture();
+                lastDragPoint = null;
+
+                OnMoveStop();
+
+                // Put back on normal level
+                Panel.SetZIndex(this, 10);
+            }
+
+        }
+
+        void MoveMode_OnMouseMove(object sender, MouseEventArgs e) {
+
+            if (MainWindow.Window.CurrentEditMode == MainWindow.EditMode.MOVE) {
+                Cursor = Cursors.SizeAll;
+                ForceCursor = true;
+            }
+            else {
+                ForceCursor = false;
+            }
 
         }
 

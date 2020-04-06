@@ -164,6 +164,12 @@ namespace SearchMap.Windows {
 
             if(e.Key == Key.Escape) {
                 RibbonTabInsert.CancelAllTasks();
+
+                // Edit Mode to normal
+                CurrentEditMode = EditMode.NORMAL;
+                RibbonTabHome.NormalEditModeButton.IsChecked = true;
+                RibbonTabHome.MoveEditModeButton.IsChecked = false;
+                RibbonTabHome.ReparentEditModeButton.IsChecked = false;
             }
 
             // Propagate event to selected control (for some reason the event is not fired there)
