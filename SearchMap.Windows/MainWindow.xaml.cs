@@ -103,6 +103,7 @@ namespace SearchMap.Windows {
             RibbonTabHome.RegisterCommands();
             RibbonTabInsert.RegisterCommands();
 
+            RibbonTabView.RegisterCommands();
             RibbonTabConnection.RegisterCommands();
 
         }

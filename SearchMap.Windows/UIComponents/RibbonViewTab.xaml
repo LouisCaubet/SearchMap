@@ -44,7 +44,14 @@
 
     <Fluent:RibbonGroupBox Header="Show">
 
-        <Fluent:ToggleButton Header="Grid">
+        <Fluent:ToggleButton Header="Grid"
+                             x:Name="ShowGridButton"
+                             LargeIcon="../Resources/grid_small.png"
+                             Margin="5, 5, 5, 0" >
+
+            <Fluent:ToggleButton.ToolTip>
+                <Fluent:ScreenTip Title="Show/Hide Grid" Text="Show or hide the grid in background of the graph." />
+            </Fluent:ToggleButton.ToolTip>
 
         </Fluent:ToggleButton>
 

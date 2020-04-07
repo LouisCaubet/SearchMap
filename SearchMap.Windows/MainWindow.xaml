@@ -95,15 +95,15 @@
                 </Canvas.LayoutTransform>
 
                 <Canvas.Background>
-                    <DrawingBrush TileMode="Tile" Viewport="-10,-10,20,20" 
+                    <DrawingBrush TileMode="Tile" Viewport="-10,-10,50,50" 
                                      ViewportUnits="Absolute">
                         <DrawingBrush.Drawing>
                             <GeometryDrawing>
                                 <GeometryDrawing.Geometry>
-                                    <RectangleGeometry Rect="0,0,50,50"/>
+                                    <RectangleGeometry Rect="0,0,100,100"/>
                                 </GeometryDrawing.Geometry>
                                 <GeometryDrawing.Pen>
-                                    <Pen Brush="Gray" Thickness="0"/>
+                                    <Pen x:Name="GridPen" Brush="Gray" Thickness="0"/>
                                 </GeometryDrawing.Pen>
                             </GeometryDrawing>
                         </DrawingBrush.Drawing>

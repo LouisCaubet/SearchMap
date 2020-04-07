@@ -276,5 +276,8 @@
   <ItemGroup>
     <Resource Include="Resources\ReparentIcon_small.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\grid_small.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -21,9 +21,42 @@ namespace SearchMap.Windows.UIComponents {
     /// </summary>
     public partial class RibbonViewTab : RibbonTabItem {
 
+        private bool IsGridShown = false;
+
+        internal ICommand ShowGrid { get; private set; }
+
         public RibbonViewTab() {
             InitializeComponent();
         }
+
+        internal void RegisterCommands() {
+
+            ShowGrid = new RoutedCommand("RibbonViewTab.ShowGrid", GetType());
+            MainWindow.Window.CommandBindings.Add(new CommandBinding(ShowGrid, ShowGrid_Execute, ShowGrid_CanExecute));
+            ShowGridButton.Command = ShowGrid;
+
+        }
+
+        #region Show/Hide Grid Command
+
+        void ShowGrid_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = true;
+        }
+
+        void ShowGrid_Execute(object sendre, ExecutedRoutedEventArgs e) {
+
+            if (IsGridShown) {
+                IsGridShown = false;
+                MainWindow.Window.GridPen.Thickness = 0;
+            }
+            else {
+                IsGridShown = true;
+                MainWindow.Window.GridPen.Thickness = 1;
+            }
+
+        }
+
+        #endregion
 
     }
 }
