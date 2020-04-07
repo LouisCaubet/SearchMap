@@ -361,6 +361,7 @@ namespace SearchMap.Windows.Controls {
 
         #endregion
 
+
         // Click Handling
 
         void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
@@ -380,6 +381,35 @@ namespace SearchMap.Windows.Controls {
                 return;
 
             }
+            else if(MainWindow.Window.CurrentEditMode == MainWindow.EditMode.REPARENT && MainWindow.Window.Selected != null) {
+
+                if(MainWindow.Window.Selected == this) {
+
+                    MainWindow.Window.StatusBarInstructionField.Value = "A node can't be its own parent!";
+
+                    new Timer(delegate {
+                        Dispatcher.Invoke(delegate {
+                            MainWindow.Window.StatusBarInstructionField.Value = "Please select the new parent for this node.";
+                        });
+                    }, null, TimeSpan.FromMilliseconds(5000), TimeSpan.FromMilliseconds(-1));
+
+                    return;
+
+                }
+
+                if(MainWindow.Window.Selected.Node != Node.GetParent()) {
+                    // reparent
+                    MainWindow.Window.Selected.Node.SetParent(Node);
+
+                    // default color ?
+                    MainWindow.Window.Selected.Node.ConnectionToParent.ShadowColor = new SearchMapCore.Rendering.Color(0, 0, 255);
+                    MainWindow.Window.Selected.Node.Refresh();
+                }
+
+                MainWindow.Window.DeselectAll();
+                MainWindow.Window.RibbonTabHome.SetNormalEditMode();
+                return;
+            }
 
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
                 Node.OnClick();
@@ -395,11 +425,20 @@ namespace SearchMap.Windows.Controls {
 
             // Selection Animation - Init here to be sure every required parameter is set.
             SelectionAnimation = new NodeSelectionAnimation(this, 1);
-            SelectionAnimation.Highlight(Color.FromRgb(33, 196, 93));
+            if (MainWindow.Window.CurrentEditMode == MainWindow.EditMode.REPARENT) {
+                // Blue highlight
+                SelectionAnimation.Highlight(Color.FromRgb(64, 137, 255));
+                MainWindow.Window.StatusBarInstructionField.Value = "Please select the new parent for this node.";
+            }
+            else {
+                // Green highlight
+                SelectionAnimation.Highlight(Color.FromRgb(33, 196, 93));
+            }
 
         }
 
-        // Move mode
+
+        #region Move Mode
 
         void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
 
@@ -426,6 +465,8 @@ namespace SearchMap.Windows.Controls {
             }
 
         }
+
+        #endregion
 
         // Context Menu
         bool ShouldContextMenuBeOpened = false;

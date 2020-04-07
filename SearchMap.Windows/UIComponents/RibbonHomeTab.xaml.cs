@@ -128,6 +128,21 @@ namespace SearchMap.Windows.UIComponents {
         #endregion Cut
 
         #region Edit Modes Commands
+        
+        /// <summary>
+        /// Sets the edit mode back to normal.
+        /// </summary>
+        public void SetNormalEditMode() {
+
+            // Edit Mode to normal
+            MainWindow.Window.CurrentEditMode = MainWindow.EditMode.NORMAL;
+            NormalEditModeButton.IsChecked = true;
+            MoveEditModeButton.IsChecked = false;
+            ReparentEditModeButton.IsChecked = false;
+
+            MainWindow.Window.StatusBarInstructionField.Value = "";
+
+        }
 
         void EditMode_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = true;
@@ -141,6 +156,8 @@ namespace SearchMap.Windows.UIComponents {
 
             MainWindow.Window.GraphCanvas.Cursor = Cursors.Arrow;
 
+            MainWindow.Window.StatusBarInstructionField.Value = "";
+
         }
 
         void MoveEditMode_Execute(object sender, ExecutedRoutedEventArgs e) {
@@ -151,6 +168,8 @@ namespace SearchMap.Windows.UIComponents {
 
             MainWindow.Window.GraphCanvas.Cursor = Cursors.SizeAll;
 
+            MainWindow.Window.StatusBarInstructionField.Value = "";
+
         }
 
         void ReparentEditMode_Execute(object sender, ExecutedRoutedEventArgs e) {
@@ -160,6 +179,11 @@ namespace SearchMap.Windows.UIComponents {
             MoveEditModeButton.IsChecked = false;
 
             MainWindow.Window.GraphCanvas.Cursor = Cursors.Arrow;
+
+            MainWindow.Window.DeselectAll();
+
+            MainWindow.Window.StatusBarInstructionField.Value = "Please select the node to reparent.";
+
         }
 
         #endregion

@@ -25,7 +25,7 @@ namespace SearchMap.Windows {
         /// <summary>
         /// Stores the only instance of MainWindow.
         /// </summary>
-        public static MainWindow Window;
+        public static MainWindow Window { get; private set; }
 
         /// <summary>
         /// The edit mode currently selected by the user.

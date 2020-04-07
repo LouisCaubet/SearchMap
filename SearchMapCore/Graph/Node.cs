@@ -522,6 +522,7 @@ namespace SearchMapCore.Graph {
                         conn.ShadowColor = new Color(100, 100, 100);
                         conn.RenderId = graph.Renderer.RenderCurvedLine(conn);
                         ConnectionsToSiblings.Add(id, conn);
+                        graph.Nodes[id].ConnectionsToSiblings.Add(Id, conn);
                     }
 
                 }
@@ -596,6 +597,7 @@ namespace SearchMapCore.Graph {
                 var conn = ConnectionPlacement.CreateConnectionBetween(graph, this, graph.Nodes[id]);
                 conn.RenderId = graph.Renderer.RenderCurvedLine(conn);
                 ConnectionsToSiblings.Add(id, conn);
+                graph.Nodes[id].ConnectionsToSiblings.Add(Id, conn);
             }
 
         }
