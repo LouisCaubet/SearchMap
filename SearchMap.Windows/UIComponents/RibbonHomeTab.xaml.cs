@@ -134,6 +134,11 @@ namespace SearchMap.Windows.UIComponents {
         /// </summary>
         public void SetNormalEditMode() {
 
+            // To deselect blue selected nodes.
+            if (MainWindow.Window.CurrentEditMode == MainWindow.EditMode.REPARENT) {
+                MainWindow.Window.DeselectAll();
+            }
+
             // Edit Mode to normal
             MainWindow.Window.CurrentEditMode = MainWindow.EditMode.NORMAL;
             NormalEditModeButton.IsChecked = true;
@@ -150,6 +155,11 @@ namespace SearchMap.Windows.UIComponents {
 
         void NormalEditMode_Execute(object sender, ExecutedRoutedEventArgs e) {
 
+            // To deselect blue selected nodes.
+            if(MainWindow.Window.CurrentEditMode == MainWindow.EditMode.REPARENT) {
+                MainWindow.Window.DeselectAll();
+            }
+
             MainWindow.Window.CurrentEditMode = MainWindow.EditMode.NORMAL;
             MoveEditModeButton.IsChecked = false;
             ReparentEditModeButton.IsChecked = false;
@@ -162,6 +172,8 @@ namespace SearchMap.Windows.UIComponents {
 
         void MoveEditMode_Execute(object sender, ExecutedRoutedEventArgs e) {
 
+            MainWindow.Window.RibbonTabInsert.CancelAllTasks();
+
             MainWindow.Window.CurrentEditMode = MainWindow.EditMode.MOVE;
             NormalEditModeButton.IsChecked = false;
             ReparentEditModeButton.IsChecked = false;
@@ -173,6 +185,8 @@ namespace SearchMap.Windows.UIComponents {
         }
 
         void ReparentEditMode_Execute(object sender, ExecutedRoutedEventArgs e) {
+
+            MainWindow.Window.RibbonTabInsert.CancelAllTasks();
 
             MainWindow.Window.CurrentEditMode = MainWindow.EditMode.REPARENT;
             NormalEditModeButton.IsChecked = false;

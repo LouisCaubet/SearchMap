@@ -9,11 +9,8 @@
         xmlns:uicomponents="clr-namespace:SearchMap.Windows.UIComponents"
         mc:Ignorable="d"
         Title="SearchMap" Height="1080" Width="1920">
-
-    <Window.CommandBindings>
-        
-    </Window.CommandBindings>
     
+
     <Grid x:Name="WindowGrid">
 
         <Grid.RowDefinitions>

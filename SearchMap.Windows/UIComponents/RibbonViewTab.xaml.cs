@@ -29,6 +29,9 @@ namespace SearchMap.Windows.UIComponents {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Registers commands associated with buttons in the View tab
+        /// </summary>
         internal void RegisterCommands() {
 
             ShowGrid = new RoutedCommand("RibbonViewTab.ShowGrid", GetType());

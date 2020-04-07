@@ -94,6 +94,7 @@ namespace SearchMap.Windows.UIComponents {
             Node WaitForUserToSelectNode() {
                 while (MainWindow.Window.Selected == null) {
                     // Continue to wait
+                    if (ct.IsCancellationRequested) return null;
                     Thread.Sleep(10);
                 }
                 Node node = MainWindow.Window.Selected.Node;
@@ -106,10 +107,11 @@ namespace SearchMap.Windows.UIComponents {
             }
 
             Node node1 = await Task.Run(WaitForUserToSelectNode, ct);
+            if (ct.IsCancellationRequested) return;
 
             MainWindow.Window.StatusBarInstructionField.Value = "Please select the second node...";
-
             Node node2 = await Task.Run(WaitForUserToSelectNode, ct);
+            if (ct.IsCancellationRequested) return;
 
             try {
                 node1.AddSibling(node2);
@@ -117,6 +119,7 @@ namespace SearchMap.Windows.UIComponents {
             catch(ArgumentException e) {
 
                 MainWindow.Window.StatusBarInstructionField.Value = e.Message;
+                // Clear instruction field after 5s
                 new Timer(delegate {
                     MainWindow.Window.Dispatcher.Invoke(delegate {
                         MainWindow.Window.StatusBarInstructionField.Value = "";
