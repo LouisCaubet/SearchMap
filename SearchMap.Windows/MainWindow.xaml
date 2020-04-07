@@ -103,7 +103,7 @@
                                     <RectangleGeometry Rect="0,0,50,50"/>
                                 </GeometryDrawing.Geometry>
                                 <GeometryDrawing.Pen>
-                                    <Pen Brush="Gray" Thickness="1"/>
+                                    <Pen Brush="Gray" Thickness="0"/>
                                 </GeometryDrawing.Pen>
                             </GeometryDrawing>
                         </DrawingBrush.Drawing>

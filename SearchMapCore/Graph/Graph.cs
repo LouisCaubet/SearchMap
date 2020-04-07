@@ -151,7 +151,7 @@ namespace SearchMapCore.Graph {
             try {
                 Location loc = NodePlacement.PlaceNode(this, node);
                 node.MoveTo(loc);
-                node.Render();
+                node.Refresh();
             }
             catch(Exception e) {
                 SearchMapCore.Logger.Error("Requested to place node missing information for placement.");
@@ -216,7 +216,7 @@ namespace SearchMapCore.Graph {
             IsDisplayed = true;
             Renderer.SetDrawingZoneSize(Width, Height);
 
-            if(RootNode != null) RootNode.Render();
+            if(RootNode != null) RootNode.Refresh();
 
         }
 

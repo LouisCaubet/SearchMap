@@ -48,7 +48,7 @@ namespace SearchMapCore.Graph {
         /// <summary>
         /// The theme color of this node
         /// </summary>
-        public Color Color { get; set; } 
+        public Color Color { get; set; }
 
         /// <summary>
         /// The border color of this node
@@ -231,7 +231,7 @@ namespace SearchMapCore.Graph {
                 ConnectionToParent = null;
             }
 
-            if(conn != null) {
+            if (conn != null) {
 
                 ConnectionToParent = conn;
                 ConnectionToParent.IsBoldStyle = true;
@@ -243,7 +243,7 @@ namespace SearchMapCore.Graph {
 
             // Render changes.
             // This method should not render the node if we're not ready yet, hence the check.
-            if(rendered) Refresh();
+            if (rendered) Refresh();
 
         }
 
@@ -295,7 +295,7 @@ namespace SearchMapCore.Graph {
                 SiblingsIds.Remove(siblingId);
                 SearchMapCore.Clipboard.CtrlZ.Push(snapshot);
 
-                if(rendered) {
+                if (rendered) {
                     if (RenderSibling[siblingId]) {
                         graph.Renderer.DeleteObject(ConnectionsToSiblings[siblingId].RenderId);
                     }
@@ -314,9 +314,9 @@ namespace SearchMapCore.Graph {
             else {
                 SearchMapCore.Logger.Error("Node with id " + siblingId + " does not exist or is not a sibling of node " + Id);
             }
-            
+
         }
-        
+
         /// <summary>
         /// FOR INTERNAL USE ONLY. To delete a node, use Graph.DeleteNode(id). <para/>
         /// Properly removes every connection to this node to allow deletion.
@@ -333,8 +333,8 @@ namespace SearchMapCore.Graph {
             SetParent(null);
 
             // Connect childs to parent
-            foreach(int child_id in c_ids) {
-                if(p_id == -1) graph.Nodes[child_id].SetParent(null);
+            foreach (int child_id in c_ids) {
+                if (p_id == -1) graph.Nodes[child_id].SetParent(null);
                 else graph.Nodes[child_id].SetParent(graph.Nodes[p_id]);
             }
 
@@ -347,9 +347,9 @@ namespace SearchMapCore.Graph {
             if (graph.IsDisplayed) {
 
                 graph.Renderer.DeleteObject(RenderId);
-                if(ConnectionToParent != null) graph.Renderer.DeleteObject(ConnectionToParent.RenderId);
+                if (ConnectionToParent != null) graph.Renderer.DeleteObject(ConnectionToParent.RenderId);
 
-                foreach(var conn in ConnectionsToSiblings.Values) {
+                foreach (var conn in ConnectionsToSiblings.Values) {
                     graph.Renderer.DeleteObject(conn.RenderId);
                 }
 
@@ -405,7 +405,7 @@ namespace SearchMapCore.Graph {
             try {
                 return ConnectionsToSiblings[sibling.Id].RenderId;
             }
-            catch(Exception) {
+            catch (Exception) {
                 throw new ArgumentException("The node given in argument (id = " + sibling.Id + ") is not a sibling of node " + Id);
             }
         }
@@ -418,7 +418,7 @@ namespace SearchMapCore.Graph {
         /// <param name="connection"></param>
         public void SetConnectionToSibling(Node sibling, Connection connection) {
             if (ConnectionsToSiblings.ContainsKey(sibling.Id)) {
-                if((connection.GetDepartureNode() == this && connection.GetArrivalNode() == sibling) ||
+                if ((connection.GetDepartureNode() == this && connection.GetArrivalNode() == sibling) ||
                     connection.GetDepartureNode() == sibling && connection.GetArrivalNode() == this) {
 
                     // Delete the current connection
@@ -501,20 +501,20 @@ namespace SearchMapCore.Graph {
         /// <summary>
         /// Called on first render of the node.
         /// </summary>
-        public virtual void Render() {
+        private void Render(Dictionary<int, bool> flag) {
             if (graph.IsDisplayed) {
 
                 rendered = true;
 
                 RenderId = graph.Renderer.RenderNode(this);
 
-                if(ParentId != -1) {
+                if (ParentId != -1) {
                     ConnectionToParent = ConnectionPlacement.CreateConnectionBetween(graph, this, GetParent());
                     ConnectionToParent.IsBoldStyle = true;
                     ConnectionToParent.RenderId = graph.Renderer.RenderCurvedLine(ConnectionToParent);
                 }
-                
-                foreach(int id in SiblingsIds) {
+
+                foreach (int id in SiblingsIds) {
 
                     // If this node must handle the rendering.
                     if (RenderSibling[id]) {
@@ -527,8 +527,8 @@ namespace SearchMapCore.Graph {
 
                 }
 
-                foreach(int child in ChildrenIds) {
-                    graph.Nodes[child].Refresh();
+                foreach (int child in ChildrenIds) {
+                    graph.Nodes[child].Refresh(false, flag);
                 }
 
             }
@@ -537,11 +537,20 @@ namespace SearchMapCore.Graph {
         /// <summary>
         /// Refreshes the render of the node.
         /// </summary>
-        public virtual void Refresh(bool renderMove = false) {
+        public virtual void Refresh(bool renderMove = false, Dictionary<int, bool> flag = null) {
             if (graph.IsDisplayed) {
 
+                if(flag == null) flag = new Dictionary<int, bool>();
+
+                // This node has already been visited.
+                if (flag.ContainsKey(Id) && flag[Id]) return;
+
+                if (!flag.ContainsKey(Id)) flag.Add(Id, true);
+                else flag[Id] = true;    
+                
+
                 if (!rendered) {
-                    Render();
+                    Render(flag);
                     return;
                 }
 
@@ -581,7 +590,7 @@ namespace SearchMapCore.Graph {
 
 
                 foreach (int child in ChildrenIds) {
-                    graph.Nodes[child].Refresh(renderMove);
+                    graph.Nodes[child].Refresh(renderMove, flag);
                 }
 
             }

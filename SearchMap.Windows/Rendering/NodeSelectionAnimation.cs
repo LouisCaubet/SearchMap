@@ -60,6 +60,7 @@ namespace SearchMap.Windows.Rendering {
             if (Control.GetType() == typeof(WebNodeControl)) {
                 WebNodeControl nodeControl = (WebNodeControl)Control;
                 nodeControl.Shadow.Color = color;
+                nodeControl.Shadow.BlurRadius = 70;
             }
 
             Control.Width = HighlightedWidth;
@@ -85,6 +86,7 @@ namespace SearchMap.Windows.Rendering {
             if (Control.GetType() == typeof(WebNodeControl)) {
                 WebNodeControl nodeControl = (WebNodeControl)Control;
                 nodeControl.Shadow.Color = Color.FromRgb(0, 0, 0);
+                nodeControl.Shadow.BlurRadius = 30;
             }
 
             // recompute position every time
