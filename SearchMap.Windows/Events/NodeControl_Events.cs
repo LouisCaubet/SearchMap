@@ -431,8 +431,8 @@ namespace SearchMap.Windows.Controls {
                 MainWindow.Window.StatusBarInstructionField.Value = "Please select the new parent for this node.";
             }
             else {
-                // Green highlight
-                SelectionAnimation.Highlight(Color.FromRgb(33, 196, 93));
+                // Orange highlight
+                SelectionAnimation.Highlight(Color.FromRgb(255, 140, 0));
             }
 
         }

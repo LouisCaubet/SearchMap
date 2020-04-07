@@ -25,29 +25,66 @@
                 <DropShadowEffect x:Name="Shadow" ShadowDepth="0" BlurRadius="30" />
             </Border.Effect>
 
-            <Grid x:Name="PlacementGrid">
+            <Grid>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="70*"/>
-                </Grid.ColumnDefinitions>
+                <!-- Front - Only title and logo -->
+                <Grid x:Name="Front" Visibility="Visible">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="70*" />
+                    </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="15*"/>
-                    <RowDefinition Height="70*"/>
-                </Grid.RowDefinitions>
+                    <Image x:Name="Icon" Source="../Resources/Placeholder.png" Grid.Column="0" Stretch="Uniform" Margin="15"/>
 
-                <Image x:Name="Icon" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Source="../Resources/Placeholder.png" Stretch="Uniform" />
+                    <TextBox x:Name="FrontTitleBox" Grid.Column="1" Text="Welcome to SearchMap" Background="Transparent" FontSize="40"
+                         FontWeight="Black" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="0" IsReadOnly="False"
+                         TextWrapping="WrapWithOverflow" AcceptsReturn="False" Margin="10"/>
 
-                <TextBox x:Name="TitleBox" Text="Welcome to SearchMap" Grid.Column="1" Grid.Row="0" Background="Transparent" FontSize="24" FontWeight="Black"
+                </Grid>
+
+                <!-- Back - All info except icon -->
+                <Grid x:Name="Back" Visibility="Collapsed">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="70*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox x:Name="BackTitleBox" Grid.Row="0" Text="Welcome to SearchMap" Background="Transparent" FontSize="30"
+                         FontWeight="Black" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="0" IsReadOnly="False"
+                         AcceptsReturn="False" />
+
+                    <TextBox x:Name="CommentBox" Grid.Row="1" Text="SearchMap - Download Now!" Background="Transparent" BorderThickness="0" 
+                             FontSize="20" AcceptsReturn="True" TextWrapping="WrapWithOverflow" Margin="10"/>
+
+                </Grid>
+
+                <!-- May be useful for export - everything on same side. -->
+                <Grid x:Name="ExportGrid" Visibility="Collapsed">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="70*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="15*"/>
+                        <RowDefinition Height="70*"/>
+                    </Grid.RowDefinitions>
+
+                    <Image x:Name="ExportIcon" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Source="../Resources/Placeholder.png" Stretch="Uniform" />
+
+                    <TextBox x:Name="ExportTitleBox" Text="Welcome to SearchMap" Grid.Column="1" Grid.Row="0" Background="Transparent" FontSize="24" FontWeight="Black"
                          VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="0" IsReadOnly="False"/>
 
-                <TextBox x:Name="UriLabel" Text="searchmap.net" Grid.Column="1" Grid.Row="1" FontSize="8" FontStyle="Italic" AcceptsReturn="True" 
+                    <TextBox x:Name="ExportUriLabel" Text="searchmap.net" Grid.Column="1" Grid.Row="1" FontSize="12" FontStyle="Italic" AcceptsReturn="True" 
                          TextWrapping="WrapWithOverflow" Background="Transparent" BorderThickness="0" IsReadOnly="True" VerticalAlignment="Top" />
 
-                <TextBox x:Name="CommentBox" Text="SearchMap - Download Now!"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Background="Transparent" 
+                    <TextBox x:Name="ExportCommentBox" Text="SearchMap - Download Now!"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Background="Transparent" 
                          BorderThickness="0" FontSize="14" AcceptsReturn="True" TextWrapping="WrapWithOverflow" Margin="10"/>
+
+                </Grid>
 
             </Grid>
 
