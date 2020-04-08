@@ -1,4 +1,5 @@
-﻿using SearchMapCore.Graph;
+﻿using SearchMap.Windows.Rendering;
+using SearchMapCore.Graph;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -32,19 +33,7 @@ namespace SearchMap.Windows.UIComponents {
         }
 
         private void OnMouseDoubleClick(object sender, MouseButtonEventArgs e) {
-
-            // Flip node
-            // TODO animation
-
-            if(Front.Visibility == Visibility.Visible) {
-                Front.Visibility = Visibility.Collapsed;
-                Back.Visibility = Visibility.Visible;
-            }
-            else {
-                Front.Visibility = Visibility.Visible;
-                Back.Visibility = Visibility.Collapsed;
-            }
-
+            if(!FrontTitleBox.IsMouseDirectlyOver && !BackTitleBox.IsMouseDirectlyOver) Flip();
         }
 
         private void OnControlLoaded(object sender, RoutedEventArgs e) {
@@ -61,12 +50,19 @@ namespace SearchMap.Windows.UIComponents {
             if (FrontTitleBox.Text == "") {
                 FrontTitleBox.Text = "Untitled";
                 BackTitleBox.Text = "Untitled";
+                IsUntitled = true;
                 FrontTitleBox.FontStyle = FontStyles.Italic;
                 BackTitleBox.FontStyle = FontStyles.Italic;
             }
             else {
+
+                // this will throw a new TitleChanged event to update the node title.
+                if (IsUntitled) FrontTitleBox.Text = FrontTitleBox.Text.Replace("Untitled", "");
+                IsUntitled = false;
+
                 FrontTitleBox.FontStyle = FontStyles.Normal;
                 BackTitleBox.FontStyle = FontStyles.Normal;
+
             }
             
         }

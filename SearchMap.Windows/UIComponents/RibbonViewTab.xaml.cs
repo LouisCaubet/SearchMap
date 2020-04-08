@@ -21,12 +21,22 @@ namespace SearchMap.Windows.UIComponents {
     /// </summary>
     public partial class RibbonViewTab : RibbonTabItem {
 
+        // TODO move to user preferences
+        public bool ShowNodeFlipAnimation { get; internal set; }
+
         private bool IsGridShown = false;
 
         internal ICommand ShowGrid { get; private set; }
+        internal ICommand ShowNodeFlipAnim { get; private set; }
 
         public RibbonViewTab() {
             InitializeComponent();
+
+            // Default ShowNodeFlipAnimation = true
+            // TODO load from user preferences
+            ShowNodeFlipAnimation = true;
+            ShowNodeFlipAnimButton.IsChecked = true;
+
         }
 
         /// <summary>
@@ -37,6 +47,10 @@ namespace SearchMap.Windows.UIComponents {
             ShowGrid = new RoutedCommand("RibbonViewTab.ShowGrid", GetType());
             MainWindow.Window.CommandBindings.Add(new CommandBinding(ShowGrid, ShowGrid_Execute, ShowGrid_CanExecute));
             ShowGridButton.Command = ShowGrid;
+
+            ShowNodeFlipAnim = new RoutedCommand("RibbonViewTab.ShowNodeFlipAnim", GetType());
+            MainWindow.Window.CommandBindings.Add(new CommandBinding(ShowNodeFlipAnim, ShowNodeFlipAnim_Execute));
+            ShowNodeFlipAnimButton.Command = ShowNodeFlipAnim;
 
         }
 
@@ -57,6 +71,14 @@ namespace SearchMap.Windows.UIComponents {
                 MainWindow.Window.GridPen.Thickness = 1;
             }
 
+        }
+
+        #endregion
+
+        #region Show/Hide Node Flip Animation
+
+        void ShowNodeFlipAnim_Execute(object sender, ExecutedRoutedEventArgs e) {
+            ShowNodeFlipAnimation = !ShowNodeFlipAnimation;
         }
 
         #endregion

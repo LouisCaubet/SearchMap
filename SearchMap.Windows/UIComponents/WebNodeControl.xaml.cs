@@ -15,6 +15,8 @@ namespace SearchMap.Windows.UIComponents {
     /// </summary>
     public partial class WebNodeControl : NodeControl {
 
+        private bool IsUntitled { get; set; }
+
         public WebNodeControl(WebNode node) : base(node) {
             InitializeComponent();
 
@@ -30,6 +32,14 @@ namespace SearchMap.Windows.UIComponents {
 
         public WebNode GetWebNode() {
             return (WebNode) Node;
+        }
+
+        public override FrameworkElement GetFront() {
+            return Front;
+        }
+
+        public override FrameworkElement GetBack() {
+            return Back;
         }
 
         public override void Refresh() {
@@ -56,10 +66,12 @@ namespace SearchMap.Windows.UIComponents {
             if (FrontTitleBox.Text == "") {
                 FrontTitleBox.Text = "Untitled";
                 BackTitleBox.Text = "Untitled";
+                IsUntitled = true;
                 FrontTitleBox.FontStyle = FontStyles.Italic;
                 BackTitleBox.FontStyle = FontStyles.Italic;
             }
             else {
+                IsUntitled = false;
                 FrontTitleBox.FontStyle = FontStyles.Normal;
                 BackTitleBox.FontStyle = FontStyles.Normal;
             }
