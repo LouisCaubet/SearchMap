@@ -14,7 +14,6 @@ namespace SearchMap.Windows.Controls {
 
         private const int REPARENT_ANIMATION_NB_PULSES = 5;
 
-        internal NodeSelectionAnimation SelectionAnimation { get; private set; }
 
         /// <summary>
         /// Register events independent of the type of Node.
@@ -415,24 +414,16 @@ namespace SearchMap.Windows.Controls {
                 Node.OnClick();
             }
 
-            // Unhighlight previously selected node if it wasn't this one.
-            if (MainWindow.Window.Selected != this) {
-                MainWindow.Window.DeselectAll();
-            }
-
-            MainWindow.Window.Selected = this;
+            
             MainWindow.Window.LastClickedPoint = null;
 
-            // Selection Animation - Init here to be sure every required parameter is set.
-            SelectionAnimation = new NodeSelectionAnimation(this, 1);
             if (MainWindow.Window.CurrentEditMode == MainWindow.EditMode.REPARENT) {
                 // Blue highlight
-                SelectionAnimation.Highlight(Color.FromRgb(64, 137, 255));
+                SetSelected(Color.FromRgb(64, 137, 255), false);
                 MainWindow.Window.StatusBarInstructionField.Value = "Please select the new parent for this node.";
             }
             else {
-                // Orange highlight
-                SelectionAnimation.Highlight(Color.FromRgb(255, 140, 0));
+                SetSelected();
             }
 
         }

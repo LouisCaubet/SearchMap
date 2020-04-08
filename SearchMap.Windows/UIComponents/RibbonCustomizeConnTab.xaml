@@ -14,7 +14,7 @@
 
         <Fluent:Button Header="Revert to default shape" 
                        x:Name="RevertButton"
-                       LargeIcon="../Resources/RevertIcon_small.png"
+                       LargeIcon="../Resources/ConnectionTab/RevertIcon_small.png"
                        Margin="5, 5, 5, 0">
 
             <Fluent:Button.ToolTip>
@@ -29,7 +29,7 @@
 
         <Fluent:DropDownButton Header="Color" 
                                x:Name="ColorButton"
-                               LargeIcon="../Resources/ColorCircle_small.png"
+                               LargeIcon="../Resources/ConnectionTab/ColorCircle_small.png"
                                Margin="5, 5, 5, 0">
 
             <Fluent:ColorGallery Mode="StandardColors" 
@@ -51,7 +51,7 @@
 
         <Fluent:Button Header="Make primary" 
                        x:Name="MakePrimaryButton"
-                       LargeIcon="../Resources/PrimaryImportance.png"
+                       LargeIcon="../Resources/ConnectionTab/PrimaryImportance.png"
                        Margin="5, 5, 5, 0">
 
             <Fluent:Button.ToolTip>
@@ -62,7 +62,7 @@
 
         <Fluent:Button Header="Make secondary" 
                        x:Name="MakeSecondaryButton"
-                       LargeIcon="../Resources/SecondaryImportance.png"
+                       LargeIcon="../Resources/ConnectionTab/SecondaryImportance.png"
                        Margin="5, 5, 5, 0">
 
             <Fluent:Button.ToolTip>

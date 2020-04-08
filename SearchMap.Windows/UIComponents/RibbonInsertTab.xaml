@@ -14,23 +14,23 @@
     <Fluent:RibbonGroupBox Header="Nodes">
 
         <Fluent:Button Header="New Title Node" 
-                       LargeIcon="../Resources/TitleNodeIcon_small.png" 
-                       Icon="../Resources/TitleNodeIcon_small.png"
+                       LargeIcon="../Resources/InsertTab/TitleNodeIcon_small.png" 
+                       Icon="../Resources/InsertTab/TitleNodeIcon_small.png"
                        Margin="5, 5, 5, 0" >
 
         </Fluent:Button>
 
         <Fluent:Button Header="New Text Node" 
-                       LargeIcon="../Resources/TextNodeIcon_small.png" 
-                       Icon="../Resources/TextNodeIcon_small.png"
+                       LargeIcon="../Resources/InsertTab/TextNodeIcon_small.png" 
+                       Icon="../Resources/InsertTab/TextNodeIcon_small.png"
                        Margin="5, 5, 5, 0">
 
         </Fluent:Button>
 
         <Fluent:Button Header="New Web Node" 
                        x:Name="NewWebNodeButton"
-                       LargeIcon="../Resources/WebNodeIcon_small.png" 
-                       Icon="../Resources/WebNodeIcon_small.png"
+                       LargeIcon="../Resources/InsertTab/WebNodeIcon_small.png" 
+                       Icon="../Resources/InsertTab/WebNodeIcon_small.png"
                        Margin="5, 5, 5, 0">
 
             <Fluent:Button.ToolTip>
@@ -41,15 +41,15 @@
         </Fluent:Button>
 
         <Fluent:Button Header="New File Node" 
-                       LargeIcon="../Resources/FileNodeIcon_small.png" 
-                       Icon="../Resources/FileNodeIcon_small.png"
+                       LargeIcon="../Resources/InsertTab/FileNodeIcon_small.png" 
+                       Icon="../Resources/InsertTab/FileNodeIcon_small.png"
                        Margin="5, 5, 5, 0">
 
         </Fluent:Button>
 
         <Fluent:Button Header="Custom Node" 
-                       LargeIcon="../Resources/CustomNodeIcon_small.png" 
-                       Icon="../Resources/CustomNodeIcon_small.png"
+                       LargeIcon="../Resources/InsertTab/CustomNodeIcon_small.png" 
+                       Icon="../Resources/InsertTab/CustomNodeIcon_small.png"
                        Margin="5, 5, 5, 0">
 
         </Fluent:Button>
@@ -60,7 +60,7 @@
 
         <Fluent:SplitButton Header="Create connection"
                             x:Name="NewConnectionButton"
-                            LargeIcon="../Resources/Connection_Red.png"
+                            LargeIcon="../Resources/InsertTab/Connection_Red.png"
                             Margin="5,5,5,0">
 
             <Fluent:SplitButton.ToolTip>
@@ -69,15 +69,15 @@
 
             <Fluent:Gallery>
                 <Fluent:GalleryItem x:Name="NewGrayConnButton">
-                    <Image Source="../Resources/Connection_Gray.png" Height="80" />
+                    <Image Source="../Resources/InsertTab/Connection_Gray.png" Height="80" />
                 </Fluent:GalleryItem>
 
                 <Fluent:GalleryItem x:Name="NewRedConnButton">
-                    <Image Source="../Resources/Connection_Red.png" Height="80" />
+                    <Image Source="../Resources/InsertTab/Connection_Red.png" Height="80" />
                 </Fluent:GalleryItem>
 
                 <Fluent:GalleryItem x:Name="NewGreenConnButton">
-                    <Image Source="../Resources/Connection_Green.png" Height="80" />
+                    <Image Source="../Resources/InsertTab/Connection_Green.png" Height="80" />
                 </Fluent:GalleryItem>
 
             </Fluent:Gallery>

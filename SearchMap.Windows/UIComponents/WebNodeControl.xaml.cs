@@ -98,6 +98,17 @@ namespace SearchMap.Windows.UIComponents {
 
         }
 
+        public override void ShowAssociatedRibbonTab(bool setSelected) {
+            MainWindow.Window.NodeContextualGroup.Visibility = Visibility.Visible;
+            MainWindow.Window.RibbonTabWebNode.Visibility = Visibility.Visible;
+            if (setSelected) MainWindow.Window.Ribbon.SelectedTabIndex = RibbonWebNodeTab.TAB_INDEX;
+        }
+
+        public override void CollapseAssociatedRibbonTab() {
+            MainWindow.Window.Ribbon.SelectedTabIndex = MainWindow.Window.RibbonTabIndex;
+            MainWindow.Window.RibbonTabWebNode.Visibility = Visibility.Collapsed;
+        }
+
         // EVENT HANDLING ------------------------------------------------------------------------------------------------------------------
         // See WebNodeControl_Events.cs
 

@@ -22,7 +22,7 @@
         <Fluent:Ribbon Grid.Row="0" x:Name="Ribbon">
 
             <Fluent:Ribbon.ContextualGroups>
-                <Fluent:RibbonContextualTabGroup x:Name="node_tools"
+                <Fluent:RibbonContextualTabGroup x:Name="NodeContextualGroup"
                                                  BorderBrush="Blue"
                                                  Background="LightBlue"
                                                  Foreground="BlueViolet"
@@ -75,7 +75,7 @@
 
             <uicomponents:RibbonHelpTab x:Name="RibbonTabHelp" />
 
-            <uicomponents:RibbonWebNodeTab Group="{Binding Source={x:Reference node_tools}}" x:Name="RibbonTabWebNode" />
+            <uicomponents:RibbonWebNodeTab Group="{Binding Source={x:Reference NodeContextualGroup}}" x:Name="RibbonTabWebNode" />
 
             <uicomponents:RibbonCustomizeConnTab Group="{Binding Source={x:Reference connection_tools}}" x:Name="RibbonTabConnection" />
 

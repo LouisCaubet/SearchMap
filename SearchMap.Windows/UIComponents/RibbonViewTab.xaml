@@ -46,7 +46,7 @@
 
         <Fluent:ToggleButton Header="Grid"
                              x:Name="ShowGridButton"
-                             LargeIcon="../Resources/grid_small.png"
+                             LargeIcon="../Resources/ViewTab/grid_small.png"
                              Margin="5, 5, 5, 0" >
 
             <Fluent:ToggleButton.ToolTip>
@@ -61,7 +61,12 @@
 
         <Fluent:ToggleButton Header="Animation when flipping nodes"
                              x:Name="ShowNodeFlipAnimButton"
+                             LargeIcon="../Resources/ViewTab/NodeFlipIcon.png"
                              Margin="5, 5, 5, 0" >
+
+            <Fluent:ToggleButton.ToolTip>
+                <Fluent:ScreenTip Title="Show/Hide animation when flipping nodes" Text="Enables or disables the flip animation played when double-clicking nodes" />
+            </Fluent:ToggleButton.ToolTip>
             
         </Fluent:ToggleButton>
 

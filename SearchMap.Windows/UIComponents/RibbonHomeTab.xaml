@@ -62,23 +62,23 @@
     <Fluent:RibbonGroupBox Header="Nodes">
 
         <Fluent:Button Header="New Title Node" 
-                       LargeIcon="../Resources/TitleNodeIcon_small.png" 
-                       Icon="../Resources/TitleNodeIcon_small.png"
+                       LargeIcon="../Resources/InsertTab/TitleNodeIcon_small.png" 
+                       Icon="../Resources/InsertTab/TitleNodeIcon_small.png"
                        Margin="5, 5, 5, 0" >
 
         </Fluent:Button>
 
         <Fluent:Button Header="New Text Node" 
-                       LargeIcon="../Resources/TextNodeIcon_small.png" 
-                       Icon="../Resources/TextNodeIcon_small.png"
+                       LargeIcon="../Resources/InsertTab/TextNodeIcon_small.png" 
+                       Icon="../Resources/InsertTab/TextNodeIcon_small.png"
                        Margin="5, 5, 5, 0">
 
         </Fluent:Button>
 
         <Fluent:Button Header="New Web Node" 
                        x:Name="NewWebNodeButton"
-                       LargeIcon="../Resources/WebNodeIcon_small.png" 
-                       Icon="../Resources/WebNodeIcon_small.png"
+                       LargeIcon="../Resources/InsertTab/WebNodeIcon_small.png" 
+                       Icon="../Resources/InsertTab/WebNodeIcon_small.png"
                        Margin="5, 5, 5, 0" >
 
             <Fluent:Button.ToolTip>
@@ -89,8 +89,8 @@
         </Fluent:Button>
 
         <Fluent:Button Header="New File Node" 
-                       LargeIcon="../Resources/FileNodeIcon_small.png" 
-                       Icon="../Resources/FileNodeIcon_small.png"
+                       LargeIcon="../Resources/InsertTab/FileNodeIcon_small.png" 
+                       Icon="../Resources/InsertTab/FileNodeIcon_small.png"
                        Margin="5, 5, 5, 0">
 
         </Fluent:Button>
@@ -101,7 +101,7 @@
 
         <Fluent:SplitButton Header="Create connection between nodes"
                             x:Name="NewConnectionButton"
-                            LargeIcon="../Resources/Connection_Red.png"
+                            LargeIcon="../Resources/InsertTab/Connection_Red.png"
                             Margin="5, 5, 5, 0">
 
             <Fluent:SplitButton.ToolTip>
@@ -110,15 +110,15 @@
 
             <Fluent:Gallery>
                 <Fluent:GalleryItem x:Name="NewGrayConnButton">
-                    <Image Source="../Resources/Connection_Gray.png" Height="80" />
+                    <Image Source="../Resources/InsertTab/Connection_Gray.png" Height="80" />
                 </Fluent:GalleryItem>
 
                 <Fluent:GalleryItem x:Name="NewRedConnButton">
-                    <Image Source="../Resources/Connection_Red.png" Height="80" />
+                    <Image Source="../Resources/InsertTab/Connection_Red.png" Height="80" />
                 </Fluent:GalleryItem>
 
                 <Fluent:GalleryItem x:Name="NewGreenConnButton">
-                    <Image Source="../Resources/Connection_Green.png" Height="80" />
+                    <Image Source="../Resources/InsertTab/Connection_Green.png" Height="80" />
                 </Fluent:GalleryItem>
 
             </Fluent:Gallery>
@@ -131,7 +131,7 @@
 
         <Fluent:ToggleButton Header="Normal" 
                              x:Name="NormalEditModeButton"
-                             LargeIcon="../Resources/NormalCursor_white.png"
+                             LargeIcon="../Resources/HomeTab/NormalCursor_white.png"
                              Margin="5, 5, 5, 0"
                              IsChecked="True">
 
@@ -143,7 +143,7 @@
 
         <Fluent:ToggleButton Header="Move"
                              x:Name="MoveEditModeButton"
-                             LargeIcon="../Resources/MoveCursor_small.png"
+                             LargeIcon="../Resources/HomeTab/MoveCursor_small.png"
                              Margin="5, 5, 5, 0" >
 
             <Fluent:ToggleButton.ToolTip>
@@ -154,7 +154,7 @@
 
         <Fluent:ToggleButton Header="Re-parent"
                              x:Name="ReparentEditModeButton"
-                             LargeIcon="../Resources/ReparentIcon_small.png"
+                             LargeIcon="../Resources/HomeTab/ReparentIcon_small.png"
                              Margin="5, 5, 5, 0" >
 
             <Fluent:ToggleButton.ToolTip>

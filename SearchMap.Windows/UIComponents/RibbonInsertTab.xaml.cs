@@ -157,8 +157,8 @@ namespace SearchMap.Windows.UIComponents {
         void NewGrayConn_Execute(object sender, ExecutedRoutedEventArgs e) {
 
             LastUsedColor = GRAY_CONN;
-            NewConnectionButton.LargeIcon = "../Resources/Connection_Gray.png";
-            MainWindow.Window.RibbonTabHome.NewConnectionButton.LargeIcon = "../Resources/Connection_Gray.png";
+            NewConnectionButton.LargeIcon = "../Resources/InsertTab/Connection_Gray.png";
+            MainWindow.Window.RibbonTabHome.NewConnectionButton.LargeIcon = "../Resources/InsertTab/Connection_Gray.png";
             NewConnection_Execute(sender, e);
 
         }
@@ -167,8 +167,8 @@ namespace SearchMap.Windows.UIComponents {
         void NewRedConn_Execute(object sender, ExecutedRoutedEventArgs e) {
 
             LastUsedColor = RED_CONN;
-            NewConnectionButton.LargeIcon = "../Resources/Connection_Red.png";
-            MainWindow.Window.RibbonTabHome.NewConnectionButton.LargeIcon = "../Resources/Connection_Red.png";
+            NewConnectionButton.LargeIcon = "../Resources/InsertTab/Connection_Red.png";
+            MainWindow.Window.RibbonTabHome.NewConnectionButton.LargeIcon = "../Resources/InsertTab/Connection_Red.png";
             NewConnection_Execute(sender, e);
 
         }
@@ -177,8 +177,8 @@ namespace SearchMap.Windows.UIComponents {
         void NewGreenConn_Execute(object sender, ExecutedRoutedEventArgs e) {
 
             LastUsedColor = GREEN_CONN;
-            NewConnectionButton.LargeIcon = "../Resources/Connection_Green.png";
-            MainWindow.Window.RibbonTabHome.NewConnectionButton.LargeIcon = "../Resources/Connection_Green.png";
+            NewConnectionButton.LargeIcon = "../Resources/InsertTab/Connection_Green.png";
+            MainWindow.Window.RibbonTabHome.NewConnectionButton.LargeIcon = "../Resources/InsertTab/Connection_Green.png";
             NewConnection_Execute(sender, e);
 
         }

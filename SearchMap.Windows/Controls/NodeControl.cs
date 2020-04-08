@@ -20,6 +20,9 @@ namespace SearchMap.Windows.Controls {
 
         NodeFlipAnimation FlipAnim { get; set; }
 
+        NodeSelectionAnimation SelectionAnimation { get; set; }
+
+
         /// <summary>
         /// Creates a new NodeControl representing the given Node
         /// </summary>
@@ -36,6 +39,17 @@ namespace SearchMap.Windows.Controls {
         /// Updates the rendered values and colors for the node.
         /// </summary>
         public abstract void Refresh();
+
+        /// <summary>
+        /// Sets the associated ribbon tab visible and, if setSelected, selects it.
+        /// </summary>
+        /// <param name="setSelected"></param>
+        public abstract void ShowAssociatedRibbonTab(bool setSelected);
+
+        /// <summary>
+        /// Collapses the associated ribbon tab, and selects the last used ribbon tab still visible.
+        /// </summary>
+        public abstract void CollapseAssociatedRibbonTab();
 
         /// <summary>
         /// Returns the WPF element representing the front side of the node.
@@ -77,6 +91,48 @@ namespace SearchMap.Windows.Controls {
                 }
 
             }
+
+        }
+
+        /// <summary>
+        /// Selects this node in the given color.
+        /// </summary>
+        /// <param name="color"></param>
+        public void SetSelected(Color color, bool openRibbonTab) {
+
+            // Unhighlight previously selected node if it wasn't this one.
+            if (MainWindow.Window.Selected != this) {
+                MainWindow.Window.DeselectAll();
+            }
+
+            MainWindow.Window.Selected = this;
+
+            // Selection Animation - Init here to be sure every required parameter is set.
+            SelectionAnimation = new NodeSelectionAnimation(this, 1);
+            SelectionAnimation.Highlight(color);
+
+            ShowAssociatedRibbonTab(openRibbonTab);
+
+        }
+
+        /// <summary>
+        /// Select with default color (orange).
+        /// </summary>
+        public void SetSelected() {
+            SetSelected(Color.FromRgb(255, 140, 0), true);
+        }
+
+        /// <summary>
+        /// Deselects this node.
+        /// </summary>
+        public void SetUnselected() {
+
+            if (MainWindow.Window.Selected != this) return;
+
+            SelectionAnimation.Normal();
+            MainWindow.Window.Selected = null;
+
+            CollapseAssociatedRibbonTab();
 
         }
 

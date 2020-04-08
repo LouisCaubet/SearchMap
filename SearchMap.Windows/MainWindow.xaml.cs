@@ -162,8 +162,7 @@ namespace SearchMap.Windows {
         public void DeselectAll() {
 
             if (Selected != null) {
-                Selected.SelectionAnimation.Normal();
-                Selected = null;
+                Selected.SetUnselected();
             }
 
             // Deselect connection

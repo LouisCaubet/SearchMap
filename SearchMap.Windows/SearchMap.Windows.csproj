@@ -221,64 +221,38 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\WebNodeIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\ConnectionTab\ColorCircle_small.png" />
+    <Resource Include="Resources\ConnectionTab\PrimaryImportance.png" />
+    <Resource Include="Resources\ConnectionTab\RevertIcon_small.png" />
+    <Resource Include="Resources\ConnectionTab\SecondaryImportance.png" />
+    <Resource Include="Resources\DeleteIcon.png" />
     <Resource Include="Resources\Placeholder.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\WebNodeIcon_small.png" />
+    <Resource Include="Resources\HomeTab\MoveCursor_small.png" />
+    <Resource Include="Resources\HomeTab\NormalCursor_white.png" />
+    <Resource Include="Resources\HomeTab\ReparentIcon_small.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\TitleNodeIcon.png" />
+    <Resource Include="Resources\InsertTab\Connection_Blue.png" />
+    <Resource Include="Resources\InsertTab\Connection_Gray.png" />
+    <Resource Include="Resources\InsertTab\Connection_Green.png" />
+    <Resource Include="Resources\InsertTab\Connection_Red.png" />
+    <Resource Include="Resources\InsertTab\CustomNodeIcon_small.png" />
+    <Resource Include="Resources\InsertTab\FileNodeIcon_small.png" />
+    <Resource Include="Resources\InsertTab\TextNodeIcon.png" />
+    <Resource Include="Resources\InsertTab\TextNodeIcon_small.png" />
+    <Resource Include="Resources\InsertTab\TitleNodeIcon.png" />
+    <Resource Include="Resources\InsertTab\TitleNodeIcon_small.png" />
+    <Resource Include="Resources\InsertTab\WebNodeIcon.png" />
+    <Resource Include="Resources\InsertTab\WebNodeIcon_small.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\TextNodeIcon.png" />
+    <Resource Include="Resources\ViewTab\grid_small.png" />
+    <Resource Include="Resources\ViewTab\NodeFlipIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\TextNodeIcon_small.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\TitleNodeIcon_small.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\FileNodeIcon_small.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\CustomNodeIcon_small.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Connection_Blue.png" />
-    <Resource Include="Resources\Connection_Gray.png" />
-    <Resource Include="Resources\Connection_Green.png" />
-    <Resource Include="Resources\Connection_Red.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\RevertIcon_small.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\DeleteIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\ColorCircle_small.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\SecondaryImportance.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\PrimaryImportance.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\NormalCursor_white.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\MoveCursor_small.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\ReparentIcon_small.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\grid_small.png" />
+    <Resource Include="Resources\NodeTab\OpenWebsiteLargeIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

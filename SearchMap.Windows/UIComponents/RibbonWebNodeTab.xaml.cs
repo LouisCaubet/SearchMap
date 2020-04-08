@@ -21,6 +21,8 @@ namespace SearchMap.Windows.UIComponents {
     /// </summary>
     public partial class RibbonWebNodeTab : RibbonTabItem {
 
+        public const int TAB_INDEX = 6;
+
         public RibbonWebNodeTab() {
             InitializeComponent();
         }
