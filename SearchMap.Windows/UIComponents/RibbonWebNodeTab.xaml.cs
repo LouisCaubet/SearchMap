@@ -30,6 +30,9 @@ namespace SearchMap.Windows.UIComponents {
         internal ICommand ToggleItalic { get; private set; }
         internal ICommand ToggleUnderline { get; private set; }
         internal ICommand ToggleStriketrough { get; private set; }
+        internal ICommand RemoveFormatting { get; private set; }
+        internal ICommand IncreaseFontSize { get; private set; }
+        internal ICommand DecreaseFontSize { get; private set; }
 
         public RibbonWebNodeTab() {
             InitializeComponent();
@@ -71,10 +74,22 @@ namespace SearchMap.Windows.UIComponents {
             MainWindow.Window.CommandBindings.Add(new CommandBinding(ToggleStriketrough, ToggleStriketrough_Execute, FontCommands_CanExecute));
             buttonStrikethrough.Command = ToggleStriketrough;
 
+            RemoveFormatting = new RoutedCommand("WebNodeTab.RemoveFormatting", GetType());
+            MainWindow.Window.CommandBindings.Add(new CommandBinding(RemoveFormatting, RemoveFormatting_Execute, FontCommands_CanExecute));
+            buttonClearFormatting.Command = RemoveFormatting;
+
+            IncreaseFontSize = new RoutedCommand("WebNodeTab.IncreaseFontSize", GetType());
+            MainWindow.Window.CommandBindings.Add(new CommandBinding(IncreaseFontSize, IncreaseFontSize_Execute, FontCommands_CanExecute));
+            buttonGrowFont.Command = IncreaseFontSize; 
+            
+            DecreaseFontSize = new RoutedCommand("WebNodeTab.DecreaseFontSize", GetType());
+            MainWindow.Window.CommandBindings.Add(new CommandBinding(DecreaseFontSize, DecreaseFontSize_Execute, FontCommands_CanExecute));
+            buttonShrinkFont.Command = DecreaseFontSize;
+
         }
 
 
-        // COLOR EDITION
+        #region Color Edition
 
         private void SelectedBorderColorChanged(object sender, RoutedEventArgs e) {
             if(BorderColorSelector.SelectedColor.HasValue && MainWindow.Window.Selected != null) {
@@ -90,8 +105,9 @@ namespace SearchMap.Windows.UIComponents {
             }
         }
 
+        #endregion
 
-        // FONT GROUP COMMANDS
+        #region Font Group Commands
 
         public void SetStateOfButtons() {
 
@@ -124,7 +140,8 @@ namespace SearchMap.Windows.UIComponents {
         }
 
         void FontCommands_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
-            e.CanExecute = MainWindow.Window.Selected != null && MainWindow.Window.Selected.GetSelectionFontSize() != -1;
+            e.CanExecute = MainWindow.Window.Selected != null 
+                && (MainWindow.Window.Selected.GetSelectionFontSize() != -1 || IsMouseOver);
             SetStateOfButtons();
         }
 
@@ -143,6 +160,21 @@ namespace SearchMap.Windows.UIComponents {
         void ToggleStriketrough_Execute(object sender, ExecutedRoutedEventArgs e) {
             MainWindow.Window.Selected.ToggleSelectionStriketrough();
         }
+
+        void RemoveFormatting_Execute(object sender, ExecutedRoutedEventArgs e) {
+            MainWindow.Window.Selected.RemoveFormattingOnSelection();
+        }
+
+        void IncreaseFontSize_Execute(object sender, ExecutedRoutedEventArgs e) {
+            MainWindow.Window.Selected.SetSelectionFontSize(MainWindow.Window.Selected.GetSelectionFontSize() + 2);
+        }
+
+        void DecreaseFontSize_Execute(object sender, ExecutedRoutedEventArgs e) {
+            double current = MainWindow.Window.Selected.GetSelectionFontSize();
+            if (current > 2) MainWindow.Window.Selected.SetSelectionFontSize(current - 2);
+        }
+
+        #endregion
 
 
         #region Font Size Combo Boxes

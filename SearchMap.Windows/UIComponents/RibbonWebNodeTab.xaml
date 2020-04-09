@@ -82,9 +82,6 @@
                             <Fluent:RibbonToolBarControlDefinition Target="buttonGrowFont" />
                             <Fluent:RibbonToolBarControlDefinition Target="buttonShrinkFont" />
                         </Fluent:RibbonToolBarControlGroupDefinition>
-                        <Fluent:RibbonToolBarControlGroupDefinition>
-                            <Fluent:RibbonToolBarControlDefinition Target="buttonChangeCase" />
-                        </Fluent:RibbonToolBarControlGroupDefinition>
 
                     </Fluent:RibbonToolBarRow>
                     <Fluent:RibbonToolBarRow>
@@ -128,7 +125,6 @@
                             <Fluent:RibbonToolBarControlDefinition Target="buttonTextEffects" />
                             <Fluent:RibbonToolBarControlDefinition Target="buttonTextHighlightColor" />
                             <Fluent:RibbonToolBarControlDefinition Target="buttonFontColor" />
-                            <Fluent:RibbonToolBarControlDefinition Target="buttonChangeCase" />
                         </Fluent:RibbonToolBarControlGroupDefinition>
                         <Fluent:RibbonToolBarControlGroupDefinition>
                             <Fluent:RibbonToolBarControlDefinition Target="buttonGrowFont" />
@@ -201,11 +197,7 @@
                            HorizontalAlignment="Left"
                            SizeDefinition="Small"
                            FocusManager.IsFocusScope="True" />
-            <Fluent:DropDownButton x:Name="buttonChangeCase"
-                                   Icon="../Resources/FontEditor/ChangeCase.png"
-                                   HorizontalAlignment="Left"
-                                   SizeDefinition="Small"
-                                   FocusManager.IsFocusScope="True"/>
+
             <Fluent:ToggleButton KeyTip="B"
                                  x:Name="buttonBold"
                                  Icon="../Resources/FontEditor/Bold.png"
@@ -245,13 +237,8 @@
                                             SizeDefinition="Small">
                 <Fluent:DropDownButton.Icon>
                     <Grid>
-                        <Image Source="../Resources/FontEditor/TextHighlightColor.png"
-                                        Width="16"
-                                        Height="16" />
-                        <Rectangle VerticalAlignment="Bottom"
-                                            Height="4"
-                                            Width="16"
-                                            HorizontalAlignment="Center">
+                        <Image Source="../Resources/FontEditor/TextHighlightColor.png" Width="16" Height="16" />
+                        <Rectangle VerticalAlignment="Bottom" Height="4" Width="16" HorizontalAlignment="Center">
                             <Rectangle.Fill>
                                 <SolidColorBrush Color="{Binding ColorViewModel.HighlightColor}" />
                             </Rectangle.Fill>
@@ -259,41 +246,33 @@
                     </Grid>
                 </Fluent:DropDownButton.Icon>
                 <Fluent:ColorGallery Mode="HighlightColors"
-                                                SelectedColor="{Binding ColorViewModel.HighlightColor, Mode=TwoWay}"
-                                                IsAutomaticColorButtonVisible="False" />
+                                     SelectedColor="{Binding ColorViewModel.HighlightColor, Mode=TwoWay}"
+                                     IsAutomaticColorButtonVisible="False" />
+                
             </Fluent:DropDownButton>
 
             <!-- The following code shows theme colors mode for color gallery -->
             <Fluent:DropDownButton x:Name="buttonFontColor"
-                                            HorizontalAlignment="Left"
-                                            SizeDefinition="Small"
-                                            MaxDropDownHeight="500">
+                                   HorizontalAlignment="Left"
+                                   SizeDefinition="Small"
+                                   MaxDropDownHeight="500">
                 <Fluent:DropDownButton.ToolTip>
-                    <Fluent:ScreenTip Text="Test-ScreenTip to test wrong ToolTip appearence when Popup is open" />
+                    <Fluent:ScreenTip Title="Text Color" Text="TODO" />
                 </Fluent:DropDownButton.ToolTip>
                 <Fluent:DropDownButton.Icon>
                     <Grid>
-                        <Image Source="../Resources/FontEditor/FontColor.png"
-                                        Width="16"
-                                        Height="16"
-                                        SnapsToDevicePixels="True" />
-                        <Rectangle VerticalAlignment="Bottom"
-                                            Height="4"
-                                            Width="16"
-                                            HorizontalAlignment="Center">
+                        <Image Source="../Resources/FontEditor/FontColor.png" Width="16" Height="16" SnapsToDevicePixels="True" />
+                        <Rectangle VerticalAlignment="Bottom" Height="4" Width="16" HorizontalAlignment="Center">
                             <Rectangle.Fill>
                                 <SolidColorBrush Color="{Binding ColorViewModel.ThemeColor}" />
                             </Rectangle.Fill>
                         </Rectangle>
                     </Grid>
                 </Fluent:DropDownButton.Icon>
-                <Fluent:ColorGallery ThemeColorsSource="{Binding ColorViewModel.ThemeColors}"
-                                                SelectedColor="{Binding ColorViewModel.ThemeColor, Mode=TwoWay}"
-                                                Mode="ThemeColors"
-                                                StandardColorGridRows="3"
-                                                Columns="10"
-                                                ThemeColorGridRows="5"
-                                                IsNoColorButtonVisible="True" />
+                <Fluent:ColorGallery Mode="ThemeColors"
+                                     StandardColorGridRows="5"
+                                     IsNoColorButtonVisible="False" />
+                
             </Fluent:DropDownButton>
         </Fluent:RibbonToolBar>
     </Fluent:RibbonGroupBox>

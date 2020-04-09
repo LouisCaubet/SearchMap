@@ -69,6 +69,8 @@ namespace SearchMap.Windows.UIComponents {
 
             TextRange range = new TextRange(CommentBox.Document.ContentStart, CommentBox.Document.ContentEnd);
             range.Load(new MemoryStream(byteArray), DataFormats.Rtf);
+
+            // TODO move somewhere else (dont want to remove color edits by user).
             range.ApplyPropertyValue(Inline.ForegroundProperty, new SolidColorBrush(textColor));
 
             // Tooltip
@@ -395,6 +397,41 @@ namespace SearchMap.Windows.UIComponents {
             }
             else if (CommentBox.Equals(LastObjectWithKeyboardFocus)) {
                 CommentBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, size);
+            }
+
+        }
+
+        public override void RemoveFormattingOnSelection() {
+
+            FontFamily font = new FontFamily("Segoe UI");
+            Color textColor = GetBrightness(CoreToWPFUtils.CoreColorToWPF(Node.Color)) < 0.55 ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0);
+
+            if (FrontTitleBox.Equals(LastObjectWithKeyboardFocus)) {
+                FrontTitleBox.FontFamily = font;
+                FrontTitleBox.FontSize = 40;
+                FrontTitleBox.Foreground = new SolidColorBrush(textColor);
+                FrontTitleBox.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+                FrontTitleBox.TextDecorations = null;
+                FrontTitleBox.FontWeight = FontWeights.Black;
+                FrontTitleBox.FontStyle = FontStyles.Normal;
+            }
+            else if (BackTitleBox.Equals(LastObjectWithKeyboardFocus)) {
+                BackTitleBox.FontFamily = font;
+                BackTitleBox.FontSize = 30;
+                BackTitleBox.Foreground = new SolidColorBrush(textColor);
+                BackTitleBox.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+                BackTitleBox.TextDecorations = null;
+                BackTitleBox.FontWeight = FontWeights.Black;
+                BackTitleBox.FontStyle = FontStyles.Normal;
+            }
+            else if (CommentBox.Equals(LastObjectWithKeyboardFocus)) {
+                CommentBox.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, font);
+                CommentBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, 16);
+                CommentBox.Selection.ApplyPropertyValue(Inline.ForegroundProperty, new SolidColorBrush(textColor));
+                CommentBox.Selection.ApplyPropertyValue(Inline.BackgroundProperty, new SolidColorBrush(Color.FromArgb(0, 0, 0, 0)));
+                CommentBox.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, null);
+                CommentBox.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Normal);
+                CommentBox.Selection.ApplyPropertyValue(Inline.FontStyleProperty, FontStyles.Normal);
             }
 
         }
