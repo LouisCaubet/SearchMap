@@ -2,9 +2,12 @@
 using SearchMapCore.Graph;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace SearchMap.Windows.UIComponents {
@@ -73,7 +76,17 @@ namespace SearchMap.Windows.UIComponents {
         }
 
         void OnCommentChanged(object sender, TextChangedEventArgs e) {
-            Node.Comment = CommentBox.Text;
+
+            // Extract rich text from CommentBox
+            TextRange range = new TextRange(CommentBox.Document.ContentStart, CommentBox.Document.ContentEnd);
+            MemoryStream stream = new MemoryStream();
+
+            range.Save(stream, DataFormats.Rtf);
+
+            byte[] bytes = stream.ToArray();
+
+            Node.Comment = Encoding.UTF8.GetString(bytes);
+
         }
         
     }

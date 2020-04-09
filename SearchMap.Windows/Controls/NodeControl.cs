@@ -40,6 +40,7 @@ namespace SearchMap.Windows.Controls {
         /// </summary>
         public abstract void Refresh();
 
+
         /// <summary>
         /// Sets the associated ribbon tab visible and, if setSelected, selects it.
         /// </summary>
@@ -50,6 +51,7 @@ namespace SearchMap.Windows.Controls {
         /// Collapses the associated ribbon tab, and selects the last used ribbon tab still visible.
         /// </summary>
         public abstract void CollapseAssociatedRibbonTab();
+
 
         /// <summary>
         /// Returns the WPF element representing the front side of the node.
@@ -62,6 +64,24 @@ namespace SearchMap.Windows.Controls {
         /// </summary>
         /// <returns></returns>
         public abstract FrameworkElement GetBack();
+
+
+        // Text edition
+
+        public abstract bool IsSelectionBold();
+        public abstract bool IsSelectionItalic();
+        public abstract bool IsSelectionUnderlined();
+        public abstract bool IsSelectionStrikedtrough();
+        public abstract string GetSelectionFont();
+        public abstract double GetSelectionFontSize();
+
+        public abstract void ToggleSelectionBold();
+        public abstract void ToggleSelectionItalic();
+        public abstract void ToggleSelectionUnderline();
+        public abstract void ToggleSelectionStriketrough();
+        public abstract void SetSelectionFont(string name);
+        public abstract void SetSelectionFontSize(double size);
+
 
         /// <summary>
         /// Source : https://stackoverflow.com/questions/50540301/c-sharp-get-good-color-for-label

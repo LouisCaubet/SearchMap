@@ -16,6 +16,13 @@
         </ContextMenu>
     </UserControl.ContextMenu>
 
+    <UserControl.ToolTip>
+        <StackPanel>
+            <TextBlock x:Name="UriToolTip" Text="uri here" FontWeight="Bold" FontSize="11" Margin="2" />
+            <TextBlock Text="Ctrl+Click to follow the link." FontSize="10" Margin="2" />
+        </StackPanel>
+    </UserControl.ToolTip>
+
     <Grid>
 
         <Border x:Name="Border" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="12" BorderBrush="DarkGray" 
@@ -54,8 +61,8 @@
                          FontWeight="Black" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="0" IsReadOnly="False"
                          AcceptsReturn="False" />
 
-                    <TextBox x:Name="CommentBox" Grid.Row="1" Text="SearchMap - Download Now!" Background="Transparent" BorderThickness="0" 
-                             FontSize="20" AcceptsReturn="True" TextWrapping="WrapWithOverflow" Margin="10"/>
+                    <RichTextBox x:Name="CommentBox" Grid.Row="1" Background="Transparent" BorderThickness="0" FontSize="20" 
+                                 AcceptsReturn="True" Margin="10"/>
 
                 </Grid>
 

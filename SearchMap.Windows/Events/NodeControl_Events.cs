@@ -121,7 +121,7 @@ namespace SearchMap.Windows.Controls {
                 IsRightClickDown = true;
 
                 // Deselect selected node
-                MainWindow.Window.DeselectAll();
+                if(MainWindow.Window.Selected != this) MainWindow.Window.DeselectAll();
 
                 var pos = args.GetPosition(MainWindow.Window.GraphCanvas);
                 lastDragPoint = pos;
