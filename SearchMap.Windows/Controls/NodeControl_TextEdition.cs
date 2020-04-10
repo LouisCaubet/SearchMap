@@ -14,6 +14,8 @@ namespace SearchMap.Windows.Controls {
         /// </summary>
         protected FrameworkElement LastObjectWithKeyboardFocus { get; set; }
 
+        protected FrameworkElement LastNotNullObjectWithKeyboardFocus { get; set; }
+
         /// <summary>
         /// Sets the value of LastObjectWithKeyboardFocus. Should only be called from the NodeControl base class.
         /// </summary>
@@ -279,20 +281,20 @@ namespace SearchMap.Windows.Controls {
         /// <param name="name"></param>
         public virtual void SetSelectionFont(string name) {
 
-            if (LastObjectWithKeyboardFocus == null) return;
+            if (LastNotNullObjectWithKeyboardFocus == null) return;
 
             FontFamily font = new FontFamily(name);
 
-            if (LastObjectWithKeyboardFocus.GetType() == typeof(TextBox)) {
-                var textbox = (TextBox) LastObjectWithKeyboardFocus;
+            if (LastNotNullObjectWithKeyboardFocus.GetType() == typeof(TextBox)) {
+                var textbox = (TextBox) LastNotNullObjectWithKeyboardFocus;
                 textbox.FontFamily = font;
             }
-            else if (LastObjectWithKeyboardFocus.GetType() == typeof(RichTextBox)) {
-                var rtb = (RichTextBox) LastObjectWithKeyboardFocus;
+            else if (LastNotNullObjectWithKeyboardFocus.GetType() == typeof(RichTextBox)) {
+                var rtb = (RichTextBox) LastNotNullObjectWithKeyboardFocus;
                 rtb.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, font);
             }
 
-            Keyboard.Focus(LastObjectWithKeyboardFocus);
+            Keyboard.Focus(LastNotNullObjectWithKeyboardFocus);
 
         }
 
@@ -302,18 +304,18 @@ namespace SearchMap.Windows.Controls {
         /// <param name="size"></param>
         public virtual void SetSelectionFontSize(double size) {
 
-            if (LastObjectWithKeyboardFocus == null) return;
+            if (LastNotNullObjectWithKeyboardFocus == null) return;
 
-            if (LastObjectWithKeyboardFocus.GetType() == typeof(TextBox)) {
-                var textbox = (TextBox) LastObjectWithKeyboardFocus;
+            if (LastNotNullObjectWithKeyboardFocus.GetType() == typeof(TextBox)) {
+                var textbox = (TextBox) LastNotNullObjectWithKeyboardFocus;
                 textbox.FontSize = size;
             }
-            else if (LastObjectWithKeyboardFocus.GetType() == typeof(RichTextBox)) {
-                var rtb = (RichTextBox) LastObjectWithKeyboardFocus;
+            else if (LastNotNullObjectWithKeyboardFocus.GetType() == typeof(RichTextBox)) {
+                var rtb = (RichTextBox) LastNotNullObjectWithKeyboardFocus;
                 rtb.Selection.ApplyPropertyValue(Inline.FontSizeProperty, size);
             }
 
-            Keyboard.Focus(LastObjectWithKeyboardFocus);
+            Keyboard.Focus(LastNotNullObjectWithKeyboardFocus);
 
         }
 
@@ -358,18 +360,18 @@ namespace SearchMap.Windows.Controls {
         /// <param name="color"></param>
         public virtual void SetSelectionColor(Color color) {
 
-            if (LastObjectWithKeyboardFocus == null) return;
+            if (LastNotNullObjectWithKeyboardFocus == null) return;
 
-            if (LastObjectWithKeyboardFocus.GetType() == typeof(TextBox)) {
-                var textbox = (TextBox) LastObjectWithKeyboardFocus;
+            if (LastNotNullObjectWithKeyboardFocus.GetType() == typeof(TextBox)) {
+                var textbox = (TextBox) LastNotNullObjectWithKeyboardFocus;
                 textbox.Foreground = new SolidColorBrush(color);
             }
-            else if (LastObjectWithKeyboardFocus.GetType() == typeof(RichTextBox)) {
-                var rtb = (RichTextBox) LastObjectWithKeyboardFocus;
+            else if (LastNotNullObjectWithKeyboardFocus.GetType() == typeof(RichTextBox)) {
+                var rtb = (RichTextBox) LastNotNullObjectWithKeyboardFocus;
                 rtb.Selection.ApplyPropertyValue(Inline.ForegroundProperty, new SolidColorBrush(color));
             }
 
-            Keyboard.Focus(LastObjectWithKeyboardFocus);
+            Keyboard.Focus(LastNotNullObjectWithKeyboardFocus);
 
         }
 
@@ -379,18 +381,18 @@ namespace SearchMap.Windows.Controls {
         /// <param name="color"></param>
         public virtual void SetSelectionHighlight(Color color) {
 
-            if (LastObjectWithKeyboardFocus == null) return;
+            if (LastNotNullObjectWithKeyboardFocus == null) return;
 
-            if (LastObjectWithKeyboardFocus.GetType() == typeof(TextBox)) {
-                var textbox = (TextBox) LastObjectWithKeyboardFocus;
+            if (LastNotNullObjectWithKeyboardFocus.GetType() == typeof(TextBox)) {
+                var textbox = (TextBox) LastNotNullObjectWithKeyboardFocus;
                 textbox.Background = new SolidColorBrush(color);
             }
-            else if (LastObjectWithKeyboardFocus.GetType() == typeof(RichTextBox)) {
-                var rtb = (RichTextBox) LastObjectWithKeyboardFocus;
+            else if (LastNotNullObjectWithKeyboardFocus.GetType() == typeof(RichTextBox)) {
+                var rtb = (RichTextBox) LastNotNullObjectWithKeyboardFocus;
                 rtb.Selection.ApplyPropertyValue(Inline.BackgroundProperty, new SolidColorBrush(color));
             }
 
-            Keyboard.Focus(LastObjectWithKeyboardFocus);
+            Keyboard.Focus(LastNotNullObjectWithKeyboardFocus);
 
         }
 

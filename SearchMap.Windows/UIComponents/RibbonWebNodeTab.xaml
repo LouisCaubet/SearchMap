@@ -16,6 +16,10 @@
                        x:Name="OpenWebsiteButton"
                        LargeIcon="../Resources/NodeTab/OpenWebsiteLargeIcon.png"
                        Margin="5,5,5,0" >
+
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip Title="Open Website" Text="Opens the website represented by the selected node." />
+            </Fluent:Button.ToolTip>
             
         </Fluent:Button>
 
@@ -23,6 +27,10 @@
                        x:Name="ChangeWebsiteButton" 
                        LargeIcon="../Resources/NodeTab/EditWebsiteIcon.png"
                        Margin="5,5,5,0">
+
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip Title="Change Website" Text="Change the website binded with the selected node." />
+            </Fluent:Button.ToolTip>
             
         </Fluent:Button>
 
@@ -30,6 +38,10 @@
                        x:Name="ChangeIconButton"
                        LargeIcon="../Resources/NodeTab/ChangeImageIcon.png"
                        Margin="5,5,5,0">
+
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip Title="Change Icon" Text="Change the icon of the selected node." />
+            </Fluent:Button.ToolTip>
             
         </Fluent:Button>
         
@@ -47,6 +59,10 @@
                                  IsNoColorButtonVisible="False">
                 
             </Fluent:ColorGallery>
+
+            <Fluent:DropDownButton.ToolTip>
+                <Fluent:ScreenTip Title="Background Color" Text="Change the background color of the selected node." />
+            </Fluent:DropDownButton.ToolTip>
             
         </Fluent:DropDownButton>
 
@@ -59,6 +75,10 @@
                                  IsNoColorButtonVisible="False">
 
             </Fluent:ColorGallery>
+
+            <Fluent:DropDownButton.ToolTip>
+                <Fluent:ScreenTip Title="Border Color" Text="Change the border color of the selected node." />
+            </Fluent:DropDownButton.ToolTip>
 
         </Fluent:DropDownButton>
 
@@ -154,6 +174,11 @@
                                              ItemContainerGenerator="{Binding ItemContainerGenerator, RelativeSource={RelativeSource FindAncestor, AncestorType=ComboBox}}" />
                     </ItemsPanelTemplate>
                 </Fluent:ComboBox.ItemsPanel>
+
+                <Fluent:ComboBox.ToolTip>
+                    <Fluent:ScreenTip Title="Font" Text="Choose a new font for the selected text." />
+                </Fluent:ComboBox.ToolTip>
+                
             </Fluent:ComboBox>
             <Fluent:ComboBox x:Name="comboBoxFontSize"
                              Width="49"
@@ -185,50 +210,97 @@
                 <TextBlock Text="36" />
                 <TextBlock Text="48" />
                 <TextBlock Text="72" />
+
+                <Fluent:ComboBox.ToolTip>
+                    <Fluent:ScreenTip Title="Font Size" Text="Change the font size of the selected text." />
+                </Fluent:ComboBox.ToolTip>
+
             </Fluent:ComboBox>
             <Fluent:Button KeyTip="GF"
                            x:Name="buttonGrowFont"
                            Icon="../Resources/FontEditor/GrowFont.png"
                            HorizontalAlignment="Left"
                            SizeDefinition="Small" 
-                           FocusManager.IsFocusScope="True" />
+                           FocusManager.IsFocusScope="True">
+
+                <Fluent:Button.ToolTip>
+                    <Fluent:ScreenTip Title="Grow Font" Text="Increase the font size of the selected text." />
+                </Fluent:Button.ToolTip>
+                
+            </Fluent:Button>
             <Fluent:Button x:Name="buttonShrinkFont"
                            Icon="../Resources/FontEditor/ShrinkFont.png"
                            HorizontalAlignment="Left"
                            SizeDefinition="Small"
-                           FocusManager.IsFocusScope="True" />
+                           FocusManager.IsFocusScope="True">
+
+                <Fluent:Button.ToolTip>
+                    <Fluent:ScreenTip Title="Shrink Font" Text="Decrease the font size of the selected text." />
+                </Fluent:Button.ToolTip>
+
+            </Fluent:Button>
 
             <Fluent:ToggleButton KeyTip="B"
                                  x:Name="buttonBold"
                                  Icon="../Resources/FontEditor/Bold.png"
                                  HorizontalAlignment="Left"
                                  SizeDefinition="Small"
-                                 FocusManager.IsFocusScope="True"/>
-            
+                                 FocusManager.IsFocusScope="True">
+
+                <Fluent:ToggleButton.ToolTip>
+                    <Fluent:ScreenTip Title="Bold (Ctrl+B)" Text="Toggle bold on the selected text." />
+                </Fluent:ToggleButton.ToolTip>
+
+            </Fluent:ToggleButton>
+
             <Fluent:ToggleButton x:Name="buttonItalic"
                                  KeyTip="I"
                                  Icon="../Resources/FontEditor/Italic.png"
                                  HorizontalAlignment="Left"
                                  SizeDefinition="Small"
-                                 FocusManager.IsFocusScope="True" />
-            
+                                 FocusManager.IsFocusScope="True">
+
+                <Fluent:ToggleButton.ToolTip>
+                    <Fluent:ScreenTip Title="Italic (Ctrl+I)" Text="Toggle italic on the selected text." />
+                </Fluent:ToggleButton.ToolTip>
+
+            </Fluent:ToggleButton>
+
             <Fluent:ToggleButton x:Name="buttonUnderline"
                                  Icon="../Resources/FontEditor/Underline.png"
                                  HorizontalAlignment="Left"
                                  SizeDefinition="Small"
-                                 FocusManager.IsFocusScope="True" />
-            
+                                 FocusManager.IsFocusScope="True">
+
+                <Fluent:ToggleButton.ToolTip>
+                    <Fluent:ScreenTip Title="Underline (Ctrl+U)" Text="Toggle underline on the selected text." />
+                </Fluent:ToggleButton.ToolTip>
+
+            </Fluent:ToggleButton>
+
             <Fluent:ToggleButton x:Name="buttonStrikethrough"
                                  Icon="../Resources/FontEditor/Strikethrough.png"
                                  HorizontalAlignment="Left"
                                  SizeDefinition="Small"
-                                 FocusManager.IsFocusScope="True" />
+                                 FocusManager.IsFocusScope="True">
+
+                <Fluent:ToggleButton.ToolTip>
+                    <Fluent:ScreenTip Title="Strikethrough" Text="Toggle strikethrough on the selected text." />
+                </Fluent:ToggleButton.ToolTip>
+
+            </Fluent:ToggleButton>
 
             <Fluent:Button x:Name="buttonClearFormatting"
                            Icon="../Resources/FontEditor/ClearFormatting.png"
                            HorizontalAlignment="Left"
                            SizeDefinition="Small"
-                           FocusManager.IsFocusScope="True" />
+                           FocusManager.IsFocusScope="True">
+
+                <Fluent:Button.ToolTip>
+                    <Fluent:ScreenTip Title="Clear Formatting" Text="Removes all user customizations from the selected text." />
+                </Fluent:Button.ToolTip>
+                
+            </Fluent:Button>
 
 
             <!-- The following code shows highlight colors mode for color gallery -->
@@ -248,6 +320,10 @@
                 <Fluent:ColorGallery Mode="HighlightColors"
                                      x:Name="HighlightColorSelector"
                                      IsAutomaticColorButtonVisible="False" />
+
+                <Fluent:DropDownButton.ToolTip>
+                    <Fluent:ScreenTip Title="Highlight Color" Text="Highlight the selected text." />
+                </Fluent:DropDownButton.ToolTip>
                 
             </Fluent:DropDownButton>
 
@@ -257,7 +333,7 @@
                                    SizeDefinition="Small"
                                    MaxDropDownHeight="500">
                 <Fluent:DropDownButton.ToolTip>
-                    <Fluent:ScreenTip Title="Text Color" Text="TODO" />
+                    <Fluent:ScreenTip Title="Font Color" Text="Change the color of the selected text." />
                 </Fluent:DropDownButton.ToolTip>
                 <Fluent:DropDownButton.Icon>
                     <Grid>

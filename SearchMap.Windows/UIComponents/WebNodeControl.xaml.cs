@@ -127,12 +127,15 @@ namespace SearchMap.Windows.UIComponents {
         protected override void SetObjectWithLastKeyboardFocus() {
             if (FrontTitleBox.IsKeyboardFocusWithin) {
                 LastObjectWithKeyboardFocus = FrontTitleBox;
+                LastNotNullObjectWithKeyboardFocus = FrontTitleBox;
             }
             else if (BackTitleBox.IsKeyboardFocusWithin) {
                 LastObjectWithKeyboardFocus = BackTitleBox;
+                LastNotNullObjectWithKeyboardFocus = BackTitleBox;
             }
             else if (CommentBox.IsKeyboardFocusWithin) {
                 LastObjectWithKeyboardFocus = CommentBox;
+                LastNotNullObjectWithKeyboardFocus = CommentBox;
             }
             else {
                 LastObjectWithKeyboardFocus = null;
