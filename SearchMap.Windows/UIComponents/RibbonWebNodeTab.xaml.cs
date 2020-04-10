@@ -54,6 +54,9 @@ namespace SearchMap.Windows.UIComponents {
             comboBoxFontSize.SelectionChanged += OnFontSizeChanged;
             comboBoxFontSize.TextInput += OnFontSizeTyped;
 
+            FontColorSelector.SelectedColorChanged += OnFontColorSelected;
+            HighlightColorSelector.SelectedColorChanged += OnHighlightColorSelected;
+
         }
 
         internal void RegisterCommands() {
@@ -119,11 +122,15 @@ namespace SearchMap.Windows.UIComponents {
             if(notnull && selected.GetSelectionFontSize() == -1) {
                 comboBoxFontSize.IsEnabled = false;
                 FontComboBox.IsEnabled = false;
+                buttonTextHighlightColor.IsEnabled = false;
+                buttonFontColor.IsEnabled = false;
                 return;
             }
 
             comboBoxFontSize.IsEnabled = true;
             FontComboBox.IsEnabled = true;
+            buttonTextHighlightColor.IsEnabled = true;
+            buttonFontColor.IsEnabled = true;
 
             buttonBold.IsChecked = notnull && selected.IsSelectionBold();
             buttonItalic.IsChecked = notnull && selected.IsSelectionItalic();
@@ -176,6 +183,27 @@ namespace SearchMap.Windows.UIComponents {
 
         #endregion
 
+        #region Font Color Edition
+
+        private void OnHighlightColorSelected(object sender, RoutedEventArgs e) {
+
+            if (HighlightColorSelector.SelectedColor.HasValue) {
+                Color color = HighlightColorSelector.SelectedColor.Value;
+                MainWindow.Window.Selected.SetSelectionHighlight(color);
+            }
+
+        }
+
+        private void OnFontColorSelected(object sender, RoutedEventArgs e) {
+
+            if (FontColorSelector.SelectedColor.HasValue) {
+                Color color = FontColorSelector.SelectedColor.Value;
+                MainWindow.Window.Selected.SetSelectionColor(color);
+            }
+
+        }
+
+        #endregion
 
         #region Font Size Combo Boxes
 

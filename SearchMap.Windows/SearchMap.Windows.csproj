@@ -75,6 +75,7 @@
     </ApplicationDefinition>
     <Compile Include="Controls\ClipboardManager.cs" />
     <Compile Include="Controls\NodeControl.cs" />
+    <Compile Include="Controls\NodeControl_TextEdition.cs" />
     <Compile Include="Controls\ResizableNodeControl.cs" />
     <Compile Include="Dialog\NewWebNodeDialog.xaml.cs">
       <DependentUpon>NewWebNodeDialog.xaml</DependentUpon>

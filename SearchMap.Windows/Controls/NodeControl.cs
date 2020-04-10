@@ -66,25 +66,6 @@ namespace SearchMap.Windows.Controls {
         public abstract FrameworkElement GetBack();
 
 
-        // Text edition
-
-        public abstract bool IsSelectionBold();
-        public abstract bool IsSelectionItalic();
-        public abstract bool IsSelectionUnderlined();
-        public abstract bool IsSelectionStrikedtrough();
-        public abstract string GetSelectionFont();
-        public abstract double GetSelectionFontSize();
-
-        public abstract void ToggleSelectionBold();
-        public abstract void ToggleSelectionItalic();
-        public abstract void ToggleSelectionUnderline();
-        public abstract void ToggleSelectionStriketrough();
-        public abstract void SetSelectionFont(string name);
-        public abstract void SetSelectionFontSize(double size);
-
-        public abstract void RemoveFormattingOnSelection();
-
-
         /// <summary>
         /// Source : https://stackoverflow.com/questions/50540301/c-sharp-get-good-color-for-label
         /// </summary>

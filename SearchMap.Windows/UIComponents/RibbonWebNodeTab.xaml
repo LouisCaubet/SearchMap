@@ -41,7 +41,7 @@
                                LargeIcon="../Resources/ConnectionTab/ColorCircle_small.png"
                                Margin="5,5,5,0">
 
-            <Fluent:ColorGallery Mode="ThemeColors" 
+            <Fluent:ColorGallery Mode="StandardColors" 
                                  x:Name="BackgroundColorSelector"
                                  StandardColorGridRows="5"
                                  IsNoColorButtonVisible="False">
@@ -240,13 +240,13 @@
                         <Image Source="../Resources/FontEditor/TextHighlightColor.png" Width="16" Height="16" />
                         <Rectangle VerticalAlignment="Bottom" Height="4" Width="16" HorizontalAlignment="Center">
                             <Rectangle.Fill>
-                                <SolidColorBrush Color="{Binding ColorViewModel.HighlightColor}" />
+                                <SolidColorBrush Color="Yellow" x:Name="HighlightColorIconBrush" />
                             </Rectangle.Fill>
                         </Rectangle>
                     </Grid>
                 </Fluent:DropDownButton.Icon>
                 <Fluent:ColorGallery Mode="HighlightColors"
-                                     SelectedColor="{Binding ColorViewModel.HighlightColor, Mode=TwoWay}"
+                                     x:Name="HighlightColorSelector"
                                      IsAutomaticColorButtonVisible="False" />
                 
             </Fluent:DropDownButton>
@@ -264,12 +264,13 @@
                         <Image Source="../Resources/FontEditor/FontColor.png" Width="16" Height="16" SnapsToDevicePixels="True" />
                         <Rectangle VerticalAlignment="Bottom" Height="4" Width="16" HorizontalAlignment="Center">
                             <Rectangle.Fill>
-                                <SolidColorBrush Color="{Binding ColorViewModel.ThemeColor}" />
+                                <SolidColorBrush Color="Red" x:Name="FontColorIconBrush"/>
                             </Rectangle.Fill>
                         </Rectangle>
                     </Grid>
                 </Fluent:DropDownButton.Icon>
                 <Fluent:ColorGallery Mode="ThemeColors"
+                                     x:Name="FontColorSelector"
                                      StandardColorGridRows="5"
                                      IsNoColorButtonVisible="False" />
                 
