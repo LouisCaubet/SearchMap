@@ -40,6 +40,11 @@ namespace SearchMap.Windows.Controls {
         /// </summary>
         public abstract void Refresh();
 
+        /// <summary>
+        /// Saves the changes made to the object to the SearchMapCore Node object.
+        /// </summary>
+        public abstract void Save();
+
 
         /// <summary>
         /// Sets the associated ribbon tab visible and, if setSelected, selects it.
@@ -64,14 +69,6 @@ namespace SearchMap.Windows.Controls {
         /// </summary>
         /// <returns></returns>
         public abstract FrameworkElement GetBack();
-
-
-        /// <summary>
-        /// Source : https://stackoverflow.com/questions/50540301/c-sharp-get-good-color-for-label
-        /// </summary>
-        protected float GetBrightness(Color c) {
-            return (c.R * 0.299f + c.G * 0.587f + c.B * 0.114f) / 256f;
-        }
 
         /// <summary>
         /// Flips the node.
@@ -136,6 +133,8 @@ namespace SearchMap.Windows.Controls {
             MainWindow.Window.Selected = null;
 
             CollapseAssociatedRibbonTab();
+
+            Save();
 
         }
 

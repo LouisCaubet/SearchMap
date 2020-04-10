@@ -47,39 +47,55 @@ namespace SearchMapCore {
                 Comment = "Learn more - click to visit the website!",
                 Color = new Color(255, 0, 0),
                 BorderColor = new Color(255, 255, 255),
+                FrontTitleFont = TextFont.DefaultFrontTitleFont(),
+                BackTitleFont = TextFont.DefaultBackTitleFont()
             };
 
             node1.MoveTo(new Location(0, 0));
+            node1.FrontTitleFont.Color = TextFont.GetDefaultColorOnBackground(node1.Color);
+            node1.BackTitleFont.Color = TextFont.GetDefaultColorOnBackground(node1.Color);
             graph.RootNode = node1;
 
             var node2 = new WebNode(graph, new Uri("http://www.wikipedia.org"), "") {
                 Title = "Wikipedia",
                 Comment = "Want to know something? Click here to visit wikipedia",
-                Color = new Color(255, 255, 255)
+                Color = new Color(255, 255, 255),
+                FrontTitleFont = TextFont.DefaultFrontTitleFont(),
+                BackTitleFont = TextFont.DefaultBackTitleFont()
             };
 
             node2.SetParent(node1);
             node2.MoveTo(new Location(600, 100));
+            node2.FrontTitleFont.Color = TextFont.GetDefaultColorOnBackground(node2.Color);
+            node2.BackTitleFont.Color = TextFont.GetDefaultColorOnBackground(node2.Color);
 
             var node3 = new WebNode(graph, new Uri("http://netflix.com"), "") {
                 Title = "Netflix",
                 Comment = "Need to relax ? Find awesome video content on Netflix.",
                 Color = new Color(0, 0, 0),
-                BorderColor = new Color(255, 0, 0)
+                BorderColor = new Color(255, 0, 0),
+                FrontTitleFont = TextFont.DefaultFrontTitleFont(),
+                BackTitleFont = TextFont.DefaultBackTitleFont()
             };
 
             node3.SetParent(node1);
             node3.MoveTo(new Location(-600, -600));
+            node3.FrontTitleFont.Color = TextFont.GetDefaultColorOnBackground(node3.Color);
+            node3.BackTitleFont.Color = TextFont.GetDefaultColorOnBackground(node3.Color);
 
             var node4 = new WebNode(graph, new Uri("http://youtube.com"), "") {
                 Title = "YouTube",
                 Comment = "Awesome video content for free.",
                 Color = new Color(255, 255, 255),
-                BorderColor = new Color(255, 0, 0)
+                BorderColor = new Color(255, 0, 0),
+                FrontTitleFont = TextFont.DefaultFrontTitleFont(),
+                BackTitleFont = TextFont.DefaultBackTitleFont()
             };
 
             node4.SetParent(node3);
             node4.MoveTo(NodePlacement.PlaceNode(graph, node4));
+            node4.FrontTitleFont.Color = TextFont.GetDefaultColorOnBackground(node4.Color);
+            node4.BackTitleFont.Color = TextFont.GetDefaultColorOnBackground(node4.Color);
 
             node2.AddSibling(node3);
 

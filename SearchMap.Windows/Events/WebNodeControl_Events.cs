@@ -77,16 +77,6 @@ namespace SearchMap.Windows.UIComponents {
 
         void OnCommentChanged(object sender, TextChangedEventArgs e) {
 
-            // Extract rich text from CommentBox
-            TextRange range = new TextRange(CommentBox.Document.ContentStart, CommentBox.Document.ContentEnd);
-            MemoryStream stream = new MemoryStream();
-
-            range.Save(stream, DataFormats.Rtf);
-
-            byte[] bytes = stream.ToArray();
-
-            Node.Comment = Encoding.UTF8.GetString(bytes);
-
         }
         
     }

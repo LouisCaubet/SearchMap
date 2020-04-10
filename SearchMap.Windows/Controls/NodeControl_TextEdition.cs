@@ -1,4 +1,5 @@
 ﻿using SearchMap.Windows.Utils;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -320,39 +321,9 @@ namespace SearchMap.Windows.Controls {
         }
 
         /// <summary>
-        /// Reverts all user changes on the selected text. <para />
-        /// The implementation in NodeControl is basic and should be overriden by all subclasses.
+        /// Reverts all user changes on the selected text.
         /// </summary>
-        public virtual void RemoveFormattingOnSelection() {
-
-            SetObjectWithLastKeyboardFocus();
-            if (LastObjectWithKeyboardFocus == null) return;
-
-            FontFamily font = new FontFamily("Segoe UI");
-            Color textColor = GetBrightness(CoreToWPFUtils.CoreColorToWPF(Node.Color)) < 0.55 ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0);
-
-            if (LastObjectWithKeyboardFocus.GetType() == typeof(TextBox)) {
-                var textbox = (TextBox) LastObjectWithKeyboardFocus;
-                textbox.FontFamily = font;
-                textbox.FontSize = 40;
-                textbox.Foreground = new SolidColorBrush(textColor);
-                textbox.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                textbox.TextDecorations = null;
-                textbox.FontWeight = FontWeights.Black;
-                textbox.FontStyle = FontStyles.Normal;
-            }
-            else if (LastObjectWithKeyboardFocus.GetType() == typeof(RichTextBox)) {
-                var rtb = (RichTextBox) LastObjectWithKeyboardFocus;
-                rtb.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, font);
-                rtb.Selection.ApplyPropertyValue(Inline.FontSizeProperty, 16);
-                rtb.Selection.ApplyPropertyValue(Inline.ForegroundProperty, new SolidColorBrush(textColor));
-                rtb.Selection.ApplyPropertyValue(Inline.BackgroundProperty, new SolidColorBrush(Color.FromArgb(0, 0, 0, 0)));
-                rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, null);
-                rtb.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Normal);
-                rtb.Selection.ApplyPropertyValue(Inline.FontStyleProperty, FontStyles.Normal);
-            }
-
-        }
+        public abstract void RemoveFormattingOnSelection();
 
         /// <summary>
         /// Sets the font color of the selection to the given color.
@@ -396,7 +367,65 @@ namespace SearchMap.Windows.Controls {
 
         }
 
+        // UTILS
+
+        /// <summary>
+        /// Converts the font of the TextBox to a SearchMapCore TextFont object.
+        /// </summary>
+        /// <param name="box"></param>
+        /// <returns></returns>
+        protected static SearchMapCore.Rendering.TextFont GetTextFontFromTextBox(TextBox box) {
+
+            try {
+
+                return new SearchMapCore.Rendering.TextFont() {
+                    FontName = box.FontFamily.Source,
+                    FontSize = box.FontSize,
+                    IsBold = box.FontWeight == FontWeights.Black,
+                    IsItalic = box.FontStyle == FontStyles.Italic,
+                    IsUnderlined = box.TextDecorations == TextDecorations.Underline,
+                    IsStrikedthrough = box.TextDecorations == TextDecorations.Strikethrough,
+                    Color = CoreToWPFUtils.WPFColorToCore(((SolidColorBrush) box.Foreground).Color),
+                    HighlightColor = CoreToWPFUtils.WPFColorToCore(((SolidColorBrush) box.Background).Color)
+                };
+
+            }
+            catch (InvalidCastException) {
+                throw new ArgumentException("The given TextBox's Foreground/Background is not a SolidColorBrush.");
+            }
+
+        }
+
+        /// <summary>
+        /// Applies the given SearchMapCore TextFont to the given TextBox.
+        /// </summary>
+        /// <param name="box"></param>
+        /// <param name="font"></param>
+        protected static void ApplyTextFontToTextBox(TextBox box, SearchMapCore.Rendering.TextFont font) {
+
+            box.FontFamily =  new FontFamily(font.FontName);
+            box.FontSize = font.FontSize;
+            box.FontWeight = font.IsBold ? FontWeights.Black : FontWeights.Normal;
+            box.FontStyle = font.IsItalic ? FontStyles.Italic : FontStyles.Normal;
+
+            if (font.IsUnderlined) {
+                box.TextDecorations = TextDecorations.Underline;
+            }
+            else if (font.IsStrikedthrough) {
+                box.TextDecorations = TextDecorations.Strikethrough;
+            }
+            else {
+                box.TextDecorations = null;
+            }
+
+            box.Foreground = new SolidColorBrush(CoreToWPFUtils.CoreColorToWPF(font.Color));
+            box.Background = new SolidColorBrush(CoreToWPFUtils.CoreColorToWPF(font.HighlightColor));
+
+            Console.WriteLine("Color applied to TextBox: " + font.Color.ToRGB());
+
+        }
 
     }
 
 }
+

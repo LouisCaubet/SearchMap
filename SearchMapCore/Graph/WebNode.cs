@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SearchMapCore.Rendering;
 using SearchMapCore.Serialization;
 using System;
 
@@ -7,6 +8,9 @@ namespace SearchMapCore.Graph {
     public class WebNode : Node {
 
         public Uri Uri { get; set; }
+
+        public TextFont FrontTitleFont { get; set; }
+        public TextFont BackTitleFont { get; set; }
 
         // TODO save highlights / notes
 

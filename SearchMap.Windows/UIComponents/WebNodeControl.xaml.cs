@@ -51,16 +51,13 @@ namespace SearchMap.Windows.UIComponents {
             Border.Background = new SolidColorBrush(CoreToWPFUtils.CoreColorToWPF(Node.Color));
             Border.BorderBrush = new SolidColorBrush(CoreToWPFUtils.CoreColorToWPF(Node.BorderColor));
 
-            // Determine good color depending on the background
-            Color textColor = GetBrightness(CoreToWPFUtils.CoreColorToWPF(Node.Color)) < 0.55 ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0);
-
             // Front
             FrontTitleBox.Text = Node.Title;
-            FrontTitleBox.Foreground = new SolidColorBrush(textColor);
+            ApplyTextFontToTextBox(FrontTitleBox, GetWebNode().FrontTitleFont);
 
             // Back
             BackTitleBox.Text = Node.Title;
-            BackTitleBox.Foreground = new SolidColorBrush(textColor);
+            ApplyTextFontToTextBox(BackTitleBox, GetWebNode().BackTitleFont);
 
             // maybe we should store comment as byteArray ?
             byte[] byteArray = Encoding.UTF8.GetBytes(Node.Comment);
@@ -69,7 +66,9 @@ namespace SearchMap.Windows.UIComponents {
             range.Load(new MemoryStream(byteArray), DataFormats.Rtf);
 
             // TODO move somewhere else (dont want to remove color edits by user).
-            range.ApplyPropertyValue(Inline.ForegroundProperty, new SolidColorBrush(textColor));
+            // Move to place where text is added in code (when typed in browser, ...)
+            range.ApplyPropertyValue(Inline.ForegroundProperty, 
+                new SolidColorBrush(CoreToWPFUtils.CoreColorToWPF(SearchMapCore.Rendering.TextFont.GetDefaultColorOnBackground(Node.Color))));
 
             // Tooltip
             UriToolTip.Text = GetWebNode().Uri.AbsoluteUri;
@@ -95,18 +94,15 @@ namespace SearchMap.Windows.UIComponents {
 
         public void PrepareForExport() {
 
-            // Determine good color depending on the background
-            Color textColor = GetBrightness(CoreToWPFUtils.CoreColorToWPF(Node.Color)) < 0.55 ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0);
-
             // Export
             ExportTitleBox.Text = Node.Title;
             ExportCommentBox.Text = Node.Comment;
             ExportUriLabel.Text = GetWebNode().Uri.OriginalString;
 
             // Color
-            ExportTitleBox.Foreground = new SolidColorBrush(textColor);
-            ExportCommentBox.Foreground = new SolidColorBrush(textColor);
-            ExportUriLabel.Foreground = new SolidColorBrush(textColor);
+            ExportTitleBox.Foreground = BackTitleBox.Foreground;
+            ExportCommentBox.Foreground = BackTitleBox.Foreground;
+            ExportUriLabel.Foreground = BackTitleBox.Foreground;
 
         }
 
@@ -145,35 +141,53 @@ namespace SearchMap.Windows.UIComponents {
         public override void RemoveFormattingOnSelection() {
 
             FontFamily font = new FontFamily("Segoe UI");
-            Color textColor = GetBrightness(CoreToWPFUtils.CoreColorToWPF(Node.Color)) < 0.55 ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0);
+            Color textColor = CoreToWPFUtils.CoreColorToWPF(SearchMapCore.Rendering.TextFont.GetDefaultColorOnBackground(Node.Color));
 
             if (FrontTitleBox.Equals(LastObjectWithKeyboardFocus)) {
-                FrontTitleBox.FontFamily = font;
-                FrontTitleBox.FontSize = 40;
-                FrontTitleBox.Foreground = new SolidColorBrush(textColor);
-                FrontTitleBox.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                FrontTitleBox.TextDecorations = null;
-                FrontTitleBox.FontWeight = FontWeights.Black;
-                FrontTitleBox.FontStyle = FontStyles.Normal;
+
+                GetWebNode().FrontTitleFont = SearchMapCore.Rendering.TextFont.DefaultFrontTitleFont();
+                GetWebNode().FrontTitleFont.Color = SearchMapCore.Rendering.TextFont.GetDefaultColorOnBackground(Node.Color);
+
+                ApplyTextFontToTextBox(FrontTitleBox, GetWebNode().FrontTitleFont);
+
             }
             else if (BackTitleBox.Equals(LastObjectWithKeyboardFocus)) {
-                BackTitleBox.FontFamily = font;
-                BackTitleBox.FontSize = 30;
-                BackTitleBox.Foreground = new SolidColorBrush(textColor);
-                BackTitleBox.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                BackTitleBox.TextDecorations = null;
-                BackTitleBox.FontWeight = FontWeights.Black;
-                BackTitleBox.FontStyle = FontStyles.Normal;
+
+                GetWebNode().BackTitleFont = SearchMapCore.Rendering.TextFont.DefaultBackTitleFont();
+                GetWebNode().BackTitleFont.Color = SearchMapCore.Rendering.TextFont.GetDefaultColorOnBackground(Node.Color);
+
+                ApplyTextFontToTextBox(BackTitleBox, GetWebNode().BackTitleFont);
+
             }
             else if (CommentBox.Equals(LastObjectWithKeyboardFocus)) {
                 CommentBox.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, font);
-                CommentBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, 16);
+                CommentBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, 16D);
                 CommentBox.Selection.ApplyPropertyValue(Inline.ForegroundProperty, new SolidColorBrush(textColor));
                 CommentBox.Selection.ApplyPropertyValue(Inline.BackgroundProperty, new SolidColorBrush(Color.FromArgb(0, 0, 0, 0)));
                 CommentBox.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, null);
                 CommentBox.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Normal);
                 CommentBox.Selection.ApplyPropertyValue(Inline.FontStyleProperty, FontStyles.Normal);
             }
+
+        }
+
+        public override void Save() {
+
+            var node = GetWebNode();
+            node.FrontTitleFont = GetTextFontFromTextBox(FrontTitleBox);
+            node.BackTitleFont = GetTextFontFromTextBox(BackTitleBox);
+
+            // Save RichTextBox
+
+            // Extract rich text from CommentBox
+            TextRange range = new TextRange(CommentBox.Document.ContentStart, CommentBox.Document.ContentEnd);
+            MemoryStream stream = new MemoryStream();
+
+            range.Save(stream, DataFormats.Rtf);
+
+            byte[] bytes = stream.ToArray();
+
+            Node.Comment = Encoding.UTF8.GetString(bytes);
 
         }
 
