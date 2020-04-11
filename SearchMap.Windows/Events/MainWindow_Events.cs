@@ -169,6 +169,7 @@ namespace SearchMap.Windows {
 
             // Propagate event to selected control (for some reason the event is not fired there)
             if (ConnectionControl.Selected != null) ConnectionControl.Selected.OnKeyDown(sender, e);
+            RibbonTabWebNode.OnKeyPress(sender, e);
 
         }
 

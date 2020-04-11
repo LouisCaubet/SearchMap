@@ -326,8 +326,8 @@ namespace SearchMapCore.Graph {
 
             // Locally save characteristics
             int p_id = ParentId;
-            var s_ids = SiblingsIds;
-            var c_ids = ChildrenIds;
+            var s_ids = new HashSet<int>(SiblingsIds);
+            var c_ids = new HashSet<int>(ChildrenIds);
 
             // Remove from parent
             SetParent(null);

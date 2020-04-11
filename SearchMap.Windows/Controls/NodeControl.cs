@@ -22,7 +22,6 @@ namespace SearchMap.Windows.Controls {
 
         NodeSelectionAnimation SelectionAnimation { get; set; }
 
-
         /// <summary>
         /// Creates a new NodeControl representing the given Node
         /// </summary>

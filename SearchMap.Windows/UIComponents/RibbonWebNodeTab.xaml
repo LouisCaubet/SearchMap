@@ -356,9 +356,20 @@
 
     <Fluent:RibbonGroupBox Header="Actions">
 
+        <Fluent:Button Header="Zoom on this node"
+                       x:Name="ZoomOnNodeButton"
+                       Margin="5,5,5,0">
+            
+        </Fluent:Button>
+
         <Fluent:Button Header="Delete"
+                       x:Name="DeleteNodeButton"
                        LargeIcon="../Resources/DeleteIcon.png"
                        Margin="5,5,5,0">
+
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip Title="Delete Node" Text="Deletes the currently selected node from the graph." />
+            </Fluent:Button.ToolTip>
             
         </Fluent:Button>
         

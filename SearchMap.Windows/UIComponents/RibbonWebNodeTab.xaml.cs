@@ -34,6 +34,8 @@ namespace SearchMap.Windows.UIComponents {
         internal ICommand IncreaseFontSize { get; private set; }
         internal ICommand DecreaseFontSize { get; private set; }
 
+        internal ICommand DeleteNode { get; private set; }
+
         public RibbonWebNodeTab() {
             InitializeComponent();
 
@@ -89,8 +91,27 @@ namespace SearchMap.Windows.UIComponents {
             MainWindow.Window.CommandBindings.Add(new CommandBinding(DecreaseFontSize, DecreaseFontSize_Execute, FontCommands_CanExecute));
             buttonShrinkFont.Command = DecreaseFontSize;
 
+            DeleteNode = new RoutedCommand("WebNodeTab.DeleteNode", GetType());
+            MainWindow.Window.CommandBindings.Add(new CommandBinding(DeleteNode, Delete_Execute, Delete_CanExecute));
+            DeleteNodeButton.Command = DeleteNode;
+
         }
 
+        internal void OnKeyPress(object sender, KeyEventArgs e) {
+            if(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
+
+                if(e.Key == Key.B && buttonBold.IsEnabled) {
+                    ToggleBold_Execute(null, null);
+                }
+                else if(e.Key == Key.I && buttonItalic.IsEnabled) {
+                    ToggleItalic_Execute(null, null);
+                }
+                else if(e.Key == Key.U && buttonUnderline.IsEnabled) {
+                    ToggleUnderline_Execute(null, null);
+                }
+
+            }
+        }
 
         #region Color Edition
 
@@ -242,9 +263,20 @@ namespace SearchMap.Windows.UIComponents {
 
         }
 
-         
+
         #endregion
 
+        #region Action Commands
+
+        void Delete_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = MainWindow.Window.Selected != null;
+        }
+
+        void Delete_Execute(object sender, ExecutedRoutedEventArgs e) {
+            MainWindow.Window.GetGraph().DeleteNode(MainWindow.Window.Selected.Node.Id);
+        }
+
+        #endregion
 
     }
 
