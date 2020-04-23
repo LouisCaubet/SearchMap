@@ -14,7 +14,6 @@ namespace SearchMap.Windows.Controls {
 
         private const int REPARENT_ANIMATION_NB_PULSES = 5;
 
-
         /// <summary>
         /// Register events independent of the type of Node.
         /// </summary>
@@ -127,6 +126,9 @@ namespace SearchMap.Windows.Controls {
                 lastDragPoint = pos;
                 Mouse.Capture(this);
 
+                // Save State
+                Node.TakeSnapshot();
+
                 // To distiguish between right click and move, check if the mouse is released 0.1 seconds later.
                 new Timer(delegate {
 
@@ -150,6 +152,9 @@ namespace SearchMap.Windows.Controls {
                     }
                     else {
                         // It's a right click
+
+                        // Remove the revert point
+                        SearchMapCore.SearchMapCore.UndoRedoSystem.RemoveLastSnapshot();
 
                         ShouldContextMenuBeOpened = true;
 
@@ -374,6 +379,9 @@ namespace SearchMap.Windows.Controls {
                 // Show on top
                 Panel.SetZIndex(this, 20);
 
+                // Reverting
+                Node.TakeSnapshot();
+
                 // Call reparent code
                 OnMoveStarted();
 
@@ -402,7 +410,7 @@ namespace SearchMap.Windows.Controls {
 
                     // default color ?
                     MainWindow.Window.Selected.Node.ConnectionToParent.ShadowColor = new SearchMapCore.Rendering.Color(0, 0, 255);
-                    MainWindow.Window.Selected.Node.Refresh();
+                    MainWindow.Window.GetGraph().Refresh();
                 }
 
                 MainWindow.Window.DeselectAll();

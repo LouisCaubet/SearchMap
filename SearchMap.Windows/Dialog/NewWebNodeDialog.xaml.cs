@@ -1,8 +1,12 @@
 ﻿using SearchMap.Windows.Utils;
 using SearchMapCore.Graph;
+using SearchMapCore.Rendering;
 using System;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -83,18 +87,24 @@ namespace SearchMap.Windows.Dialog {
             }
              
             string title = TitleBox.Text;
-            string comment = CommentBox.Text;
-            ImageSource icon = NodeIcon.Source;
 
-            if (!CommentBoxModified) {
-                comment = "";
-            }
+            // Comment
+            TextRange range = new TextRange(CommentBox.Document.ContentStart, CommentBox.Document.ContentEnd);
+            MemoryStream stream = new MemoryStream();
+
+            range.Save(stream, DataFormats.Rtf);
+
+            byte[] comment = stream.ToArray();
+
+            ImageSource icon = NodeIcon.Source;
 
             WebNode createdNode = new WebNode(MainWindow.Window.GetGraph(), uri, "") {
                 Title = title,
                 Comment = comment
             };
 
+            createdNode.FrontTitleFont.Color = TextFont.GetDefaultColorOnBackground(createdNode.Color);
+            createdNode.BackTitleFont.Color = TextFont.GetDefaultColorOnBackground(createdNode.Color);
 
             // Determine parent.
             Node parent = null;
@@ -103,7 +113,7 @@ namespace SearchMap.Windows.Dialog {
                 parent = MainWindow.Window.Selected.Node;
             }
 
-            createdNode.SetParent(parent);
+            createdNode.SetParent(parent, false);
 
             // Place Node
             if (parent != null) {
@@ -179,30 +189,6 @@ namespace SearchMap.Windows.Dialog {
 
         private void UriBox_TextChanged(object sender, TextChangedEventArgs e) {
             if (UriBox.Text != "" && !IgnoreNextTextChange) UriBoxModified = true;
-            if (IgnoreNextTextChange) IgnoreNextTextChange = false;
-        }
-
-        private void CommentBox_GotFocus(object sender, RoutedEventArgs e) {
-
-            if (!CommentBoxModified) {
-                CommentBox.Text = "";
-                CommentBox.FontStyle = FontStyles.Normal;
-            }
-
-        }
-
-        private void CommentBox_LostFocus(object sender, RoutedEventArgs e) {
-
-            if (!CommentBoxModified) {
-                IgnoreNextTextChange = true;
-                CommentBox.Text = "Insert comments here.";
-                CommentBox.FontStyle = FontStyles.Italic;
-            }
-
-        }
-
-        private void CommentBox_TextChanged(object sender, TextChangedEventArgs e) {
-            if (CommentBox.Text != "" && !IgnoreNextTextChange) CommentBoxModified = true;
             if (IgnoreNextTextChange) IgnoreNextTextChange = false;
         }
 

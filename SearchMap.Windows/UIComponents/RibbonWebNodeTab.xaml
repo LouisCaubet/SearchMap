@@ -10,7 +10,7 @@
                       d:DesignHeight="450" d:DesignWidth="800"
                       Header="{t:Translate Key=WebNode_RibbonTab}">
 
-    <Fluent:RibbonGroupBox Header="Website">
+    <Fluent:RibbonGroupBox Header="Web Node">
 
         <Fluent:Button Header="Open Website"
                        x:Name="OpenWebsiteButton"
@@ -358,7 +358,12 @@
 
         <Fluent:Button Header="Zoom on this node"
                        x:Name="ZoomOnNodeButton"
+                       LargeIcon="../Resources/NodeTab/ZoomInIcon.png"
                        Margin="5,5,5,0">
+
+            <Fluent:Button.ToolTip>
+                <Fluent:ScreenTip Title="Zoom on this node" Text="Zooms in and centers this node" />
+            </Fluent:Button.ToolTip>
             
         </Fluent:Button>
 

@@ -34,6 +34,7 @@ namespace SearchMap.Windows.UIComponents {
         internal ICommand IncreaseFontSize { get; private set; }
         internal ICommand DecreaseFontSize { get; private set; }
 
+        internal ICommand ZoomOnNode { get; private set; }
         internal ICommand DeleteNode { get; private set; }
 
         public RibbonWebNodeTab() {
@@ -61,6 +62,9 @@ namespace SearchMap.Windows.UIComponents {
 
         }
 
+        /// <summary>
+        /// Registers commands binded with buttons from the Node Tab.
+        /// </summary>
         internal void RegisterCommands() {
 
             ToggleBold = new RoutedCommand("WebNodeTab.ToggleBold", GetType());
@@ -92,8 +96,12 @@ namespace SearchMap.Windows.UIComponents {
             buttonShrinkFont.Command = DecreaseFontSize;
 
             DeleteNode = new RoutedCommand("WebNodeTab.DeleteNode", GetType());
-            MainWindow.Window.CommandBindings.Add(new CommandBinding(DeleteNode, Delete_Execute, Delete_CanExecute));
+            MainWindow.Window.CommandBindings.Add(new CommandBinding(DeleteNode, Delete_Execute, Actions_CanExecute));
             DeleteNodeButton.Command = DeleteNode;
+
+            ZoomOnNode = new RoutedCommand("WebNodeTab.ZoomOnNode", GetType());
+            MainWindow.Window.CommandBindings.Add(new CommandBinding(ZoomOnNode, ZoomOnNode_Execute, Actions_CanExecute));
+            ZoomOnNodeButton.Command = ZoomOnNode;
 
         }
 
@@ -268,8 +276,22 @@ namespace SearchMap.Windows.UIComponents {
 
         #region Action Commands
 
-        void Delete_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+        private const double ZOOM_ON_NODE_VALUE = 1.9;
+
+        void Actions_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = MainWindow.Window.Selected != null;
+        }
+
+        void ZoomOnNode_Execute(object sender, ExecutedRoutedEventArgs e) {
+
+            var node = MainWindow.Window.Selected.Node;
+            Point toCenter = MainWindow.Window.ConvertFromLocation(node.Location);
+
+            MainWindow.Window.ZoomSlider.Value = ZOOM_ON_NODE_VALUE;
+
+            MainWindow.Window.ScrollView.ScrollToVerticalOffset(toCenter.Y * ZOOM_ON_NODE_VALUE * MainWindow.DEFAULT_ZOOM - MainWindow.Window.ScrollView.ActualHeight / 2);
+            MainWindow.Window.ScrollView.ScrollToHorizontalOffset(toCenter.X * ZOOM_ON_NODE_VALUE * MainWindow.DEFAULT_ZOOM - MainWindow.Window.ScrollView.ActualWidth / 2);
+
         }
 
         void Delete_Execute(object sender, ExecutedRoutedEventArgs e) {

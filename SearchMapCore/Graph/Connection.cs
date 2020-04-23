@@ -1,4 +1,5 @@
-﻿using SearchMapCore.Rendering;
+﻿using Newtonsoft.Json;
+using SearchMapCore.Rendering;
 using System;
 using System.Collections.Generic;
 
@@ -15,49 +16,61 @@ namespace SearchMapCore.Graph {
         /// </summary>
         public const int CONNECTOR_EDIT_DISTANCE = 200;
 
-        private Graph Graph { get; }
+        [JsonIgnore]
+        private Graph Graph { get; set; }
 
         /// <summary>
         /// The Id given to this connection by the rendering system.
         /// </summary>
+        [JsonProperty]
         public int RenderId { get; set; }
 
         /// <summary>
         /// The points interpolated by this connection. 
         /// 4 points required. To interpolate using only one control point, put the control point twice (pos 1 and 2)
         /// </summary>
+        [JsonProperty]
         public List<Location> Points { get; set; }
 
         /// <summary>
         /// The points than have been imposed by user interaction.
         /// </summary>
+        [JsonProperty]
         public List<Location> UserImposedPoints { get; set; }
 
         /// <summary>
         /// The inner color of the Connection
         /// </summary>
+        [JsonProperty]
         public Color Color { get; set; }
 
         /// <summary>
         /// The connection of the shadow of the connection
         /// </summary>
+        [JsonProperty]
         public Color ShadowColor { get; set; }
 
         /// <summary>
         /// true for connections between father-child, false for nodes between siblings.
         /// </summary>
+        [JsonProperty]
         public bool IsBoldStyle { get; internal set; }
         
         // Used to refresh user customized connections
+        [JsonProperty]
         internal int NodeFromId { get; set; }
+        [JsonProperty]
         internal int NodeToId { get; set; }
 
+        [JsonProperty]
         internal Location LocationNode1 { get; set; }
+        [JsonProperty]
         internal Location LocationNode2 { get; set; }
 
         /// <summary>
         /// Indicates if this node was customized by user.
         /// </summary>
+        [JsonProperty]
         public bool IsCustomizedByUser { get; set; }
 
         /// <summary>
@@ -159,6 +172,20 @@ namespace SearchMapCore.Graph {
         }
 
         /// <summary>
+        /// Refreshes the connection if already rendered, renders it otherwise.
+        /// </summary>
+        public void RenderOrRefresh() {
+
+            if (Graph.Renderer.ContainsObjectWithId(RenderId)) {
+                Graph.Renderer.RefreshCurvedLine(RenderId);
+            }
+            else {
+                RenderId = Graph.Renderer.RenderCurvedLine(this);
+            }
+
+        }
+
+        /// <summary>
         /// Actions that can be performed on the connector.
         /// </summary>
         public enum Action {
@@ -173,6 +200,14 @@ namespace SearchMapCore.Graph {
                 text += "Point x=" + pt.x + "; y=" + pt.y + "        ";
             }
             return text;
+        }
+
+        /// <summary>
+        /// For internal use by deserialization system only.
+        /// </summary>
+        /// <param name="g"></param>
+        internal void Internal_SetGraph(Graph g) {
+            Graph = g;
         }
 
     }

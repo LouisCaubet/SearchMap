@@ -15,6 +15,8 @@ namespace SearchMap.Windows.Utils {
         /// <returns></returns>
         public static Color CoreColorToWPF(SearchMapCore.Rendering.Color color) {
 
+            if (color == null) throw new ArgumentNullException();
+
             (byte a, byte r, byte g, byte b) = color.ToARGB();
             return Color.FromArgb(a, r, g, b);
 

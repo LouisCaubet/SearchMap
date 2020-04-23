@@ -5,6 +5,7 @@ using SearchMap.Windows.Rendering;
 using SearchMap.Windows.UIComponents;
 using SearchMapCore.Graph;
 using System;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -194,7 +195,7 @@ namespace SearchMap.Windows {
             WebNode node = new WebNode(graph, new Uri("https://www.wikipedia.org"), "") {
                 Title = "Wikipedia",
                 Color = new SearchMapCore.Rendering.Color(255, 255, 255, 255),
-                Comment = "A great website!",
+                Comment = Encoding.UTF8.GetBytes("A great website!"),
 
             };
 

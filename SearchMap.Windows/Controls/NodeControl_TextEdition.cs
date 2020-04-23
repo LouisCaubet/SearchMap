@@ -403,6 +403,12 @@ namespace SearchMap.Windows.Controls {
         /// <param name="font"></param>
         protected static void ApplyTextFontToTextBox(TextBox box, SearchMapCore.Rendering.TextFont font) {
 
+            if(font == null) {
+                SearchMapCore.SearchMapCore.Logger.Error("Tried to apply font null to a TextBox.");
+                SearchMapCore.SearchMapCore.Logger.Debug("ArgumentNullException encountered in method ApplyTextFontToTextBox, in class NodeControl");
+                return;
+            }
+
             box.FontFamily =  new FontFamily(font.FontName);
             box.FontSize = font.FontSize;
             box.FontWeight = font.IsBold ? FontWeights.Black : FontWeights.Normal;
@@ -420,8 +426,6 @@ namespace SearchMap.Windows.Controls {
 
             box.Foreground = new SolidColorBrush(CoreToWPFUtils.CoreColorToWPF(font.Color));
             box.Background = new SolidColorBrush(CoreToWPFUtils.CoreColorToWPF(font.HighlightColor));
-
-            Console.WriteLine("Color applied to TextBox: " + font.Color.ToRGB());
 
         }
 

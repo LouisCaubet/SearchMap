@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="Utils\CoreToWPFUtils.cs" />
     <Compile Include="Utils\MathUtils.cs" />
+    <Compile Include="Utils\RtfUtils.cs" />
     <Page Include="Dialog\NewWebNodeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -285,6 +286,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\FontEditor\ClearFormatting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NodeTab\ZoomInIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

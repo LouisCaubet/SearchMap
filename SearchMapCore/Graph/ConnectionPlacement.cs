@@ -177,19 +177,12 @@ namespace SearchMapCore.Graph {
 
                 double fracX, fracY;
 
-                try {
-                    fracX = (controlPt.x - node1.Location.x) / Math.Abs(node1.Location.x - node2.Location.x);
-                }
-                catch (DivideByZeroException) {
-                    fracX = 0;
-                }
+                if (node1.Location.x == node2.Location.x) fracX = 0;
+                else fracX = (controlPt.x - node1.Location.x) / Math.Abs(node1.Location.x - node2.Location.x);
 
-                try {
-                    fracY = (controlPt.y - node1.Location.y) / Math.Abs(node1.Location.y - node2.Location.y);
-                }
-                catch (DivideByZeroException) {
-                    fracY = 0;
-                }
+                if (node1.Location.y == node2.Location.y) fracY = 0;
+                else fracY = (controlPt.y - node1.Location.y) / Math.Abs(node1.Location.y - node2.Location.y);
+
 
                 // By how much both nodes moved
                 var Node1Move_x = node1.Location.x - connection.LocationNode1.x;

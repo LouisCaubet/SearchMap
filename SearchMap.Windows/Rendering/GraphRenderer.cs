@@ -1,4 +1,5 @@
-﻿using SearchMap.Windows.UIComponents;
+﻿using SearchMap.Windows.Controls;
+using SearchMap.Windows.UIComponents;
 using SearchMapCore.Graph;
 using SearchMapCore.Rendering;
 using System;
@@ -37,15 +38,14 @@ namespace SearchMap.Windows.Rendering {
         }
 
         public bool DeleteObject(int id) {
-            
-            try {
-                MainWindow.Window.GraphCanvas.Children.Remove(RenderedObjects[id]);
-                RenderedObjects.Remove(id);
-                return true;
-            }
-            catch (Exception) {
+
+            if (!RenderedObjects.ContainsKey(id)) {
                 return false;
             }
+            
+            MainWindow.Window.GraphCanvas.Children.Remove(RenderedObjects[id]);
+            RenderedObjects.Remove(id);
+            return true;
 
         }
 
@@ -137,23 +137,18 @@ namespace SearchMap.Windows.Rendering {
 
         public void RefreshNode(int renderId) {
 
-            try {
-                var control = RenderedObjects[renderId];
-
-                if(control.GetType() == typeof(WebNodeControl)) {
-                    ((WebNodeControl)control).Refresh();
-                }
-                else {
-                    // Go to catch.
-                    throw new Exception();
-                }
-
-            }
-            catch (Exception e) {
-                Console.WriteLine(e.StackTrace);
+            if (!RenderedObjects.ContainsKey(renderId)) {
                 throw new ArgumentException("The id " + renderId + " is not the id of a renderer object corresponding to a node.");
             }
-            
+
+            var control = RenderedObjects[renderId];
+
+            if(control is NodeControl) {
+                ((NodeControl) control).Refresh();
+            }
+            else {
+                throw new ArgumentException("The id " + renderId + " is not the id of a renderer object corresponding to a node.");
+            }
 
         }
 
@@ -176,22 +171,22 @@ namespace SearchMap.Windows.Rendering {
         }
 
         public void RefreshCurvedLine(int renderId) {
-            try {
-                var control = RenderedObjects[renderId];
-                if (control.GetType() == typeof(ConnectionControl)) {
-                    ((ConnectionControl)control).Refresh();
 
-                    Point loc = ((ConnectionControl)control).PositionOnCanvas;
-                    Canvas.SetTop(control, loc.Y);
-                    Canvas.SetLeft(control, loc.X);
-
-                }
-                else {
-                    throw new ArgumentException("The given id is not the id of a ConnectionControl.");
-                }
-            }
-            catch (KeyNotFoundException) {
+            if (!RenderedObjects.ContainsKey(renderId)) {
                 throw new ArgumentException("The given id is invalid.");
+            }
+
+            var control = RenderedObjects[renderId];
+            if (control.GetType() == typeof(ConnectionControl)) {
+                ((ConnectionControl) control).Refresh();
+
+                Point loc = ((ConnectionControl) control).PositionOnCanvas;
+                Canvas.SetTop(control, loc.Y);
+                Canvas.SetLeft(control, loc.X);
+
+            }
+            else {
+                throw new ArgumentException("The given id is not the id of a ConnectionControl.");
             }
            
         }
@@ -234,6 +229,16 @@ namespace SearchMap.Windows.Rendering {
             MainWindow.Window.GraphCanvas.Height = y;
 
             MainWindow.Window.MoveToCenterOfCanvas();
+        }
+
+        public void DeleteAll() {
+            foreach(int id in new List<int>(RenderedObjects.Keys)) {
+                DeleteObject(id);
+            }
+        }
+
+        public bool ContainsObjectWithId(int id) {
+            return RenderedObjects.ContainsKey(id);
         }
 
     }

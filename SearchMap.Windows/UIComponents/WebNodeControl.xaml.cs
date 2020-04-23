@@ -59,11 +59,9 @@ namespace SearchMap.Windows.UIComponents {
             BackTitleBox.Text = Node.Title;
             ApplyTextFontToTextBox(BackTitleBox, GetWebNode().BackTitleFont);
 
-            // maybe we should store comment as byteArray ?
-            byte[] byteArray = Encoding.UTF8.GetBytes(Node.Comment);
-
+            // Comment
             TextRange range = new TextRange(CommentBox.Document.ContentStart, CommentBox.Document.ContentEnd);
-            range.Load(new MemoryStream(byteArray), DataFormats.Rtf);
+            range.Load(new MemoryStream(Node.Comment), DataFormats.Rtf);
 
             // TODO move somewhere else (dont want to remove color edits by user).
             // Move to place where text is added in code (when typed in browser, ...)
@@ -96,7 +94,7 @@ namespace SearchMap.Windows.UIComponents {
 
             // Export
             ExportTitleBox.Text = Node.Title;
-            ExportCommentBox.Text = Node.Comment;
+            // ExportCommentBox.Text = Node.Comment;
             ExportUriLabel.Text = GetWebNode().Uri.OriginalString;
 
             // Color
@@ -185,9 +183,7 @@ namespace SearchMap.Windows.UIComponents {
 
             range.Save(stream, DataFormats.Rtf);
 
-            byte[] bytes = stream.ToArray();
-
-            Node.Comment = Encoding.UTF8.GetString(bytes);
+            Node.Comment = stream.ToArray();
 
         }
 

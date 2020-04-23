@@ -62,6 +62,18 @@ namespace SearchMapCore.Rendering {
         /// <returns></returns>
         double GetZoomLevel();
 
+        /// <summary>
+        /// Clears the graph canvas.
+        /// </summary>
+        void DeleteAll();
+
+        /// <summary>
+        /// Checks if the renderer contains a definition for id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool ContainsObjectWithId(int id);
+
     }
 
 }

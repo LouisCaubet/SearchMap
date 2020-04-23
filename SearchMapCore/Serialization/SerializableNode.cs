@@ -12,7 +12,7 @@ namespace SearchMapCore.Serialization {
         public Color Color { get; set; }
         public Color BorderColor { get; set; }
         public string Title { get; set; }
-        public string Comment { get; set; }
+        public byte[] Comment { get; set; }
         public string Icon { get; set; }
         public string AssociatedFile { get; set; }
         public int Height { get; set; }

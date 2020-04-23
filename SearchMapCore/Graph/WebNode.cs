@@ -18,6 +18,10 @@ namespace SearchMapCore.Graph {
 
             Uri = uri;
 
+            // Default fonts
+            FrontTitleFont = TextFont.DefaultFrontTitleFont();
+            BackTitleFont = TextFont.DefaultBackTitleFont();
+
             if(html == null){
                 // Retrieve HTML from internet
             }
@@ -41,6 +45,12 @@ namespace SearchMapCore.Graph {
             graph.Refresh();
 
         }
+
+        /// <summary>
+        /// ONLY FOR DESERIALIZATION. NODE WILL NOT BE INITIALIZED.
+        /// </summary>
+        [JsonConstructor]
+        private WebNode() : base() { }
 
         public string GetHtml() {
             // Retrieve Html from archive, return it

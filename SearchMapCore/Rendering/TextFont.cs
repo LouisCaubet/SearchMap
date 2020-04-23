@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SearchMapCore.Rendering {
+﻿namespace SearchMapCore.Rendering {
 
     /// <summary>
     /// Stores font info for a text.

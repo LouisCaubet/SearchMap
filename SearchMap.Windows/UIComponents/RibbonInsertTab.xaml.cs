@@ -118,6 +118,8 @@ namespace SearchMap.Windows.UIComponents {
             }
             catch(ArgumentException e) {
 
+                SearchMapCore.SearchMapCore.Logger.Info("Could not connect nodes selected by user. Reason: " + e.Message);
+
                 MainWindow.Window.StatusBarInstructionField.Value = e.Message;
                 // Clear instruction field after 5s
                 new Timer(delegate {

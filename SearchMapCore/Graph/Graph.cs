@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
-using SearchMapCore.Controls;
+using SearchMapCore.Undoing;
 using SearchMapCore.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace SearchMapCore.Graph {
 
@@ -53,9 +54,10 @@ namespace SearchMapCore.Graph {
         public IGraphRenderer Renderer { get; set; }
 
         /// <summary>
+        /// INTERNAL USE ONLY. <para />
         /// The id of the last registered node.
         /// </summary>
-        private int lastRegisteredId = 0;
+        internal int LastRegisteredId { get; private set; }
 
         // Graph edit operations ---------------------------------------------------------------------------------------------------------------
 
@@ -67,6 +69,7 @@ namespace SearchMapCore.Graph {
             Width = 3000;
             Nodes = new Dictionary<int, Node>();
             RootNode = null;
+            LastRegisteredId = 0;
         }
 
         /// <summary>
@@ -77,17 +80,19 @@ namespace SearchMapCore.Graph {
         /// <returns>The id given to the new node</returns>
         internal int Internal_AddNewNode(Node node) {
 
-            lastRegisteredId++;
+            TakeSnapshot();
+
+            LastRegisteredId++;
 
             try {
-                Nodes.Add(lastRegisteredId, node);
+                Nodes.Add(LastRegisteredId, node);
             }
             catch (ArgumentException) {
-                lastRegisteredId = RecomputeLastRegisteredId() + 1;
-                Nodes.Add(lastRegisteredId, node);
+                LastRegisteredId = RecomputeLastRegisteredId() + 1;
+                Nodes.Add(LastRegisteredId, node);
             }
 
-            return lastRegisteredId;
+            return LastRegisteredId;
         }
 
         /// <summary>
@@ -96,11 +101,11 @@ namespace SearchMapCore.Graph {
         /// <param name="id">The id of the node to delete.</param>
         public void DeleteNode(int id) {
 
-            SearchMapCore.Clipboard.CtrlZ.Push(new Snapshot(this));
+            TakeSnapshot();
 
             if (id == RootNode.Id) {
                 var children = RootNode.GetChildren();
-                if(children.Length > 0) {
+                if (children.Length > 0) {
                     RootNode = children[0];
                 }
                 else {
@@ -110,55 +115,12 @@ namespace SearchMapCore.Graph {
 
             // Call deleting code of node
             Nodes[id].Internal_DeleteNode();
-            
+
             // Remove node
             Nodes.Remove(id);
 
             // Rendering
             Refresh();
-
-        }
-
-        /// <summary>
-        /// Determines good location for node given its parent, and adds it to the graph. <para />
-        /// The node must have been created in this graph. 
-        /// </summary>
-        /// <param name="node">The node to place.</param>
-        [Obsolete]
-        public void PlaceNodeAsChild(Node node) {
-
-            // Argument checks
-            if (node == null) {
-                SearchMapCore.Logger.Error("NullPointerException: Tried to place node null.");
-                return;
-            }
-
-            if (!node.IsNodeOfGraph(this)) {
-                SearchMapCore.Logger.Error("ArgumentException: Attempted to add a node which is not associated with this graph.");
-                return;
-            }
-
-            
-            if(node.Location != null) {
-                SearchMapCore.Logger.Warning("Requested automatic placement of node that already contains location information. " +
-                    "This information will be lost.");
-            }
-
-            // Save current state of graph to revert
-            SearchMapCore.Clipboard.CtrlZ.Push(new Snapshot(this));
-
-            // Determine location of node
-            try {
-                Location loc = NodePlacement.PlaceNode(this, node);
-                node.MoveTo(loc);
-                node.Refresh();
-            }
-            catch(Exception e) {
-                SearchMapCore.Logger.Error("Requested to place node missing information for placement.");
-                SearchMapCore.Logger.Error(e.Message);
-                SearchMapCore.Logger.Error(e.StackTrace);
-            }
-            
 
         }
 
@@ -173,8 +135,16 @@ namespace SearchMapCore.Graph {
                     max = key;
                 }
             }
-            lastRegisteredId = max;
+            LastRegisteredId = max;
             return max;
+        }
+
+        /// <summary>
+        /// Takes a snapshot of the graph to be able to revert to this point.
+        /// </summary>
+        internal void TakeSnapshot() {
+            Snapshot snap = new Snapshot(this);
+            SearchMapCore.UndoRedoSystem.AddToUndoStack(snap);
         }
 
         /// <summary>
@@ -182,15 +152,31 @@ namespace SearchMapCore.Graph {
         /// Reverts the graph's state to a given snapshot.
         /// </summary>
         /// <param name="snapshot"></param>
-        internal void RevertToSnapshot(Graph snapshot) {
+        internal void RevertToSnapshot(int lastRegisteredId, Dictionary<int, Node> nodes, int rootNodeId) {
 
-            Nodes = snapshot.Nodes;
-            RootNode = snapshot.RootNode;
-            lastRegisteredId = snapshot.lastRegisteredId;
+            Nodes = nodes;
+            this.LastRegisteredId = lastRegisteredId;
+            RootNode = Nodes[rootNodeId];
+
+            foreach(Node node in Nodes.Values) {
+
+                node.rendered = false;
+                node.Internal_SetGraph(this);
+                node.Internal_RemoveInvalidConnections();
+
+                if(node.ConnectionToParent != null) node.ConnectionToParent.Internal_SetGraph(this);
+
+                var conns = typeof(Node).GetProperty("ConnectionsToSiblings", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(node) as Dictionary<int, Connection>;
+
+                foreach (var conn in conns.Values) {
+                    conn.Internal_SetGraph(this);
+                }
+
+            }
 
             // Should height and width be reverted ? Not required, as only increasing. 
 
-            // TODO Renderer.DeleteAll()
+            Renderer.DeleteAll();
 
             // Render with the same GraphRenderer.
             Render(Renderer);
@@ -202,7 +188,7 @@ namespace SearchMapCore.Graph {
         /// </summary>
         /// <returns></returns>
         public int GetMaxId() {
-            return lastRegisteredId;
+            return LastRegisteredId;
         }
 
 
@@ -212,11 +198,12 @@ namespace SearchMapCore.Graph {
         /// Renders the graph using the given IGraphRenderer
         /// </summary>
         public void Render(IGraphRenderer renderer) {
+
             Renderer = renderer;
             IsDisplayed = true;
             Renderer.SetDrawingZoneSize(Width, Height);
 
-            if(RootNode != null) RootNode.Refresh();
+            Refresh();
 
         }
 
@@ -245,7 +232,10 @@ namespace SearchMapCore.Graph {
         /// Call to re-render the graph.
         /// </summary>
         public void Refresh() {
-            if(RootNode != null) RootNode.Refresh();
+            foreach(Node node in Nodes.Values) {
+                if(node.GetParent() == null) node.Refresh();
+            }
+            RootNode.Refresh();
         }
 
         // Called when graph is loaded from file

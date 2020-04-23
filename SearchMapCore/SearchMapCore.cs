@@ -3,7 +3,8 @@ using SearchMapCore.Graph;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SearchMapCore.Controls;
+using SearchMapCore.Undoing;
+using Newtonsoft.Json;
 
 namespace SearchMapCore {
 
@@ -22,7 +23,7 @@ namespace SearchMapCore {
         /// <summary>
         /// Manages clipboard and undo/redo ops.
         /// </summary>
-        public static Clipboard Clipboard { get; set; }
+        public static UndoRedo UndoRedoSystem { get; set; }
 
         /// <summary>
         /// Logging to console.
@@ -34,7 +35,7 @@ namespace SearchMapCore {
         /// </summary>
         public static void InitCore(IGraphRenderer renderer) {
             Renderer = renderer;
-            Clipboard = new Clipboard();
+            UndoRedoSystem = new UndoRedo();
         }
 
         // TESTING ---
@@ -44,7 +45,7 @@ namespace SearchMapCore {
 
             var node1 = new WebNode(graph, (new UriBuilder("www.ourwebsite.net")).Uri, "") {
                 Title = "Welcome to SearchMap",
-                Comment = "Learn more - click to visit the website!",
+                Comment = Encoding.UTF8.GetBytes("Learn more - click to visit the website!"),
                 Color = new Color(255, 0, 0),
                 BorderColor = new Color(255, 255, 255),
                 FrontTitleFont = TextFont.DefaultFrontTitleFont(),
@@ -58,7 +59,7 @@ namespace SearchMapCore {
 
             var node2 = new WebNode(graph, new Uri("http://www.wikipedia.org"), "") {
                 Title = "Wikipedia",
-                Comment = "Want to know something? Click here to visit wikipedia",
+                Comment = Encoding.UTF8.GetBytes("Want to know something? Click here to visit wikipedia"),
                 Color = new Color(255, 255, 255),
                 FrontTitleFont = TextFont.DefaultFrontTitleFont(),
                 BackTitleFont = TextFont.DefaultBackTitleFont()
@@ -71,7 +72,7 @@ namespace SearchMapCore {
 
             var node3 = new WebNode(graph, new Uri("http://netflix.com"), "") {
                 Title = "Netflix",
-                Comment = "Need to relax ? Find awesome video content on Netflix.",
+                Comment = Encoding.UTF8.GetBytes("Need to relax ? Find awesome video content on Netflix."),
                 Color = new Color(0, 0, 0),
                 BorderColor = new Color(255, 0, 0),
                 FrontTitleFont = TextFont.DefaultFrontTitleFont(),
@@ -85,7 +86,7 @@ namespace SearchMapCore {
 
             var node4 = new WebNode(graph, new Uri("http://youtube.com"), "") {
                 Title = "YouTube",
-                Comment = "Awesome video content for free.",
+                Comment = Encoding.UTF8.GetBytes("Awesome video content for free."),
                 Color = new Color(255, 255, 255),
                 BorderColor = new Color(255, 0, 0),
                 FrontTitleFont = TextFont.DefaultFrontTitleFont(),
@@ -98,6 +99,8 @@ namespace SearchMapCore {
             node4.BackTitleFont.Color = TextFont.GetDefaultColorOnBackground(node4.Color);
 
             node2.AddSibling(node3);
+
+            UndoRedoSystem.ClearCtrlZStack();
 
             return graph;
 

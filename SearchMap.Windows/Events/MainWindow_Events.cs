@@ -14,7 +14,7 @@ namespace SearchMap.Windows {
 
         internal const int NUMBER_OF_PERSISTANT_TABS = 6;
 
-        private const double DEFAULT_ZOOM = 0.4;
+        internal const double DEFAULT_ZOOM = 0.4;
 
         // Event Handling
 
@@ -44,7 +44,7 @@ namespace SearchMap.Windows {
         }
 
         // Implementation of movement by drag and dropping
-        // Original code : https://www.codeproject.com/Articles/97871/WPF-simple-zoom-and-drag-support-in-a-ScrollView
+        // Source : https://www.codeproject.com/Articles/97871/WPF-simple-zoom-and-drag-support-in-a-ScrollView
 
         #region MoveByDragDrop
 
@@ -109,7 +109,7 @@ namespace SearchMap.Windows {
         #endregion MoveByDragDrop
 
 
-        // Size ribbon tabs correctly on window resize
+        #region Ribbon
 
         void OnWindowSizeChanged(object sender, RoutedEventArgs e) {
 
@@ -135,9 +135,8 @@ namespace SearchMap.Windows {
             }
         }
 
-        // END of ribbon management
+        #endregion
 
-        // Clipboard tasks
 
         #region Clipboard
 
@@ -158,6 +157,12 @@ namespace SearchMap.Windows {
                 }
                 else if(e.Key == Key.V) {
                     ClipboardManager.Paste(LastClickedPoint);
+                }
+                else if(e.Key == Key.Z) {
+                    SearchMapCore.SearchMapCore.UndoRedoSystem.Undo();
+                }
+                else if(e.Key == Key.Y) {
+                    SearchMapCore.SearchMapCore.UndoRedoSystem.Redo();
                 }
 
             }
