@@ -138,6 +138,9 @@ namespace SearchMap.Windows.Controls {
 
             if (MouseHitType == HitType.None) return;
 
+            // Place revert point
+            Node.TakeSnapshot();
+
             MainWindow.Window.DeselectAll();
 
             LastPoint = e.GetPosition(MainWindow.Window.GraphCanvas);

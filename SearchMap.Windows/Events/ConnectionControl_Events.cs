@@ -42,6 +42,9 @@ namespace SearchMap.Windows.UIComponents {
                 Cursor = Cursors.Hand;
                 Mouse.Capture(this);
 
+                // Revert point.
+                Connection.TakeSnapshot();
+
                 MainWindow.Window.DeselectAll();
                 SetSelected();
 

@@ -39,6 +39,10 @@ namespace SearchMap.Windows.UIComponents {
 
             if (ColorSelector.SelectedColor.HasValue) {
                 var color = CoreToWPFUtils.WPFColorToCore(ColorSelector.SelectedColor.Value);
+
+                // Revert point
+                conn.TakeSnapshot();
+
                 conn.ShadowColor = color;
                 ConnectionControl.Selected.Refresh();
             }
@@ -90,6 +94,9 @@ namespace SearchMap.Windows.UIComponents {
             }
 
             var conn = ConnectionControl.Selected.Connection;
+
+            // Revert point.
+            conn.TakeSnapshot();
 
             conn.IsCustomizedByUser = false;
             for(int i=0; i<4; i++) {
@@ -169,9 +176,10 @@ namespace SearchMap.Windows.UIComponents {
 
             var connToNewSibling = child.ConnectionToParent;
 
-            child.SetParent(null);
+            child.SetParent(null, true);
 
-            child.AddSibling(parent);
+            // Snapshot already taken in SetParent.
+            child.AddSibling(parent, false);
             child.SetConnectionToSibling(parent, connToNewSibling);
 
         }

@@ -171,6 +171,8 @@ namespace SearchMap.Windows.UIComponents {
 
         public override void Save() {
 
+            Node.TakeSnapshot();
+
             var node = GetWebNode();
             node.FrontTitleFont = GetTextFontFromTextBox(FrontTitleBox);
             node.BackTitleFont = GetTextFontFromTextBox(BackTitleBox);

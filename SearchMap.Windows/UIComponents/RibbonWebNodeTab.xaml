@@ -47,7 +47,7 @@
         
     </Fluent:RibbonGroupBox>
 
-    <Fluent:RibbonGroupBox Header="Node">
+    <Fluent:RibbonGroupBox Header="Style">
 
         <Fluent:DropDownButton Header="Background color"
                                LargeIcon="../Resources/ConnectionTab/ColorCircle_small.png"

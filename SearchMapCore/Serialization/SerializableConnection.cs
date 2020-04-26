@@ -1,10 +1,16 @@
 ﻿using SearchMapCore.Graph;
 using SearchMapCore.Rendering;
+using SearchMapCore.Undoing;
+using System;
 using System.Collections.Generic;
 
 namespace SearchMapCore.Serialization {
 
-    public class SerializableConnection {
+    public class SerializableConnection : IRevertable {
+
+        public Graph.Graph Graph { get; set; }
+
+        public Connection Connection { get; }
 
         public List<Location> Points { get; }
         public List<Location> UserImposedPoints { get; }
@@ -17,7 +23,10 @@ namespace SearchMapCore.Serialization {
 
         public bool IsCustomizedByUser { get; }
 
-        public SerializableConnection(Connection conn) {
+        public SerializableConnection(Graph.Graph graph, Connection conn) {
+
+            Connection = conn;
+            Graph = graph;
 
             Points = conn.Points;
             UserImposedPoints = conn.UserImposedPoints;
@@ -32,14 +41,24 @@ namespace SearchMapCore.Serialization {
 
         }
 
-        public void RevertConnectionToThis(Connection conn) {
+        public void Revert() {
 
-            conn.Points = Points;
-            conn.UserImposedPoints = UserImposedPoints;
-            conn.Color = Color;
-            conn.ShadowColor = conn.ShadowColor;
-            conn.IsBoldStyle = IsBoldStyle;
-            conn.IsCustomizedByUser = IsCustomizedByUser;
+            Console.WriteLine("Current connection:");
+            Console.WriteLine(Connection.ToString());
+            Console.WriteLine("Reverting to:");
+            
+
+            Connection.Points = Points;
+            Connection.UserImposedPoints = UserImposedPoints;
+            Connection.Color = Color;
+            Connection.ShadowColor = ShadowColor;
+            Connection.IsBoldStyle = IsBoldStyle;
+            Connection.IsCustomizedByUser = IsCustomizedByUser;
+
+            Connection.RenderOrRefresh();
+
+            Console.WriteLine(Connection.ToString());
+            Console.WriteLine("Connection reverted.");
 
         }
 

@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SearchMapCore.Rendering;
+using SearchMapCore.Serialization;
+using SearchMapCore.Undoing;
 using System;
 using System.Collections.Generic;
 
@@ -85,6 +87,11 @@ namespace SearchMapCore.Graph {
             IsCustomizedByUser = false;
             IsBoldStyle = false;
         }
+
+        /// <summary>
+        /// For deserialization only.
+        /// </summary>
+        private Connection() { }
 
         public Node GetDepartureNode() {
             return Graph.Nodes[NodeFromId];
@@ -192,6 +199,14 @@ namespace SearchMapCore.Graph {
             EDIT_CONNECTOR1,
             EDIT_CONTROLPOINT,
             EDIT_CONNECTOR2
+        }
+
+        /// <summary>
+        /// Creates a revert point reverting the connection to its current state.
+        /// </summary>
+        public void TakeSnapshot() {
+            ConnectionState serial = new ConnectionState(Graph, this);
+            SearchMapCore.UndoRedoSystem.AddToUndoStack(serial);
         }
 
         public override string ToString() {

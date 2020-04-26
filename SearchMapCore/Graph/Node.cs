@@ -481,14 +481,12 @@ namespace SearchMapCore.Graph {
         #region Move & Resize
 
         /// <summary>
-        /// Change abstract size of Node.
+        /// Changes size of Node.
         /// Refreshes rendering of node.
         /// </summary>
         /// <param name="width">New width of node</param>
         /// <param name="height">New height of node</param>
         public void Resize(int width, int height) {
-
-            TakeSnapshot();
 
             Height = height;
             Width = width;

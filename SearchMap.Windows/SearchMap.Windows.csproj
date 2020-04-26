@@ -126,7 +126,6 @@
     </Compile>
     <Compile Include="Utils\CoreToWPFUtils.cs" />
     <Compile Include="Utils\MathUtils.cs" />
-    <Compile Include="Utils\RtfUtils.cs" />
     <Page Include="Dialog\NewWebNodeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

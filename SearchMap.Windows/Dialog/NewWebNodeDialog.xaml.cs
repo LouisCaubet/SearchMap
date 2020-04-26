@@ -22,7 +22,6 @@ namespace SearchMap.Windows.Dialog {
 
         bool TitleBoxModified;
         bool UriBoxModified;
-        bool CommentBoxModified;
         bool IconModified;
 
         public NewWebNodeDialog() {
@@ -35,7 +34,6 @@ namespace SearchMap.Windows.Dialog {
 
             TitleBoxModified = false;
             UriBoxModified = false;
-            CommentBoxModified = false;
             IconModified = false;
 
             MouseLeftButtonDown += OnMouseDown;
