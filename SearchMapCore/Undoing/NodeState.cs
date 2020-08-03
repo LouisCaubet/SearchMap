@@ -7,13 +7,24 @@ using System.Reflection;
 
 namespace SearchMapCore.Undoing {
 
+    /// <summary>
+    /// Represents the state of a node, which can be reverted to.
+    /// </summary>
     class NodeState : IRevertable {
 
+        /// <summary>
+        /// Instance of the graph this object is part of.
+        /// </summary>
         public Graph.Graph Graph { get; set; }
 
         private string SerializedNode { get; }
         private Type NodeType { get; }
 
+        /// <summary>
+        /// Creates a new NodeState from the current state of the given node, in the given graph.
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="node"></param>
         public NodeState(Graph.Graph graph, Node node) {
 
             Graph = graph;

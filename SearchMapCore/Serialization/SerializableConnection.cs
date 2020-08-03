@@ -6,6 +6,10 @@ using System.Collections.Generic;
 
 namespace SearchMapCore.Serialization {
 
+    /// <summary>
+    /// Obsolete - Use SearchMapCore.Undoing.ConnectionState instead.
+    /// </summary>
+    [Obsolete]
     public class SerializableConnection : IRevertable {
 
         public Graph.Graph Graph { get; set; }

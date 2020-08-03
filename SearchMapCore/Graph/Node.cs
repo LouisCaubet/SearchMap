@@ -317,7 +317,7 @@ namespace SearchMapCore.Graph {
 
             /* The previous code, which should improve performance by only reverting the nodes that have been modified by
              * this action, doesn't work: the previous node is not completely deleted...
-             * For now, we are thus reverting the whole graph. In case performance is an issue, reconsider using previous code.
+             * For now, we are therefore reverting the whole graph. In case performance is an issue, reconsider using previous code.
              */
 
             if(takeSnapshot) graph.TakeSnapshot();

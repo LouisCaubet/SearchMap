@@ -233,9 +233,8 @@ namespace SearchMapCore.Graph {
         /// </summary>
         public void Refresh() {
             foreach(Node node in Nodes.Values) {
-                if(node.GetParent() == null) node.Refresh();
+                node.Refresh();
             }
-            RootNode.Refresh();
         }
 
         // Called when graph is loaded from file
