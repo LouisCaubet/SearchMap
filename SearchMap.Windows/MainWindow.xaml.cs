@@ -88,10 +88,17 @@ namespace SearchMap.Windows {
             MoveToCenterOfCanvas();
 
             Renderer = new GraphRenderer();
+            SearchMapCore.SearchMapCore.Renderer = Renderer;
 
-            Graph test = SearchMapCore.SearchMapCore.CreateTestGraph();
+            // Graph test = SearchMapCore.SearchMapCore.CreateTestGraph();
+            /*
             test.Render(Renderer);
             SearchMapCore.SearchMapCore.Graph = test;
+            */
+
+            // SearchMapCore.SearchMapCore.NewProject("testgraph.smp", test);
+
+            SearchMapCore.SearchMapCore.OpenProject("testgraph.smp");
 
             OnWindowSizeChanged(null, null);
 

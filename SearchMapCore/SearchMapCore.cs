@@ -51,9 +51,7 @@ namespace SearchMapCore {
         public static void OpenProject(string path) {
 
             File = new SearchMapFile(path);
-            Graph = File.OpenGraph();
-
-            Graph.Render(Renderer);
+            Graph = File.Graph;
 
         }
 
@@ -64,8 +62,12 @@ namespace SearchMapCore {
         /// <param name="graph"></param>
         public static void NewProject(string path, Graph.Graph graph) {
 
-            File = new SearchMapFile(path, graph);
             Graph = graph;
+
+            // Graph must have been rendered for everything to be initialized correctly.
+            Graph.Render(Renderer);
+
+            File = new SearchMapFile(path, graph);
 
         }
 

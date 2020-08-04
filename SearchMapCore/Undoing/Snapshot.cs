@@ -14,18 +14,35 @@ namespace SearchMapCore.Undoing {
 
         public static MethodInfo JsonConvertGenericDeserializeObjectMethod { get; private set; }
 
+        // ALL THE FOLLOWING FIELDS SHOULD BE CONSIDERED READONLY
+        // THEY NEED TO BE SET-ABLE FOR DESERIALIZATION.
+
         /// <summary>
         /// Calling revert won't do anything if the snapshot could not be made.
         /// </summary>
-        private bool IsValidSnapshot { get; }
+        
+        [JsonProperty]
+        private bool IsValidSnapshot { get; set; }
 
-        private readonly int LastRegisteredId;
+        [JsonProperty]
+        private int Height { get; set; }
 
-        private readonly Dictionary<int, string> SerializedNodes;
-        private readonly Dictionary<int, Type> NodeTypes;
+        [JsonProperty]
+        private int Width { get; set; }
 
-        private readonly int RootNodeId;
+        [JsonProperty]
+        private int LastRegisteredId { get; set; }
 
+        [JsonProperty]
+        private Dictionary<int, string> SerializedNodes { get; set; }
+
+        [JsonProperty]
+        private Dictionary<int, Type> NodeTypes { get; set; }
+
+        [JsonProperty]
+        private int RootNodeId { get; set; }
+
+        [JsonIgnore]
         public Graph.Graph Graph { get; set; }
 
         /// <summary>
@@ -63,6 +80,9 @@ namespace SearchMapCore.Undoing {
 
             SerializedNodes = new Dictionary<int, string>();
             NodeTypes = new Dictionary<int, Type>();
+
+            Height = graph.Height;
+            Width = graph.Width;
 
             // Specific ReferenceLoopHandling options are required because each node is 
             // pointing back to the graph.
@@ -115,7 +135,7 @@ namespace SearchMapCore.Undoing {
 
                 }
 
-                Graph.RevertToSnapshot(LastRegisteredId, nodes, RootNodeId);
+                Graph.RevertToSnapshot(LastRegisteredId, nodes, RootNodeId, Height, Width);
 
             }
             catch (Exception e) {

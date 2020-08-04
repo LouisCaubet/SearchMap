@@ -17,13 +17,11 @@ namespace SearchMapCore.Graph {
         /// <summary>
         /// The Height of the drawing zone of the graph.
         /// </summary>
-        [JsonProperty]
         public int Height { get; private set; }
 
         /// <summary>
         /// The Width of the drawing zone of the graph.
         /// </summary>
-        [JsonProperty]
         public int Width { get; private set; }
 
         // Graph definition --------------------------------------------------------------------------------------------------------------------
@@ -31,39 +29,33 @@ namespace SearchMapCore.Graph {
         /// <summary>
         /// The name of the project this graph represents.
         /// </summary>
-        [JsonProperty]
         public string ProjectName { get; set; }
 
         /// <summary>
         /// Nodes of the graph, accessed by id.
         /// </summary>
-        [JsonProperty]
         public Dictionary<int, Node> Nodes { get; private set; }
 
         /// <summary>
         /// The root node of the graph.
         /// </summary>
-        [JsonProperty]
         public Node RootNode { get; set; }
 
         /// <summary>
         /// Checks if the graph is currently on user screen.
         /// The renderer may be null if IsDisplayed is false.
         /// </summary>
-        [JsonIgnore]
         public bool IsDisplayed { get; set; }
 
         /// <summary>
         /// Describes the UI rendering of the graph.
         /// </summary>
-        [JsonIgnore]
         public IGraphRenderer Renderer { get; set; }
 
         /// <summary>
         /// INTERNAL USE ONLY. <para />
         /// The id of the last registered node.
         /// </summary>
-        [JsonProperty]
         internal int LastRegisteredId { get; private set; }
 
         // Graph edit operations ---------------------------------------------------------------------------------------------------------------
@@ -159,7 +151,10 @@ namespace SearchMapCore.Graph {
         /// Reverts the graph's state to a given snapshot.
         /// </summary>
         /// <param name="snapshot"></param>
-        internal void RevertToSnapshot(int lastRegisteredId, Dictionary<int, Node> nodes, int rootNodeId) {
+        internal void RevertToSnapshot(int lastRegisteredId, Dictionary<int, Node> nodes, int rootNodeId, int height, int width) {
+
+            Height = height;
+            Width = width;
 
             Nodes = nodes;
             this.LastRegisteredId = lastRegisteredId;

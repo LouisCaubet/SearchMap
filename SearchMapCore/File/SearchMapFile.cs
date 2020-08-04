@@ -1,5 +1,7 @@
 ﻿using Ionic.Zip;
 using Newtonsoft.Json;
+using SearchMapCore.Graph;
+using SearchMapCore.Undoing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -54,15 +56,16 @@ namespace SearchMapCore.File {
         /// <returns></returns>
         internal Graph.Graph OpenGraph() {
 
-            try {
+            using (ZipFile Zip = new ZipFile(Path, Encoding.UTF8)) {
 
-                using(ZipFile Zip = new ZipFile(Path, Encoding.UTF8)) {
+                if (Zip.EntryFileNames.Contains("graph.json")) {
 
                     var entry = Zip["graph.json"];
 
                     // Unzip entry and read contents to string
                     MemoryStream stream = new MemoryStream();
                     entry.Extract(stream);
+                    stream.Position = 0;
 
                     string json = null;
                     using (StreamReader reader = new StreamReader(stream)) {
@@ -70,46 +73,58 @@ namespace SearchMapCore.File {
                     }
 
                     // Deserialize graph
-                    var graph = JsonConvert.DeserializeAnonymousType(json, new Graph.Graph());
+                    var snapshot = JsonConvert.DeserializeObject<Snapshot>(json);
+
+                    // We are using the Snapshot class to create a new graph with the contents of the saved snapshot.
+                    var graph = new Graph.Graph();
+
+                    // Renderer needs to be set to revert to a snapshot.
+                    graph.Renderer = SearchMapCore.Renderer;
+
+                    snapshot.Graph = graph;
+                    snapshot.Revert();
+
+                    // Due to issues when deserializing abstract classes, we cannot directly serialize the graph, 
+                    // but need to go through a Snapshot.
 
                     SearchMapCore.Logger.Info("Graph has been opened from file " + Path);
 
                     return graph;
 
                 }
+                else {
 
-            }
-            catch (Exception) {
+                    SearchMapCore.Logger.Info("Selected zip file does not contain definition for graph. Creating empty graph.");
 
-                SearchMapCore.Logger.Info("Selected zip file does not contain definition for graph. Creating empty graph.");
+                    var graph = new Graph.Graph();
+                    Snapshot snapshot = new Snapshot(graph);
 
-                var graph = new Graph.Graph();
+                    string json = JsonConvert.SerializeObject(snapshot, Formatting.Indented,
+                            new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
 
-                string json = JsonConvert.SerializeObject(graph, Formatting.Indented,
-                        new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+                    // Write json to MemoryStream
+                    using (MemoryStream stream = new MemoryStream()) {
+                        var sw = new StreamWriter(stream, Encoding.UTF8);
+                        try {
 
-                // Write json to MemoryStream
-                using (MemoryStream stream = new MemoryStream()) {
-                    var sw = new StreamWriter(stream, Encoding.UTF8);
-                    try {
-                        sw.Write(json);
-                        sw.Flush();
-                        stream.Seek(0, SeekOrigin.Begin);
+                            sw.Write(json);
+                            sw.Flush();
+                            stream.Seek(0, SeekOrigin.Begin);
+
+                            // Add stream to zip
+                            Zip.AddEntry("graph.json", stream);
+                            Zip.Save(Path);
+
+                        }
+                        finally {
+                            sw.Dispose();
+                        }
+
                     }
-                    finally {
-                        sw.Dispose();
-                    }
 
-                    // Add stream to zip
-                    using (ZipFile Zip = new ZipFile(Path, Encoding.UTF8)) {
-                        Zip.AddEntry("graph.json", stream);
-                        Zip.Save(Path);
-                    }
+                    return graph;
 
                 }
-
-                return graph;
-
 
             }
 
@@ -120,25 +135,27 @@ namespace SearchMapCore.File {
         /// </summary>
         public void SaveGraph() {
 
-            string json = JsonConvert.SerializeObject(Graph, Formatting.Indented,
+            string json = JsonConvert.SerializeObject(new Snapshot(Graph), Formatting.Indented,
                     new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
 
             // Write json to MemoryStream
             using (MemoryStream stream = new MemoryStream()) {
                 var sw = new StreamWriter(stream, Encoding.UTF8);
                 try {
+
                     sw.Write(json);
                     sw.Flush();
                     stream.Seek(0, SeekOrigin.Begin);
+
+                    // Add stream to zip
+                    using (ZipFile Zip = new ZipFile(Path, Encoding.UTF8)) {
+                        Zip.UpdateEntry("graph.json", stream);
+                        Zip.Save(Path);
+                    }
+
                 }
                 finally {
                     sw.Dispose();
-                }
-
-                // Add stream to zip
-                using (ZipFile Zip = new ZipFile(Path, Encoding.UTF8)) {
-                    Zip.UpdateEntry("graph.json", stream);
-                    Zip.Save(Path);
                 }
 
             }
