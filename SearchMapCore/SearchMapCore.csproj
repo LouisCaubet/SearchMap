@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Louis Caubet</Authors>
+    <Company>EnhanceLabs</Company>
+    <Description>SearchMap Core Library</Description>
+    <Copyright>(C) Louis Caubet, 2020. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using SearchMapCore.Undoing;
 using Newtonsoft.Json;
+using SearchMapCore.File;
 
 namespace SearchMapCore {
 
@@ -14,6 +15,11 @@ namespace SearchMapCore {
         /// The instance of Graph currently visible in SearchMap
         /// </summary>
         public static Graph.Graph Graph { get; set; }
+
+        /// <summary>
+        /// The file storing the opened Graph.
+        /// </summary>
+        public static SearchMapFile File { get; private set; }
 
         /// <summary>
         /// Interface to link with the platform-dependent rendering code.
@@ -36,6 +42,39 @@ namespace SearchMapCore {
         public static void InitCore(IGraphRenderer renderer) {
             Renderer = renderer;
             UndoRedoSystem = new UndoRedo();
+        }
+
+        /// <summary>
+        /// Opens a SearchMap Project from the given path.
+        /// </summary>
+        /// <param name="path"></param>
+        public static void OpenProject(string path) {
+
+            File = new SearchMapFile(path);
+            Graph = File.OpenGraph();
+
+            Graph.Render(Renderer);
+
+        }
+
+        /// <summary>
+        /// Creates a new project at the given path from the given graph.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="graph"></param>
+        public static void NewProject(string path, Graph.Graph graph) {
+
+            File = new SearchMapFile(path, graph);
+            Graph = graph;
+
+        }
+
+        /// <summary>
+        /// Creates a new empty project at the given path.
+        /// </summary>
+        /// <param name="path"></param>
+        public static void NewProject(string path) {
+            NewProject(path, new Graph.Graph());
         }
 
         // TESTING ---
