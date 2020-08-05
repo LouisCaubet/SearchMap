@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Fluent:Ribbon Grid.Row="0" x:Name="Ribbon">
+        <Fluent:Ribbon Grid.Row="0" x:Name="Ribbon" >
 
             <Fluent:Ribbon.ContextualGroups>
                 <Fluent:RibbonContextualTabGroup x:Name="NodeContextualGroup"
@@ -60,7 +60,25 @@
                 </Fluent:Backstage>
             </Fluent:Ribbon.Menu>
             
-            
+            <!-- Quick Access Toolbar -->
+            <Fluent:Ribbon.QuickAccessItems>
+                
+                <!-- Save -->
+                <Fluent:QuickAccessMenuItem IsChecked="True">
+                    <Fluent:Button x:Name="QuickAccessSave" Header="Save" Icon="/Resources/HomeTab/save_small.png" ToolTip="Save (Ctrl+S)" />
+                </Fluent:QuickAccessMenuItem>
+                
+                <!-- Open -->
+                <Fluent:QuickAccessMenuItem IsChecked="True">
+                    <Fluent:Button x:Name="QuickAccessOpen" Header="Open" Icon="/Resources/HomeTab/open.png" ToolTip="Open Project (Ctrl+O)" />
+                </Fluent:QuickAccessMenuItem>
+                
+                <!-- New -->
+                <Fluent:QuickAccessMenuItem IsChecked="True">
+                    <Fluent:Button x:Name="QuickAccessNew" Header="New Project" Icon="/Resources/HomeTab/new.png" ToolTip="New Project (Ctrl+N)" />
+                </Fluent:QuickAccessMenuItem>
+
+            </Fluent:Ribbon.QuickAccessItems>
 
             <!--Tabs-->
             <uicomponents:RibbonHomeTab x:Name="RibbonTabHome" />

@@ -115,6 +115,8 @@ namespace SearchMap.Windows {
             RibbonTabWebNode.RegisterCommands();
             RibbonTabConnection.RegisterCommands();
 
+            QuickAccessCommands.RegisterCommands();
+
         }
 
         void OnWindowClose(object sender, EventArgs e) {

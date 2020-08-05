@@ -1,9 +1,7 @@
 ﻿using Ionic.Zip;
 using Newtonsoft.Json;
-using SearchMapCore.Graph;
 using SearchMapCore.Undoing;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 

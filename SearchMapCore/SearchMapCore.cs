@@ -6,6 +6,7 @@ using System.Text;
 using SearchMapCore.Undoing;
 using Newtonsoft.Json;
 using SearchMapCore.File;
+using System.IO;
 
 namespace SearchMapCore {
 
@@ -20,6 +21,11 @@ namespace SearchMapCore {
         /// The file storing the opened Graph.
         /// </summary>
         public static SearchMapFile File { get; private set; }
+
+        /// <summary>
+        /// Indicates whether the current project has already been saved by the user.
+        /// </summary>
+        public static bool IsCurrentProjectSaved { get; set; }
 
         /// <summary>
         /// Interface to link with the platform-dependent rendering code.
@@ -67,6 +73,9 @@ namespace SearchMapCore {
             // Graph must have been rendered for everything to be initialized correctly.
             Graph.Render(Renderer);
 
+            // Delete file if it already exists (override will have been prompted in UI)
+            System.IO.File.Delete(path);
+
             File = new SearchMapFile(path, graph);
 
         }
@@ -77,6 +86,19 @@ namespace SearchMapCore {
         /// <param name="path"></param>
         public static void NewProject(string path) {
             NewProject(path, new Graph.Graph());
+        }
+
+        /// <summary>
+        /// Creates new project without saving it.
+        /// </summary>
+        public static void ShowNewGraph() {
+            Graph = new Graph.Graph();
+            IsCurrentProjectSaved = false;
+            File = null;
+
+            Renderer.DeleteAll();
+
+            Graph.Render(Renderer);
         }
 
         // TESTING ---
