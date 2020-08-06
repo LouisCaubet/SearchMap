@@ -1,10 +1,4 @@
 ﻿using Microsoft.Win32;
-using SearchMapCore.Graph;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -69,7 +63,7 @@ namespace SearchMap.Windows.Controls {
             SaveAsDialog();
         }
 
-        static bool SaveAsDialog() {
+        internal static bool SaveAsDialog() {
 
             SaveFileDialog dialog = new SaveFileDialog() {
                 AddExtension = true,

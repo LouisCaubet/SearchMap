@@ -5,6 +5,7 @@ using SearchMap.Windows.Rendering;
 using SearchMap.Windows.UIComponents;
 using SearchMapCore.Graph;
 using System;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -72,7 +73,7 @@ namespace SearchMap.Windows {
             WindowState = WindowState.Maximized;
 
             ContentRendered += OnWindowLoaded;
-            Closed += OnWindowClose;
+            Closing += OnWindowClose;
 
             RegisterEventHandlers();
 
@@ -119,9 +120,37 @@ namespace SearchMap.Windows {
 
         }
 
-        void OnWindowClose(object sender, EventArgs e) {
+        void OnWindowClose(object sender, CancelEventArgs e) {
+
             // Close all subwindows
             if (NewWebNodeDialog.Instance != null) NewWebNodeDialog.Instance.Close();
+
+            // Ask for save if unsaved.
+            if (!SearchMapCore.SearchMapCore.IsCurrentProjectSaved) {
+
+                var result = MessageBox.Show("Do you want to save the current project?", "Unsaved project",
+                    MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+
+                switch (result) {
+
+                    case MessageBoxResult.Yes:
+                        if (!QuickAccessCommands.SaveAsDialog()) {
+                            e.Cancel = true;
+                            return;
+                        }
+                        break;
+
+                    case MessageBoxResult.No:
+                        break;
+
+                    case MessageBoxResult.Cancel:
+                        e.Cancel = true;
+                        return;
+
+                }
+
+            }
+
         }
 
         /// <summary>
