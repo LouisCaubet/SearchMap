@@ -41,6 +41,18 @@
             };
         }
 
+        public static TextFont DefaultSubtitleFont() {
+            return new TextFont() {
+                FontName = "Segoe UI",
+                FontSize = 25,
+                IsBold = false,
+                IsItalic = false,
+                IsUnderlined = false,
+                IsStrikedthrough = false,
+                HighlightColor = new Color(0, 0, 0, 0)
+            };
+        }
+
         // Source : https://stackoverflow.com/questions/50540301/c-sharp-get-good-color-for-label
         public static Color GetDefaultColorOnBackground(Color background) {
             float brightness = (background.Red * 0.299f + background.Green * 0.587f + background.Blue * 0.114f) / 256f;

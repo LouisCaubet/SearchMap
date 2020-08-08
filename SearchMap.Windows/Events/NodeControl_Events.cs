@@ -19,6 +19,9 @@ namespace SearchMap.Windows.Controls {
         /// </summary>
         public void RegisterBaseEvents() {
 
+            // Complete loading
+            Loaded += OnControlLoaded;
+
             // Drag and drop
             this.MouseRightButtonUp += OnMouseRightButtonUp;
             this.PreviewMouseRightButtonUp += OnMouseRightButtonUp;
@@ -42,6 +45,10 @@ namespace SearchMap.Windows.Controls {
 
            
             
+        }
+
+        private void OnControlLoaded(object sender, RoutedEventArgs e) {
+            Refresh();
         }
 
         /// <summary>

@@ -24,8 +24,7 @@ namespace SearchMap.Windows.UIComponents {
             FrontTitleBox.TextChanged += OnFrontTitleChanged;
             BackTitleBox.TextChanged += OnBackTitleChanged;
             CommentBox.TextChanged += OnCommentChanged;
-            Loaded += OnControlLoaded;
-
+            
             MouseDoubleClick += OnMouseDoubleClick;
 
             RegisterEventsOnChild(FrontTitleBox);
@@ -37,10 +36,6 @@ namespace SearchMap.Windows.UIComponents {
 
         private void OnMouseDoubleClick(object sender, MouseButtonEventArgs e) {
             if(!FrontTitleBox.IsMouseDirectlyOver && !BackTitleBox.IsMouseDirectlyOver) Flip();
-        }
-
-        private void OnControlLoaded(object sender, RoutedEventArgs e) {
-            Refresh();
         }
 
         // Editing

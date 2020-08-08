@@ -1,10 +1,5 @@
 ﻿using SearchMap.Windows.Rendering;
 using SearchMapCore.Graph;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -56,6 +51,11 @@ namespace SearchMap.Windows.Controls {
         /// </summary>
         public abstract void CollapseAssociatedRibbonTab();
 
+        /// <summary>
+        /// Indicates whether the node can be flipped.
+        /// </summary>
+        /// <returns></returns>
+        public abstract bool IsFlippable();
 
         /// <summary>
         /// Returns the WPF element representing the front side of the node.
@@ -74,6 +74,8 @@ namespace SearchMap.Windows.Controls {
         /// </summary>
         public void Flip() {
             // Flip node
+
+            if (!IsFlippable()) return;
 
             if (MainWindow.Window.RibbonTabView.ShowNodeFlipAnimation) {
                 FlipAnim.Flip();

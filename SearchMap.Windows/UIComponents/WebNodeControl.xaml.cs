@@ -38,6 +38,10 @@ namespace SearchMap.Windows.UIComponents {
             return (WebNode) Node;
         }
 
+        public override bool IsFlippable() {
+            return true;
+        }
+
         public override FrameworkElement GetFront() {
             return Front;
         }

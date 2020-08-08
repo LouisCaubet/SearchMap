@@ -104,6 +104,7 @@
     <Compile Include="Events\ConnectionControl_Events.cs" />
     <Compile Include="Events\MainWindow_Events.cs" />
     <Compile Include="Events\NodeControl_Events.cs" />
+    <Compile Include="Events\TitleNodeControl_Events.cs" />
     <Compile Include="Events\WebNodeControl_Events.cs" />
     <Compile Include="Localization\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -141,6 +142,9 @@
     </Compile>
     <Compile Include="UIComponents\RibbonWebNodeTab.xaml.cs">
       <DependentUpon>RibbonWebNodeTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\TitleNodeControl.xaml.cs">
+      <DependentUpon>TitleNodeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\WebNodeControl.xaml.cs">
       <DependentUpon>WebNodeControl.xaml</DependentUpon>
@@ -196,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIComponents\RibbonWebNodeTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\TitleNodeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SearchMapCore.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,6 +14,9 @@ namespace SearchMapCore.Graph {
         /// The subtitle of this TitleNode.
         /// </summary>
         public string Subtitle { get; set; }
+
+        public TextFont TitleFont { get; set; }
+        public TextFont SubtitleFont { get; set; }
 
         public TitleNode(Graph graph) : base(graph) { }
 
