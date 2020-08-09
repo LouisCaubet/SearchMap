@@ -151,6 +151,15 @@ namespace SearchMap.Windows.Localization {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Title Node.
+        /// </summary>
+        internal static string TitleNode_RibbonTab {
+            get {
+                return ResourceManager.GetString("TitleNode_RibbonTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à View.
         /// </summary>
         internal static string View_RibbonTab {
@@ -160,7 +169,7 @@ namespace SearchMap.Windows.Localization {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Web Node Tools.
+        ///   Recherche une chaîne localisée semblable à Web Node.
         /// </summary>
         internal static string WebNode_RibbonTab {
             get {

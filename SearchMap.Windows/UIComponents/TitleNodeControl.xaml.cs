@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SearchMap.Windows.UIComponents {
+
     /// <summary>
     /// Logique d'interaction pour TitleNodeControl.xaml
     /// </summary>

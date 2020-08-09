@@ -1,6 +1,6 @@
 ﻿<controls:RibbonNodeTab  xmlns:controls="clr-namespace:SearchMap.Windows.Controls"
                          xmlns:Fluent="urn:fluent-ribbon" 
-                      x:Class="SearchMap.Windows.UIComponents.RibbonWebNodeTab"
+                      x:Class="SearchMap.Windows.UIComponents.RibbonTitleNodeTab"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,45 +9,9 @@
                       xmlns:t="clr-namespace:SearchMap.Windows.Localization"
                       mc:Ignorable="d" 
                       d:DesignHeight="450" d:DesignWidth="800"
-                      Header="{t:Translate Key=WebNode_RibbonTab}">
+                      Header="{t:Translate Key=TitleNode_RibbonTab}">
 
-    <Fluent:RibbonGroupBox Header="Web Node">
-
-        <Fluent:Button Header="Open Website"
-                       x:Name="OpenWebsiteButton"
-                       LargeIcon="../Resources/NodeTab/OpenWebsiteLargeIcon.png"
-                       Margin="5,5,5,0" >
-
-            <Fluent:Button.ToolTip>
-                <Fluent:ScreenTip Title="Open Website" Text="Opens the website represented by the selected node." />
-            </Fluent:Button.ToolTip>
-            
-        </Fluent:Button>
-
-        <Fluent:Button Header="Change Website"
-                       x:Name="ChangeWebsiteButton" 
-                       LargeIcon="../Resources/NodeTab/EditWebsiteIcon.png"
-                       Margin="5,5,5,0">
-
-            <Fluent:Button.ToolTip>
-                <Fluent:ScreenTip Title="Change Website" Text="Change the website binded with the selected node." />
-            </Fluent:Button.ToolTip>
-            
-        </Fluent:Button>
-
-        <Fluent:Button Header="Change Icon"
-                       x:Name="ChangeIconButton"
-                       LargeIcon="../Resources/NodeTab/ChangeImageIcon.png"
-                       Margin="5,5,5,0">
-
-            <Fluent:Button.ToolTip>
-                <Fluent:ScreenTip Title="Change Icon" Text="Change the icon of the selected node." />
-            </Fluent:Button.ToolTip>
-            
-        </Fluent:Button>
-        
-    </Fluent:RibbonGroupBox>
-
+    
     <Fluent:RibbonGroupBox Header="Style">
 
         <Fluent:DropDownButton Header="Background color"
@@ -58,13 +22,13 @@
                                  x:Name="BackgroundColorSelector"
                                  StandardColorGridRows="5"
                                  IsNoColorButtonVisible="False">
-                
+
             </Fluent:ColorGallery>
 
             <Fluent:DropDownButton.ToolTip>
                 <Fluent:ScreenTip Title="Background Color" Text="Change the background color of the selected node." />
             </Fluent:DropDownButton.ToolTip>
-            
+
         </Fluent:DropDownButton>
 
         <Fluent:DropDownButton Header="Border color"
@@ -179,7 +143,7 @@
                 <Fluent:ComboBox.ToolTip>
                     <Fluent:ScreenTip Title="Font" Text="Choose a new font for the selected text." />
                 </Fluent:ComboBox.ToolTip>
-                
+
             </Fluent:ComboBox>
             <Fluent:ComboBox x:Name="comboBoxFontSize"
                              Width="49"
@@ -227,7 +191,7 @@
                 <Fluent:Button.ToolTip>
                     <Fluent:ScreenTip Title="Grow Font" Text="Increase the font size of the selected text." />
                 </Fluent:Button.ToolTip>
-                
+
             </Fluent:Button>
             <Fluent:Button x:Name="buttonShrinkFont"
                            Icon="../Resources/FontEditor/ShrinkFont.png"
@@ -300,7 +264,7 @@
                 <Fluent:Button.ToolTip>
                     <Fluent:ScreenTip Title="Clear Formatting" Text="Removes all user customizations from the selected text." />
                 </Fluent:Button.ToolTip>
-                
+
             </Fluent:Button>
 
 
@@ -325,7 +289,7 @@
                 <Fluent:DropDownButton.ToolTip>
                     <Fluent:ScreenTip Title="Highlight Color" Text="Highlight the selected text." />
                 </Fluent:DropDownButton.ToolTip>
-                
+
             </Fluent:DropDownButton>
 
             <!-- The following code shows theme colors mode for color gallery -->
@@ -350,7 +314,7 @@
                                      x:Name="FontColorSelector"
                                      StandardColorGridRows="5"
                                      IsNoColorButtonVisible="False" />
-                
+
             </Fluent:DropDownButton>
         </Fluent:RibbonToolBar>
     </Fluent:RibbonGroupBox>
@@ -365,7 +329,7 @@
             <Fluent:Button.ToolTip>
                 <Fluent:ScreenTip Title="Zoom on this node" Text="Zooms in and centers this node" />
             </Fluent:Button.ToolTip>
-            
+
         </Fluent:Button>
 
         <Fluent:Button Header="Delete"
@@ -376,9 +340,9 @@
             <Fluent:Button.ToolTip>
                 <Fluent:ScreenTip Title="Delete Node" Text="Deletes the currently selected node from the graph." />
             </Fluent:Button.ToolTip>
-            
+
         </Fluent:Button>
-        
+
     </Fluent:RibbonGroupBox>
 
 </controls:RibbonNodeTab>

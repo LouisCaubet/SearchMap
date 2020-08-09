@@ -98,6 +98,7 @@
     <Compile Include="Controls\NodeControl_TextEdition.cs" />
     <Compile Include="Controls\QuickAccessCommands.cs" />
     <Compile Include="Controls\ResizableNodeControl.cs" />
+    <Compile Include="Controls\RibbonNodeTab.cs" />
     <Compile Include="Dialog\NewWebNodeDialog.xaml.cs">
       <DependentUpon>NewWebNodeDialog.xaml</DependentUpon>
     </Compile>
@@ -136,6 +137,9 @@
     </Compile>
     <Compile Include="UIComponents\RibbonInsertTab.xaml.cs">
       <DependentUpon>RibbonInsertTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\RibbonTitleNodeTab.xaml.cs">
+      <DependentUpon>RibbonTitleNodeTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\RibbonViewTab.xaml.cs">
       <DependentUpon>RibbonViewTab.xaml</DependentUpon>
@@ -192,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIComponents\RibbonInsertTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\RibbonTitleNodeTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

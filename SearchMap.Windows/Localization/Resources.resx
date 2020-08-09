@@ -147,10 +147,13 @@
   <data name="Node_ContextualGroup_Header" xml:space="preserve">
     <value>NODES</value>
   </data>
+  <data name="TitleNode_RibbonTab" xml:space="preserve">
+    <value>Title Node</value>
+  </data>
   <data name="View_RibbonTab" xml:space="preserve">
     <value>View</value>
   </data>
   <data name="WebNode_RibbonTab" xml:space="preserve">
-    <value>Web Node Tools</value>
+    <value>Web Node</value>
   </data>
 </root>
