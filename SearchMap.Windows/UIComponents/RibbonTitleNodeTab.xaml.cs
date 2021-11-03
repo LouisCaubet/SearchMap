@@ -22,6 +22,8 @@ namespace SearchMap.Windows.UIComponents {
     /// </summary>
     public partial class RibbonTitleNodeTab : RibbonNodeTab {
 
+        public const int TAB_INDEX = 7;
+
         public RibbonTitleNodeTab() {
             InitializeComponent();
 
@@ -55,7 +57,7 @@ namespace SearchMap.Windows.UIComponents {
         }
 
         protected override ToggleButton GetUnderlineButton() {
-            return buttonItalic;
+            return buttonUnderline;
         }
 
         protected override ToggleButton GetStrikethroughButton() {

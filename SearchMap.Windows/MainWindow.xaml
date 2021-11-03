@@ -95,6 +95,8 @@
 
             <uicomponents:RibbonWebNodeTab Group="{Binding Source={x:Reference NodeContextualGroup}}" x:Name="RibbonTabWebNode" />
 
+            <uicomponents:RibbonTitleNodeTab Group="{Binding Source={x:Reference NodeContextualGroup}}" x:Name="RibbonTabTitleNode" />
+
             <uicomponents:RibbonCustomizeConnTab Group="{Binding Source={x:Reference connection_tools}}" x:Name="RibbonTabConnection" />
 
             

@@ -16,16 +16,18 @@ namespace SearchMap.Windows.Controls {
 
         private ICollection<FontFamily> AvailableFonts { get; set; }
 
-        internal ICommand ToggleBold { get; private set; }
-        internal ICommand ToggleItalic { get; private set; }
-        internal ICommand ToggleUnderline { get; private set; }
-        internal ICommand ToggleStriketrough { get; private set; }
-        internal ICommand RemoveFormatting { get; private set; }
-        internal ICommand IncreaseFontSize { get; private set; }
-        internal ICommand DecreaseFontSize { get; private set; }
+        private bool CommandsRegistered = false;
 
-        internal ICommand ZoomOnNode { get; private set; }
-        internal ICommand DeleteNode { get; private set; }
+        internal static ICommand ToggleBold { get; private set; }
+        internal static ICommand ToggleItalic { get; private set; }
+        internal static ICommand ToggleUnderline { get; private set; }
+        internal static ICommand ToggleStriketrough { get; private set; }
+        internal static ICommand RemoveFormatting { get; private set; }
+        internal static ICommand IncreaseFontSize { get; private set; }
+        internal static ICommand DecreaseFontSize { get; private set; }
+
+        internal static ICommand ZoomOnNode { get; private set; }
+        internal static ICommand DeleteNode { get; private set; }
 
 
         // Access fields of subclass
@@ -84,40 +86,48 @@ namespace SearchMap.Windows.Controls {
         /// </summary>
         internal void RegisterCommands() {
 
-            ToggleBold = new RoutedCommand("WebNodeTab.ToggleBold", GetType());
-            MainWindow.Window.CommandBindings.Add(new CommandBinding(ToggleBold, ToggleBold_Execute, FontCommands_CanExecute));
+            if (!CommandsRegistered) {
+
+                ToggleBold = new RoutedCommand("WebNodeTab.ToggleBold", GetType());
+                MainWindow.Window.CommandBindings.Add(new CommandBinding(ToggleBold, ToggleBold_Execute, FontCommands_CanExecute));
+
+                ToggleItalic = new RoutedCommand("WebNodeTab.ToggleItalic", GetType());
+                MainWindow.Window.CommandBindings.Add(new CommandBinding(ToggleItalic, ToggleItalic_Execute, FontCommands_CanExecute));
+
+                ToggleUnderline = new RoutedCommand("WebNodeTab.ToggleUnderline", GetType());
+                MainWindow.Window.CommandBindings.Add(new CommandBinding(ToggleUnderline, ToggleUnderline_Execute, FontCommands_CanExecute));
+
+                ToggleStriketrough = new RoutedCommand("WebNodeTab.ToggleStriketrough", GetType());
+                MainWindow.Window.CommandBindings.Add(new CommandBinding(ToggleStriketrough, ToggleStriketrough_Execute, FontCommands_CanExecute));
+
+                RemoveFormatting = new RoutedCommand("WebNodeTab.RemoveFormatting", GetType());
+                MainWindow.Window.CommandBindings.Add(new CommandBinding(RemoveFormatting, RemoveFormatting_Execute, FontCommands_CanExecute));
+
+                IncreaseFontSize = new RoutedCommand("WebNodeTab.IncreaseFontSize", GetType());
+                MainWindow.Window.CommandBindings.Add(new CommandBinding(IncreaseFontSize, IncreaseFontSize_Execute, FontCommands_CanExecute));
+
+                DecreaseFontSize = new RoutedCommand("WebNodeTab.DecreaseFontSize", GetType());
+                MainWindow.Window.CommandBindings.Add(new CommandBinding(DecreaseFontSize, DecreaseFontSize_Execute, FontCommands_CanExecute));
+
+                DeleteNode = new RoutedCommand("WebNodeTab.DeleteNode", GetType());
+                MainWindow.Window.CommandBindings.Add(new CommandBinding(DeleteNode, Delete_Execute, Actions_CanExecute));
+
+                ZoomOnNode = new RoutedCommand("WebNodeTab.ZoomOnNode", GetType());
+                MainWindow.Window.CommandBindings.Add(new CommandBinding(ZoomOnNode, ZoomOnNode_Execute, Actions_CanExecute));
+
+                CommandsRegistered = true;
+
+            }
+
+            
             GetBoldButton().Command = ToggleBold;
-
-            ToggleItalic = new RoutedCommand("WebNodeTab.ToggleItalic", GetType());
-            MainWindow.Window.CommandBindings.Add(new CommandBinding(ToggleItalic, ToggleItalic_Execute, FontCommands_CanExecute));
             GetItalicButton().Command = ToggleItalic;
-
-            ToggleUnderline = new RoutedCommand("WebNodeTab.ToggleUnderline", GetType());
-            MainWindow.Window.CommandBindings.Add(new CommandBinding(ToggleUnderline, ToggleUnderline_Execute, FontCommands_CanExecute));
             GetUnderlineButton().Command = ToggleUnderline;
-
-            ToggleStriketrough = new RoutedCommand("WebNodeTab.ToggleStriketrough", GetType());
-            MainWindow.Window.CommandBindings.Add(new CommandBinding(ToggleStriketrough, ToggleStriketrough_Execute, FontCommands_CanExecute));
             GetStrikethroughButton().Command = ToggleStriketrough;
-
-            RemoveFormatting = new RoutedCommand("WebNodeTab.RemoveFormatting", GetType());
-            MainWindow.Window.CommandBindings.Add(new CommandBinding(RemoveFormatting, RemoveFormatting_Execute, FontCommands_CanExecute));
             GetClearFormattingButton().Command = RemoveFormatting;
-
-            IncreaseFontSize = new RoutedCommand("WebNodeTab.IncreaseFontSize", GetType());
-            MainWindow.Window.CommandBindings.Add(new CommandBinding(IncreaseFontSize, IncreaseFontSize_Execute, FontCommands_CanExecute));
             GetGrowFontButton().Command = IncreaseFontSize;
-
-            DecreaseFontSize = new RoutedCommand("WebNodeTab.DecreaseFontSize", GetType());
-            MainWindow.Window.CommandBindings.Add(new CommandBinding(DecreaseFontSize, DecreaseFontSize_Execute, FontCommands_CanExecute));
             GetShrinkFontButton().Command = DecreaseFontSize;
-
-            DeleteNode = new RoutedCommand("WebNodeTab.DeleteNode", GetType());
-            MainWindow.Window.CommandBindings.Add(new CommandBinding(DeleteNode, Delete_Execute, Actions_CanExecute));
             GetDeleteNodeButton().Command = DeleteNode;
-
-            ZoomOnNode = new RoutedCommand("WebNodeTab.ZoomOnNode", GetType());
-            MainWindow.Window.CommandBindings.Add(new CommandBinding(ZoomOnNode, ZoomOnNode_Execute, Actions_CanExecute));
             GetZoomOnNodeButton().Command = ZoomOnNode;
 
         }
@@ -204,31 +214,31 @@ namespace SearchMap.Windows.Controls {
             SetStateOfButtons();
         }
 
-        void ToggleBold_Execute(object sender, ExecutedRoutedEventArgs e) {
+        static void ToggleBold_Execute(object sender, ExecutedRoutedEventArgs e) {
             MainWindow.Window.Selected.ToggleSelectionBold();
         }
 
-        void ToggleItalic_Execute(object sender, ExecutedRoutedEventArgs e) {
+        static void ToggleItalic_Execute(object sender, ExecutedRoutedEventArgs e) {
             MainWindow.Window.Selected.ToggleSelectionItalic();
         }
 
-        void ToggleUnderline_Execute(object sender, ExecutedRoutedEventArgs e) {
+        static void ToggleUnderline_Execute(object sender, ExecutedRoutedEventArgs e) {
             MainWindow.Window.Selected.ToggleSelectionUnderline();
         }
 
-        void ToggleStriketrough_Execute(object sender, ExecutedRoutedEventArgs e) {
+        static void ToggleStriketrough_Execute(object sender, ExecutedRoutedEventArgs e) {
             MainWindow.Window.Selected.ToggleSelectionStriketrough();
         }
 
-        void RemoveFormatting_Execute(object sender, ExecutedRoutedEventArgs e) {
+        static void RemoveFormatting_Execute(object sender, ExecutedRoutedEventArgs e) {
             MainWindow.Window.Selected.RemoveFormattingOnSelection();
         }
 
-        void IncreaseFontSize_Execute(object sender, ExecutedRoutedEventArgs e) {
+        static void IncreaseFontSize_Execute(object sender, ExecutedRoutedEventArgs e) {
             MainWindow.Window.Selected.SetSelectionFontSize(MainWindow.Window.Selected.GetSelectionFontSize() + 2);
         }
 
-        void DecreaseFontSize_Execute(object sender, ExecutedRoutedEventArgs e) {
+        static void DecreaseFontSize_Execute(object sender, ExecutedRoutedEventArgs e) {
             double current = MainWindow.Window.Selected.GetSelectionFontSize();
             if (current > 2) MainWindow.Window.Selected.SetSelectionFontSize(current - 2);
         }
@@ -300,11 +310,11 @@ namespace SearchMap.Windows.Controls {
 
         private const double ZOOM_ON_NODE_VALUE = 1.9;
 
-        void Actions_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+        static void Actions_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = MainWindow.Window.Selected != null;
         }
 
-        void ZoomOnNode_Execute(object sender, ExecutedRoutedEventArgs e) {
+        static void ZoomOnNode_Execute(object sender, ExecutedRoutedEventArgs e) {
 
             var node = MainWindow.Window.Selected.Node;
             Point toCenter = MainWindow.Window.ConvertFromLocation(node.Location);
@@ -316,7 +326,7 @@ namespace SearchMap.Windows.Controls {
 
         }
 
-        void Delete_Execute(object sender, ExecutedRoutedEventArgs e) {
+        static void Delete_Execute(object sender, ExecutedRoutedEventArgs e) {
             MainWindow.Window.GetGraph().DeleteNode(MainWindow.Window.Selected.Node.Id);
         }
 

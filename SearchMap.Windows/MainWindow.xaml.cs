@@ -116,6 +116,8 @@ namespace SearchMap.Windows {
             RibbonTabWebNode.RegisterCommands();
             RibbonTabConnection.RegisterCommands();
 
+            RibbonTabTitleNode.RegisterCommands();
+
             QuickAccessCommands.RegisterCommands();
 
         }

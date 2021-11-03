@@ -24,10 +24,6 @@ namespace SearchMap.Windows.UIComponents {
 
         }
 
-        
-
-        
-
 
         // Required to access XAML fields from superclass.
 
@@ -56,7 +52,7 @@ namespace SearchMap.Windows.UIComponents {
         }
 
         protected override ToggleButton GetUnderlineButton() {
-            return buttonItalic;
+            return buttonUnderline;
         }
 
         protected override ToggleButton GetStrikethroughButton() {

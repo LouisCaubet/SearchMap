@@ -14,7 +14,7 @@ namespace SearchMap.Windows.UIComponents {
         /// <summary>
         /// The index in the ribbon of this tab
         /// </summary>
-        public const int TAB_INDEX = 7;
+        public const int TAB_INDEX = 8;
 
         internal ICommand RevertShape { get; private set; }
         internal ICommand DeleteConnection { get; private set; }

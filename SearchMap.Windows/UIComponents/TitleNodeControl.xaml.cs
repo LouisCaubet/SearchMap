@@ -42,7 +42,10 @@ namespace SearchMap.Windows.UIComponents {
         }
 
         public override void CollapseAssociatedRibbonTab() {
-            throw new NotImplementedException();
+
+            MainWindow.Window.Ribbon.SelectedTabIndex = MainWindow.Window.RibbonTabIndex;
+            MainWindow.Window.RibbonTabTitleNode.Visibility = Visibility.Collapsed;
+
         }
 
         public override FrameworkElement GetBack() {
@@ -116,7 +119,11 @@ namespace SearchMap.Windows.UIComponents {
         }
 
         public override void ShowAssociatedRibbonTab(bool setSelected) {
-            throw new NotImplementedException();
+
+            MainWindow.Window.NodeContextualGroup.Visibility = Visibility.Visible;
+            MainWindow.Window.RibbonTabTitleNode.Visibility = Visibility.Visible;
+            if (setSelected) MainWindow.Window.Ribbon.SelectedTabIndex = RibbonTitleNodeTab.TAB_INDEX;
+
         }
 
         protected override void SetObjectWithLastKeyboardFocus() {
