@@ -15,7 +15,7 @@ Already implemented features include:
 
 ## Technologies
 
-This project is developed in C# / .NET, using a core library in .NET Core, a Windows software built on Windows Foundation Platform. There are plans for a cross-platform Xamarin app, and a Chromium web extension. 
+This project is developed in C# / .NET, using a core library in .NET Core, a Windows software built on Windows Presentation Foundation. There are plans for a cross-platform Xamarin app, and a Chromium web extension. 
 
 ## Screenshots
 
