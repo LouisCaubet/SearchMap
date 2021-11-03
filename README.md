@@ -21,9 +21,15 @@ This project is developed in C# / .NET, using a core library in .NET Core, a Win
 
 Main view of the editor: 
 
+![Main view](https://github.com/LouisCaubet/SearchMap/blob/master/screenshots/main.jpg)
+
 The Insert Tab:
 
+![Insert tab](https://github.com/LouisCaubet/SearchMap/blob/master/screenshots/insert_tab.jpg)
+
 Editing a node:
+
+![Editing node](https://github.com/LouisCaubet/SearchMap/blob/master/screenshots/editing_node.jpg)
 
 ## Releases
 
